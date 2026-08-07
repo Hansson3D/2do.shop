@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2do.shop — Was du im Leben gemacht haben solltest</title>
+  <meta name="description" content="Lebenserfahrungen nach Alter — mit konkreten Produkten zum Kaufen und Experimentieren. Lerne, wachse, kaufe direkt.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --surface-hover: #1e1e1e;
+      --text: #e5e5e5;
+      --text-muted: #888;
+      --accent: #ff5e00;
+      --accent-2: #ff8c42;
+      --border: #2a2a2a;
+      --radius: 12px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-2); }
+
+    /* Hero */
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: radial-gradient(ellipse at center, #1a1a1a 0%, var(--bg) 70%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--text-muted);
+      max-width: 700px;
+      margin-bottom: 2rem;
+    }
+    .age-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+    .age-btn {
+      padding: 0.75rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .age-btn:hover, .age-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Matching-Box */
+    .matching-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+    }
+    .matching-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .matching-title {
+      font-weight: 700;
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+    .matching-box {
+      flex: 1;
+      min-height: 50px;
+      background: var(--surface);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .matching-box.drag-over {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+    }
+    .matching-item {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .matching-item:hover {
+      background: var(--accent-2);
+      transform: scale(1.05);
+    }
+    .matching-count {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* Abschnitte */
+    .section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .section-header {
+      margin-bottom: 2.5rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+    .section-header h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Erfahrungs-Kachel */
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .exp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+    .exp-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+    .exp-card.dragging {
+      opacity: 0.5;
+    }
+    .exp-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .exp-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .exp-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .exp-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .exp-age {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .exp-products {
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    footer a {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .section { padding: 3rem 1.5rem; }
+      .exp-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Fade-in */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Matching-Box sticky -->
+  <div class="matching-bar">
+    <div class="matching-inner">
+      <div class="matching-title">🎯 Meine Auswahl</div>
+      <div class="matching-box" id="matchingBox">
+        <span style="color: var(--text-muted); font-size: 0.9rem;">Ziehe Erfahrungen hierher →</span>
+      </div>
+      <div class="matching-count" id="matchingCount">0</div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>2do.shop</h1>
+    <p>Was du im Leben gemacht haben solltest — nach Alter, mit konkreten Produkten zum Kaufen und Experimentieren.</p>
+    <div class="age-nav">
+      <button class="age-btn" onclick="scrollToSection('18-25')">18–25</button>
+      <button class="age-btn" onclick="scrollToSection('26-35')">26–35</button>
+      <button class="age-btn" onclick="scrollToSection('36-45')">36–45</button>
+      <button class="age-btn" onclick="scrollToSection('46-55')">46–55</button>
+      <button class="age-btn" onclick="scrollToSection('55plus')">55+</button>
+    </div>
+  </section>
+
+  <!-- 18-25 -->
+  <section class="section" id="18-25">
+    <div class="section-header">
+      <h2>🎯 18–25 Jahre</h2>
+      <p>Grundlagen schaffen — Dinge, die dir 10 Jahre Vorsprung geben.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card fade-in" draggable="true" data-id="18-25-1" data-title="Löten lernen">
+        <div class="exp-icon">🔧</div>
+        <h3>Löten lernen</h3>
+        <p>Ein Radio, ein Roboter, eine Schaltung — mit eigenen Händen etwas zum Laufen bringen.</p>
+        <div class="exp-meta">
+          <span class="exp-age">18–25</span>
+          <span class="exp-products">5 Produkte</span>
+        </div>
+      </div>
+      <div class="exp-card fade-in" draggable="true" data-id="18-25-2" data-title="Programmieren">
+        <div class="exp-icon">💻</div>
+        <h3>Programmieren</h3>
+        <p>Python, Web, Apps — die Zukunft gehört denen, die sie bauen.</p>
+        <div class="exp-meta">
+          <span class="exp-age">18–25</span>
+          <span class="exp-products">4 Produkte</span>
+        </div>
+      </div>
+      <div class="exp-card fade-in" draggable="true" data-id="18-25-3" data-title="Fotografie">
+        <div class="exp-icon">📸</div>
+        <h3>Fotografie</h3>
+        <p>Kamera, Objektiv, Licht — lernen, die Welt durch den Sucher zu sehen.</p>
+        <div class="exp-meta">
+          <span class="exp-age">18–25</span>
+          <span class="exp-products">3 Produkte</span>
+        </div>
+      </div>
+      <div class="exp-card fade-in" draggable="true" data-id="18-25-4" data-title="Finanzen">
+        <div class="exp-icon">💰</div>
+        <h3>Finanzen verstehen</h3>
+        <p>Budget, ETFs, Steuern — Geld ist ein Werkzeug, lerne es zu nutzen.</p>
+        <div class="exp-meta">
+          <span class="exp-age">18–25</span>
+          <span class="exp-products">3 Produkte</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26-35 -->
+  <section class="section" id="26-35">
+    <div class="section-header">
+      <h2>🔥 26–35 Jahre</h2>
+      <p>Breiter werden — Business, Handwerk, Führung.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card fade-in" draggable="true" data-id="26-35-1" data-title="Business gründen">
+        <div class="exp-icon">🚀</div>
+        <h3>Business gründen</h3>
+        <p>Lean Startup, Side-Hustle, erstes Produkt — von der Idee zum ersten Euro.</p>
+        <div class="exp-meta">
+          <span class="exp-age">26–35</span>
+          <span class="exp-products">3 Produkte</span>
+        </div>
+      </div>
+      <div class="exp-card fade-in" draggable="true" data-id="26-35-2" data-title="Handwerk">
+        <div class="exp-icon">🛠️</div>
+        <h3>Handwerk lernen</h3>
+        <p>Schreinern, Löten, 3D-Druck — Dinge bauen, die funktionieren.</p>
+        <div class="exp-meta">
+          <span class="exp-age">26–35</span>
+          <span class="exp-products">3 Produkte</span>
+        </div>
+      </div>
+      <div class="exp-card fade-in" draggable="true" data-id="26-35-3" data-title="Führung">
+        <div class="exp-icon">🎯</div>
+        <h3>Führen lernen</h3>
+        <p>Verantwortung übernehmen, Teams leiten, Ownership leben.</p>
+        <div class="exp-meta">
+          <span class="exp-age">26–35</span>
+          <span class="exp-products">2 Produkte</span>
+        </div>
+      </div>
+      <div class="exp-card fade-in" draggable="true" data-id="26-35-4" data-title="Investieren">
+        <div class="exp-icon">📈</div>
+        <h3>Investieren</h3>
+        <p>ETFs, Aktien, Immobilien — Geld arbeiten lassen, statt nur zu sparen.</p>
+        <div class="exp-meta">
+          <span class="exp-age">26–35</span>
+          <span class="exp-products">3 Produkte</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 36-45 -->
+  <section class="section" id="36-45">
+    <div class="section-header">
+      <h2>⚡ 36–45 Jahre</h2>
+      <p>Tiefe statt Breite — Gesundheit, Nachhaltigkeit, Vermächtnis.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card fade-in" draggable="true" data-id="36-45-1" data-title="Gärtnern">
+        <div class="exp-icon">🌱</div>
+        <h3>Gärtnern</h3>
+        <p>Kräuter, Gemüse, Bonsai — etwas erschaffen, das über dich hinauswächst.</p>
+        <div class="exp-meta">
+          <span class="exp-age">36–45</span>
+          <span class="exp-products">3 Produkte</span>
+        </div>
+      </div>
+      <div class="exp-card fade-in" draggable="true" data-id="36-45-2" data-title="Gesundheit">
+        <div class="exp-icon">❤️</div>
+        <h3>Gesundheit</h3>
+        <p>Multivitamine, Blutdruck, Körperanalyse — der Körper will gepflegt werden.</p>
+        <div class="exp-meta">
+          <span class="exp-age">36–45</span>
+          <span class="exp-products">3 Produkte</span>
+        </div>
+      </div>
+      <div class="exp-card fade-in" draggable="true" data-id="36-45-3" data-title="Mentoring">
+        <div class="exp-icon">🤝</div>
+        <h3>Mentoring</h3>
+        <p>Weitergeben, was du gelernt hast — der nächste Schritt nach dem eigenen Erfolg.</p>
+        <div class="exp-meta">
+          <span class="exp-age">36–45</span>
+          <span class="exp-products">2 Produkte</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 46-55 -->
+  <section class="section" id="46-55">
+    <div class="section-header">
+      <h2>🎖️ 46–55 Jahre</h2>
+      <p>Erfahrung nutzen — Vermächtnis, Nachhaltigkeit, Ruhe.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card fade-in" draggable="true" data-id="46-55-1" data-title="Vermächtnis">
+        <div class="exp-icon">📖</div>
+        <h3>Vermächtnis</h3>
+        <p>Lebensbuch, Testament — was du hinterlässt, wenn du nicht mehr da bist.</p>
+        <div class="exp-meta">
+          <span class="exp-age">46–55</span>
+          <span class="exp-products">2 Produkte</span>
+        </div>
+      </div>
+      <div class="exp-card fade-in" draggable="true" data-id="46-55-2" data-title="Nachhaltigkeit">
+        <div class="exp-icon">🌍</div>
+        <h3>Nachhaltigkeit</h3>
+        <p>Zero Waste, Solar, Garten — zurück zu den Wurzeln, aber mit System.</p>
+        <div class="exp-meta">
+          <span class="exp-age">46–55</span>
+          <span class="exp-products">3 Produkte</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 55+ -->
+  <section class="section" id="55plus">
+    <div class="section-header">
+      <h2>🌟 55+ Jahre</h2>
+      <p>Jetzt oder nie — Technologie, Kreativität, Gesundheit.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card fade-in" draggable="true" data-id="55-1" data-title="Technologie">
+        <div class="exp-icon">📱</div>
+        <h3>Technologie nutzen</h3>
+        <p>E-Reader, Smart Display — Geräte, die das Leben leichter machen.</p>
+        <div class="exp-meta">
+          <span class="exp-age">55+</span>
+          <span class="exp-products">2 Produkte</span>
+        </div>
+      </div>
+      <div class="exp-card fade-in" draggable="true" data-id="55-2" data-title="Kreativität">
+        <div class="exp-icon">🎨</div>
+        <h3>Kreativität</h3>
+        <p>Aquarell, Lebensbuch — die besten Ideen kommen oft später im Leben.</p>
+        <div class="exp-meta">
+          <span class="exp-age">55+</span>
+          <span class="exp-products">3 Produkte</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 2do.shop — Was du im Leben gemacht haben solltest. | <a href="#">Impressum</a> | <a href="#">Datenschutz</a></p>
+    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: #666;">*Affiliate-Links: Wenn du über unsere Links kaufst, unterstützt du uns — ohne Mehrkosten für dich.</p>
+  </footer>
+
+  <script>
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Active button
+    const sections = document.querySelectorAll('.section');
+    const ageBtns = document.querySelectorAll('.age-btn');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 150;
+        if (scrollY >= top) current = section.getAttribute('id') || '';
+      });
+      ageBtns.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(current)) btn.classList.add('active');
+      });
+    });
+
+    // Klick auf Erfahrung → Detailseite
+    document.querySelectorAll('.exp-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.classList.contains('matching-item')) return;
+        const id = card.getAttribute('data-id');
+        window.location.href = 'detail/' + id + '.html';
+      });
+    });
+
+    // Drag & Drop → Matching-Box
+    const matchingBox = document.getElementById('matchingBox');
+    const matchingCount = document.getElementById('matchingCount');
+    let selected = [];
+
+    document.querySelectorAll('.exp-card').forEach(card => {
+      card.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', JSON.stringify({
+          id: card.getAttribute('data-id'),
+          title: card.getAttribute('data-title')
+        }));
+        card.classList.add('dragging');
+      });
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+      });
+    });
+
+    matchingBox.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      matchingBox.classList.add('drag-over');
+    });
+    matchingBox.addEventListener('dragleave', () => {
+      matchingBox.classList.remove('drag-over');
+    });
+    matchingBox.addEventListener('drop', (e) => {
+      e.preventDefault();
+      matchingBox.classList.remove('drag-over');
+      try {
+        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+        if (!selected.find(s => s.id === data.id)) {
+          selected.push(data);
+          updateMatchingBox();
+        }
+      } catch (err) {}
+    });
+
+    function updateMatchingBox() {
+      matchingBox.innerHTML = '';
+      if (selected.length === 0) {
+        matchingBox.innerHTML = '<span style="color: var(--text-muted); font-size: 0.9rem;">Ziehe Erfahrungen hierher →</span>';
+      } else {
+        selected.forEach(item => {
+          const tag = document.createElement('span');
+          tag.className = 'matching-item';
+          tag.textContent = item.title;
+          tag.addEventListener('click', () => {
+            selected = selected.filter(s => s.id !== item.id);
+            updateMatchingBox();
+          });
+          matchingBox.appendChild(tag);
+        });
+      }
+      matchingCount.textContent = selected.length;
+    }
+  </script>
+</body>
+</html>
