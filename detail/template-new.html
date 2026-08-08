@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{KATEGORIE}} — 2do.shop</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0a; --surface: #141414; --surface-hover: #1e1e1e;
+    --text: #e5e5e5; --text-muted: #888; --accent: #ff5e00; --accent-2: #ff8c42;
+    --border: #2a2a2a; --radius: 8px;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem;
+    max-width: 1600px; margin: 0 auto;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-2); }
+  .back {
+    display: inline-block; padding: 0.5rem 1rem; background: var(--surface);
+    border: 1px solid var(--border); color: var(--text); border-radius: 8px;
+    margin-bottom: 2rem; font-size: 0.9rem;
+  }
+  .back:hover { border-color: var(--accent); color: var(--accent); }
+  .detail-header { margin-bottom: 2rem; border-left: 4px solid var(--accent); padding-left: 1rem; }
+  .detail-icon { font-size: 4rem; margin-bottom: 1rem; }
+  .detail-header h1 {
+    font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 0.75rem;
+  }
+  .detail-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; }
+  
+  /* Hauptprodukte oben */
+  .products-section { margin-bottom: 2rem; }
+  .section-title {
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;
+    padding-left: 1rem; border-left: 3px solid var(--accent);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-icon { font-size: 1.5rem; }
+  .products-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .column {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+  }
+  .column-header {
+    padding: 1rem;
+    background: var(--surface-hover);
+    border-bottom: 2px solid var(--accent);
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .column-icon { font-size: 1.3rem; }
+  .column-content {
+    overflow-y: auto;
+    flex: 1;
+    padding: 0.5rem;
+  }
+  .column-content::-webkit-scrollbar { width: 6px; }
+  .column-content::-webkit-scrollbar-track { background: var(--bg); }
+  .column-content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+  
+  .product-item {
+    padding: 0.8rem;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .product-item:last-child { border-bottom: none; }
+  .product-item:hover { background: var(--surface-hover); }
+  .product-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+  .product-desc {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+  .product-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+  .product-price {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .product-rating {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .product-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.3rem;
+  }
+  .product-btn:hover { background: var(--accent-2); color: #000; }
+  
+  /* Community-Tipps unten */
+  .community-tips {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border);
+  }
+  .community-tips h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .tips-intro {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  .filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .filter-tab {
+    padding: 0.5rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+  .filter-tab:hover { border-color: var(--accent); }
+  .filter-tab.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  .community-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    transition: all 0.2s;
+  }
+  .product-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+  }
+  .product-name { font-size: 0.95rem; font-weight: 600; line-height: 1.3; flex: 1; }
+  .product-badge {
+    background: var(--accent);
+    color: #000;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .product-desc { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.8rem; line-height: 1.4; }
+  .product-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .product-price { font-size: 1rem; font-weight: 700; color: var(--accent); }
+  .product-rating { font-size: 0.85rem; color: var(--text-muted); }
+  .product-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .product-btn:hover { background: var(--accent-2); color: #000; }
+  
+  /* Vorschlagsformular */
+  .suggestion-box {
+    margin-top: 2rem;
+    padding: 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    max-width: 800px;
+  }
+  .suggestion-box h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
+  .suggestion-box > p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+  .suggestion-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .form-group label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .form-group input {
+    padding: 0.5rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.85rem;
+  }
+  .form-group.full { grid-column: 1 / -1; }
+  .submit-btn {
+    grid-column: 1 / -1;
+    padding: 0.6rem 1rem;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .submit-btn:hover { background: var(--accent-2); }
+  .form-note {
+    grid-column: 1 / -1;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+  }
+  
+  footer {
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    margin-top: 3rem;
+  }
+  @media (max-width: 1200px) {
+    .products-columns { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    body { padding: 1.5rem; }
+    .suggestion-form { grid-template-columns: 1fr; }
+    .products-columns { grid-template-columns: 1fr; }
+    .column { max-height: none; }
+  }
+</style>
+</head>
+<body>
+  <a href="/" class="back">← Zurück zur Übersicht</a>
+  
+  <div class="detail-header">
+    <div class="detail-icon">{{ICON}}</div>
+    <h1>{{KATEGORIE}}</h1>
+    <p>{{BESCHREIBUNG}}</p>
+  </div>
+  
+  <!-- Hauptprodukte: 4 Spalten -->
+  <div class="products-section">
+    <div class="section-title"><span class="section-icon">🛠️</span> Aus Nischen-Communitys aufgespürt</div>
+    <p class="tips-intro">
+      Unsere Redaktion recherchiert kontinuierlich in Foren, Erfahrungsberichten und Community-Diskussionen 
+      nach praxiserprobten Produkten. Hier findest du unsere aktuelle Auswahl — übersichtlich nach 
+      Preisklassen sortiert.
+    </p>
+    <div class="products-columns">
+      <div class="column">
+        <div class="column-header"><span class="column-icon">💸</span> Günstig</div>
+        <div class="column-content">{{GUENSTIG_PRODUKTE}}</div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⚖️</span> Preis/Leistung</div>
+        <div class="column-content">{{PREIS_LEISTUNG_PRODUKTE}}</div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⭐</span> Marke</div>
+        <div class="column-content">{{MARKE_PRODUKTE}}</div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">📚</span> Bücher</div>
+        <div class="column-content">{{BUECHER_PRODUKTE}}</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Community-Tipps unten -->
+  <div class="community-tips">
+    <h3>💡 Eure Community-Vorschläge</h3>
+    <p class="tips-intro">
+      Hier teilt die Community ihre favorisierten Produkte und Erfahrungen. 
+      Du hast ein Produkt entdeckt, das hier fehlt? Reiche es gerne ein — 
+      unser Team prüft jeden Vorschlag.
+    </p>
+    
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">Alle</button>
+      <button class="filter-tab" data-filter="guenstig">💸 Günstig</button>
+      <button class="filter-tab" data-filter="preis-leistung">⚖️ Preis/Leistung</button>
+      <button class="filter-tab" data-filter="marke">⭐ Markenprodukt</button>
+    </div>
+    
+    <div id="community-products" class="community-grid"></div>
+  </div>
+  
+  <!-- Vorschlagsformular -->
+  <div class="suggestion-box">
+    <h3>💬 Produkt vorschlagen</h3>
+    <p>Kennst du ein gutes Produkt für diese Erfahrung? Schlag es uns vor!</p>
+    <form class="suggestion-form" action="mailto:info@vegadelux.de" method="post" enctype="text/plain">
+      <div class="form-group">
+        <label for="prod-name">Produktname</label>
+        <input type="text" id="prod-name" name="Produktname" placeholder="z.B. XYZ Werkzeugset" required>
+      </div>
+      <div class="form-group">
+        <label for="prod-alias">Dein Alias-Name</label>
+        <input type="text" id="prod-alias" name="Alias" placeholder="z.B. Hans">
+      </div>
+      <div class="form-group full">
+        <label for="prod-desc">Warum empfehlst du dieses Produkt?</label>
+        <input type="text" id="prod-desc" name="Begründung" placeholder="z.B. Hält 10 Jahre, super Qualität...">
+      </div>
+      <div class="form-group">
+        <label for="prod-search">Suchbegriff</label>
+        <input type="text" id="prod-search" name="Suchbegriff" placeholder="z.B. garten werkzeug set">
+      </div>
+      <div class="form-group">
+        <label for="prod-vendor">Händler</label>
+        <input type="text" id="prod-vendor" name="Händler" placeholder="z.B. Amazon">
+      </div>
+      <div class="form-group full">
+        <label for="prod-link">Link</label>
+        <input type="url" id="prod-link" name="Link" placeholder="https://...">
+      </div>
+      <button type="submit" class="submit-btn">Vorschlag senden →</button>
+      <p class="form-note">Keine Speicherung personenbezogener Daten.</p>
+    </form>
+  </div>
+  
+  <footer>
+    <p>© 2026 Tobias Eric Wolk — 2do.shop | <a href="/impressum.html">Impressum</a> | <a href="/datenschutz.html">Datenschutz</a></p>
+  </footer>
+  
+  <script>
+    // Scroll-Position speichern und wiederherstellen
+    (function() {
+      const storageKey = '2do-scroll-pos-' + window.location.pathname;
+      
+      // Beim Verlassen der Seite Scroll-Position speichern
+      window.addEventListener('beforeunload', function() {
+        sessionStorage.setItem(storageKey, window.scrollY);
+      });
+      
+      // Beim Laden der Seite Scroll-Position wiederherstellen
+      window.addEventListener('DOMContentLoaded', function() {
+        const savedPos = sessionStorage.getItem(storageKey);
+        if (savedPos) {
+          window.scrollTo(0, parseInt(savedPos, 10));
+        }
+      });
+      
+      // Auch bei Hash-Änderungen
+      window.addEventListener('hashchange', function() {
+        const savedPos = sessionStorage.getItem(storageKey);
+        if (savedPos) {
+          window.scrollTo(0, parseInt(savedPos, 10));
+        }
+      });
+    })();
+    
+    // Community-Tipps Filter-Logik
+    const communityProducts = [
+      {"name": "Dein Produkt A", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€29,99", "rating": "4.5★", "link": "https://www.amazon.de/dp/B000000001?tag=shops2go-21", "category": "guenstig"},
+      {"name": "Dein Produkt B", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€59,99", "rating": "4.8★", "link": "https://www.amazon.de/dp/B000000002?tag=shops2go-21", "category": "preis-leistung"},
+      {"name": "Dein Produkt C", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€129,99", "rating": "4.9★", "link": "https://www.amazon.de/dp/B000000003?tag=shops2go-21", "category": "marke"}
+    ];
+    
+    function renderProducts(filter) {
+      const container = document.getElementById('community-products');
+      container.innerHTML = '';
+      const filtered = filter === 'all' ? communityProducts : communityProducts.filter(p => p.category === filter);
+      if (filtered.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted)">Keine Produkte in dieser Kategorie.</p>';
+        return;
+      }
+      filtered.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        const badge = product.category === 'guenstig' ? 'Günstig' : product.category === 'preis-leistung' ? 'Preis/Leistung' : 'Marke';
+        card.innerHTML = '<div class="product-header"><div class="product-name">' + product.name + '</div><span class="product-badge">' + badge + '</span></div><div class="product-desc">' + product.desc + '</div><div class="product-meta"><div class="product-price">' + product.price + '</div><div class="product-rating">' + product.rating + '</div></div><a href="' + product.link + '" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>';
+        container.appendChild(card);
+      });
+    }
+    
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        renderProducts(tab.dataset.filter);
+      });
+    });
+    
+    renderProducts('all');
+  </script>
+</body>
+</html>
