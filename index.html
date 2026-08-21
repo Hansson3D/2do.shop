@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Entdecke praktische Life Skills nach Ziel und Lebensphase - mit Starterprojekten, Zeitaufwand und passenden Werkzeugen. Erstelle deine persönliche 2do-Liste.">
+  <title>24 Life Skills, die du im Leben gelernt haben solltest | 2do.shop</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --surface-hover: #1e1e1e;
+      --text: #e5e5e5;
+      --text-muted: #888;
+      --accent: #ff5e00;
+      --accent-2: #ff8c42;
+      --border: #2a2a2a;
+      --radius: 12px;
+      --sidebar-width: 300px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-2); }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    .sidebar-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    .sidebar-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .sidebar-list {
+      list-style: none;
+      padding: 0;
+    }
+    .problem-box { margin-bottom: 1.5rem; }
+    .problem-btn {
+      display: block; width: 100%; text-align: left; margin-bottom: 0.5rem;
+      padding: 0.6rem 0.8rem; background: var(--surface-hover); color: var(--text);
+      border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .problem-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .sidebar-list li {
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-list a {
+      color: var(--text);
+      font-size: 0.85rem;
+      display: block;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+    .sidebar-list a:hover {
+      color: var(--accent);
+    }
+    .sidebar-empty {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+    .sidebar-count {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.4rem 0.8rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .sidebar-clear {
+      display: inline-block;
+      margin-top: 0.5rem;
+      margin-left: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .sidebar-clear:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .sidebar-dropzone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1rem;
+      text-align: center;
+      margin-top: 1rem;
+      transition: all 0.3s;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .sidebar-dropzone.drag-over {
+      border-color: var(--accent);
+      background: rgba(255, 94, 0, 0.1);
+      color: var(--accent);
+    }
+    .sidebar-products {
+      margin-top: 1rem;
+      display: none;
+    }
+    .sidebar-products.visible {
+      display: block;
+    }
+    .sidebar-product {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      transition: all 0.2s;
+    }
+    .sidebar-product:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .sidebar-product h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .sidebar-product p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .sidebar-product .price {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .sidebar-product a {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .sidebar-product a:hover {
+      background: var(--accent-2);
+      color: #fff;
+    }
+
+    /* Main */
+    .main {
+      flex: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: radial-gradient(ellipse at center, #1a1a1a 0%, var(--bg) 70%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--text-muted);
+      max-width: 700px;
+      margin-bottom: 2rem;
+    }
+    .top-nav {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .nav-btn {
+      padding: 0.6rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover, .nav-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .age-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+    .age-btn {
+      padding: 0.75rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .age-btn:hover, .age-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Section */
+    .section {
+      padding: 4rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .section-header {
+      margin-bottom: 2.5rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+    .section-header h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Experience Grid */
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .exp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+    .exp-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+    .exp-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .exp-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .exp-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .exp-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+    }
+    .exp-age {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .exp-products {
+      color: var(--text-muted);
+    }
+    .drag-hint {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .exp-card:hover .drag-hint {
+      opacity: 1;
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    footer a {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .section { padding: 3rem 1.5rem; }
+      .exp-grid { grid-template-columns: 1fr; }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* KLEINKIND eigener Kasten - kompakt, horizontal */
+    .kl-kasten {
+      margin: 1.5rem 1rem;
+      padding: 1.25rem 1.25rem 1.5rem;
+      background: #141414;
+      border: 1.5px solid var(--accent);
+      border-radius: 14px;
+    }
+    .kl-section { background: transparent; padding: 0; }
+    .kl-kasten .section-header { margin-bottom: 0.75rem; }
+    .kl-title {
+      color: var(--accent) !important;
+      font-size: 1.3rem !important;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem !important;
+    }
+    .kl-kasten .section-header p { font-size: 0.8rem; margin: 0; }
+    /* horizontale Scroll-Reihe statt Grid */
+    .kl-kasten .exp-grid {
+      display: flex !important;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 1rem;
+      padding: 0.5rem 0.25rem 1rem;
+      scroll-snap-type: x mandatory;
+    }
+    .kl-kasten .exp-card {
+      flex: 0 0 240px;
+      max-width: 240px;
+      scroll-snap-align: start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .kl-kasten .exp-card {
+      scroll-snap-align: start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .kl-kasten .exp-card .exp-icon { font-size: 2rem; margin-bottom: 0.4rem; }
+    .kl-kasten .exp-card h3 { font-size: 1.05rem; margin: 0.4rem 0; }
+    .kl-kasten .exp-card p { font-size: 0.85rem; line-height: 1.45; }
+    .kl-kasten .exp-meta { font-size: 0.7rem; }
+    .kl-kasten .drag-hint { display: none; }
+    /* schlanke Scrollbar */
+    .kl-kasten .exp-grid::-webkit-scrollbar { height: 6px; }
+    .kl-kasten .exp-grid::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+    .kl-section { background: transparent; }
+    .kl-title {
+      color: var(--accent) !important;
+      font-size: 1.8rem !important;
+      letter-spacing: 0.05em;
+    }
+    .kl-kasten .exp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    /* Sidebar: Problem-Box oben, Meine Auswahl unten */
+    .problem-box { margin-bottom: 1.5rem; }
+    .problem-btn {
+      display: block; width: 100%; text-align: left; margin-bottom: 0.5rem;
+      padding: 0.6rem 0.8rem; background: var(--surface-hover); color: var(--text);
+      border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .problem-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateX(2px); }
+    .selection-box {
+      padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    }
+    .sidebar-count {
+      display: inline-block; min-width: 22px; text-align: center; background: var(--accent); color: #fff;
+      border-radius: 11px; font-size: 0.75rem; padding: 0 0.4rem; margin-left: 0.3rem;
+    }
+    .sel-item {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+      padding: 0.5rem 0; border-bottom: 1px solid var(--border);
+    }
+    .sel-item:last-child { border-bottom: none; }
+    .sel-name { font-size: 0.85rem; }
+    .sel-btn {
+      flex-shrink: 0; padding: 0.3rem 0.6rem; background: var(--accent); color: #fff !important;
+      border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+    }
+    .sel-btn:hover { background: var(--accent-2); }
+
+    .problem-box { margin-bottom: 1.2rem; }
+    .problem-box + .problem-box { border-top: 1px solid var(--border); padding-top: 1rem; }
+    .problem-btn {
+      display: block; width: 100%; text-align: left; margin-bottom: 0.4rem;
+      padding: 0.55rem 0.75rem; background: var(--surface-hover); color: var(--text);
+      border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.82rem;
+      transition: all 0.2s;
+    }
+    .problem-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateX(3px); }
+    .selection-box {
+      padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    }
+    .sidebar-count {
+      display: inline-block; min-width: 22px; text-align: center; background: var(--accent); color: #fff;
+      border-radius: 11px; font-size: 0.75rem; padding: 0 0.4rem; margin-left: 0.3rem;
+    }
+    .sel-item { padding: 0.75rem 0; border-bottom: 1px solid var(--border); display: block; }
+    .sel-item:last-child { border-bottom: none; }
+    .sel-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text); }
+    .sel-prod {
+      display: block; width: 100%; box-sizing: border-box; font-size: 0.82rem;
+      padding: 0.45rem 0.5rem; margin-bottom: 0.3rem;
+      background: var(--surface-hover); border-radius: 6px; color: var(--accent) !important;
+    }
+    .sel-prod:hover { background: var(--accent); color: #fff !important; }
+    .sidebar-empty { color: var(--text-muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar: Meine Auswahl -->
+  <aside class="sidebar" id="sidebarDropzone">
+    <!-- Meine Auswahl (oben) -->
+    <div class="selection-box">
+      <div class="sidebar-title">🛒 Meine Auswahl <span id="sidebarCount" class="sidebar-count">0</span></div>
+      <button class="sidebar-clear" id="sidebarClear">Leeren</button>
+      <div class="sidebar-hint">Ziehe Erlebnisse hierher oder klicke sie an.</div>
+      <div class="sidebar-dropzone" id="sidebarDrop">📥 Erlebnis hierher ziehen</div>
+      <div id="sidebarProducts"></div>
+    </div>
+
+    <!-- Problem? (unten) -->
+    <div class="problem-box" id="problemBox">
+      <div class="sidebar-title" id="problemTitle">🩺 Problem?</div>
+      <div id="problemButtons"></div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="top-nav">
+        
+        <button class="nav-btn" id="locationBtn" onclick="detectLocation()">📍 Location</button>
+      </div>
+      <h1 id="heroTitle">2do.shop</h1>
+      <p id="heroSub">Was du im Leben gemacht haben solltest — nach Alter, mit konkreten Erfahrungen und kaufbaren Produkten.</p>
+      <div class="age-nav">
+        <button class="age-btn" onclick="scrollToSection('18-25')">18–25</button>
+        <button class="age-btn" onclick="scrollToSection('26-35')">26–35</button>
+        <button class="age-btn" onclick="scrollToSection('36-45')">36–45</button>
+        <button class="age-btn" onclick="scrollToSection('46-55')">46–55</button>
+        <button class="age-btn" onclick="scrollToSection('55plus')">55+</button>
+        <button class="age-btn" onclick="scrollToSection('kleinkind')">🤸 Körper</button>
+      </div>
+    </section>
+
+    <!-- Körperskills lernen -->
+    <div class="kl-kasten">
+    <section class="section kl-section" id="kleinkind">
+      <div class="section-header">
+        <h2 id="section_koerperskills_title" class="kl-title">🧸 KLEINKIND</h2>
+        <p id="section_koerperskills_sub">Vom Greifen bis zur Präzisionsarbeit — Bewegungen spielerisch üben, in jedem Alter.</p>
+      </div>
+      <div class="exp-grid">
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-greifen" data-icon="👶" data-title-de="Greifen lernen" data-title-en="Learn to grasp" data-desc-de="Erste Handkontrolle: Ball umschließen, von Hand zu Hand geben." data-desc-en="First hand control: grip a ball, pass hand to hand."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">👶</div><h3>Greifen lernen</h3><p>Erste Handkontrolle: Ball umschließen, von Hand zu Hand geben.</p><div class="exp-meta"><span class="exp-age">ab 0 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-pinzette" data-icon="✌️" data-title-de="Pinzettengriff lernen" data-title-en="Learn the pincer grip" data-desc-de="Präzision: Stacheln ziehen, gezielt einsetzen." data-desc-en="Precision: pull spikes, place deliberately."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">✌️</div><h3>Pinzettengriff lernen</h3><p>Präzision: Stacheln ziehen, gezielt einsetzen.</p><div class="exp-meta"><span class="exp-age">ab 18 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-faedeln" data-icon="🧵" data-title-de="Fädeln lernen" data-title-en="Learn to lace" data-desc-de="Beidhändig: Schnur führen, Elemente auffädeln." data-desc-en="Two-handed: guide thread, lace elements."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🧵</div><h3>Fädeln lernen</h3><p>Beidhändig: Schnur führen, Elemente auffädeln.</p><div class="exp-meta"><span class="exp-age">ab 18 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-hammer" data-icon="🔨" data-title-de="Mit dem Hammer zielen" data-title-en="Learn to aim with a hammer" data-desc-de="Zielbewegung: Hammer führen, Kugel treffen." data-desc-en="Targeted motion: guide hammer, hit the ball."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🔨</div><h3>Mit dem Hammer zielen</h3><p>Zielbewegung: Hammer führen, Kugel treffen.</p><div class="exp-meta"><span class="exp-age">ab 12 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-werfen-fangen" data-icon="⚾" data-title-de="Werfen & Fangen" data-title-en="Throwing & catching" data-desc-de="Auge-Hand: Ball werfen, fangen, bewegtes Ziel treffen." data-desc-en="Eye-hand: throw, catch, hit moving target."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">⚾</div><h3>Werfen & Fangen</h3><p>Auge-Hand: Ball werfen, fangen, bewegtes Ziel treffen.</p><div class="exp-meta"><span class="exp-age">ab 2 J.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-balancieren" data-icon="⚖️" data-title-de="Balancieren lernen" data-title-en="Learn to balance" data-desc-de="Gleichgewicht: von Stein zu Stein, Höhen unterscheiden." data-desc-en="Balance: stone to stone, distinguish heights."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">⚖️</div><h3>Balancieren lernen</h3><p>Gleichgewicht: von Stein zu Stein, Höhen unterscheiden.</p><div class="exp-meta"><span class="exp-age">ab 3 J.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-reaktion" data-icon="⚡" data-title-de="Reaktion trainieren" data-title-en="Train reactivity" data-desc-de="Reflex: unberechenbaren Absprung auffangen." data-desc-en="Reflex: catch unpredictable bounce."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">⚡</div><h3>Reaktion trainieren</h3><p>Reflex: unberechenbaren Absprung auffangen.</p><div class="exp-meta"><span class="exp-age">ab 6 J.</span><span class="exp-products">1 Produkt</span></div></div>
+      </div>
+    </section>
+    </div>
+    <!-- 18-25 -->
+    <section class="section" id="18-25">
+      <div class="section-header">
+        <h2 id="section_18_25_title">🎯 18–25 Jahre</h2>
+        <p id="section_18_25_sub">Grundlagen schaffen — Erfahrungen, die dir später Vorteile bringen.</p>
+      </div>
+      <div class="exp-grid">
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-5" data-icon="🧱" data-title-de="Möbel bauen" data-title-en="Build furniture" data-desc-de="Regal, Hocker oder Tisch aus Holz — etwas Bleibendes mit den Händen schaffen." data-desc-en="Shelf, stool or table from wood — create something lasting."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🧱</div><h3>Möbel bauen</h3><p>Regal, Hocker oder Tisch aus Holz — etwas Bleibendes mit den Händen schaffen.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-3" data-icon="📸" data-title-de="Fotografie" data-title-en="Photography" data-desc-de="Kamera, Objektiv, Licht — lernen, die Welt durch den Sucher zu sehen." data-desc-en="Camera, lens, light — learn to see the world through the viewfinder."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📸</div><h3>Fotografie</h3><p>Kamera, Objektiv, Licht — lernen, die Welt durch den Sucher zu sehen.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-4" data-icon="💰" data-title-de="Finanzen verstehen" data-title-en="Understand finances" data-desc-de="Budget, ETFs, Steuern — Geld ist ein Werkzeug, lerne es zu nutzen." data-desc-en="Budget, ETFs, taxes — money is a tool, learn to use it."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">💰</div><h3>Finanzen verstehen</h3><p>Budget, ETFs, Steuern — Geld ist ein Werkzeug, lerne es zu nutzen.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-6" data-icon="🎸" data-title-de="Instrument lernen" data-title-en="Learn an instrument" data-desc-de="Gitarre, Ukulele, Klavier — Lieder spielen, die du liebst." data-desc-en="Guitar, ukulele, piano — play songs you love."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎸</div><h3>Instrument lernen</h3><p>Gitarre, Ukulele, Klavier — Lieder spielen, die du liebst.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-7" data-icon="🎨" data-title-de="Kreativ sein" data-title-en="Be creative" data-desc-de="Malen, zeichnen, designen — etwas erschaffen, das dein Name trägt." data-desc-en="Paint, draw, design — create something that bears your name."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎨</div><h3>Kreativ sein</h3><p>Malen, zeichnen, designen — etwas erschaffen, das dein Name trägt.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-8" data-icon="🌿" data-title-de="Gärtnern" data-title-en="Gardening" data-desc-de="Kräuter, Gemüse, Bonsai — etwas wachsen lassen, das du ernten kannst." data-desc-en="Herbs, vegetables, bonsai — grow something you can harvest."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌿</div><h3>Gärtnern</h3><p>Kräuter, Gemüse, Bonsai — etwas wachsen lassen, das du ernten kannst.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-1" data-icon="🔧" data-title-de="Löten lernen" data-title-en="Learn soldering" data-desc-de="Mit eigenen Händen etwas zum Laufen bringen: ein Radio, ein Roboter, eine Schaltung." data-desc-en="Make something work with your own hands: a radio, a robot, a circuit."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🔧</div><h3>Löten lernen</h3><p>Mit eigenen Händen etwas zum Laufen bringen: ein Radio, ein Roboter, eine Schaltung.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+      </div>
+    </section>
+
+    <!-- 26-35 -->
+    <section class="section" id="26-35">
+      <div class="section-header">
+        <h2 id="section_26_35_title">🔥 26–35 Jahre</h2>
+        <p id="section_26_35_sub">Breiter werden — Business, Handwerk, Führung, Beziehungen.</p>
+      </div>
+      <div class="exp-grid">
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-1" data-icon="🚀" data-title-de="Business gründen" data-title-en="Start a business" data-desc-de="Lean Startup, Side-Hustle, erstes Produkt — von der Idee zum ersten Euro." data-desc-en="Lean Startup, side hustle, first product — from idea to first euro."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🚀</div><h3>Business gründen</h3><p>Lean Startup, Side-Hustle, erstes Produkt — von der Idee zum ersten Euro.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-2" data-icon="🛠️" data-title-de="Handwerk lernen" data-title-en="Learn a craft" data-desc-de="Schreinern, Löten, 3D-Druck — Dinge bauen, die funktionieren." data-desc-en="Carpentry, soldering, 3D printing — build things that work."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🛠️</div><h3>Handwerk lernen</h3><p>Schreinern, Löten, 3D-Druck — Dinge bauen, die funktionieren.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-3" data-icon="🎯" data-title-de="Führen lernen" data-title-en="Learn leadership" data-desc-de="Verantwortung übernehmen, Teams leiten, Ownership leben." data-desc-en="Take responsibility, lead teams, live ownership."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎯</div><h3>Führen lernen</h3><p>Verantwortung übernehmen, Teams leiten, Ownership leben.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-4" data-icon="📈" data-title-de="Investieren" data-title-en="Investing" data-desc-de="ETFs, Aktien, Immobilien — Geld arbeiten lassen, statt nur zu sparen." data-desc-en="ETFs, stocks, real estate — make money work instead of just saving."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📈</div><h3>Investieren</h3><p>ETFs, Aktien, Immobilien — Geld arbeiten lassen, statt nur zu sparen.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-5" data-icon="🍳" data-title-de="Kochen meistern" data-title-en="Master cooking" data-desc-de="Fünf Gerichte einer fremden Küche, eigenes Brot, 3-Gänge-Menü." data-desc-en="Five dishes from a foreign cuisine, your own bread, a 3-course menu."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🍳</div><h3>Kochen meistern</h3><p>Fünf Gerichte einer fremden Küche, eigenes Brot, 3-Gänge-Menü — von der Quelle bis zum Teller.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-6" data-icon="🔧" data-title-de="Reparieren statt ersetzen" data-title-en="Repair instead of replace" data-desc-de="Handy-Display, Laptop-Lüfter, Toaster — Ressourcen sparen." data-desc-en="Phone screen, laptop fan, toaster — save resources."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🔧</div><h3>Reparieren statt ersetzen</h3><p>Handy-Display, Laptop-Lüfter, Toaster — Ressourcen sparen und Problemlösung stärken.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-7" data-icon="💻" data-title-de="Programmieren" data-title-en="Programming" data-desc-de="Python, Web, Apps — Automatisierung, Side-Projekte, Beruf." data-desc-en="Python, Web, Apps — automation, side projects, career."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">💻</div><h3>Programmieren</h3><p>Python, Web, Apps — nicht nur zum Arbeiten, sondern zum Machen.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+      </div>
+    </section>
+
+    <!-- 36-45 -->
+    <section class="section" id="36-45">
+      <div class="section-header">
+        <h2 id="section_36_45_title">⚡ 36–45 Jahre</h2>
+        <p id="section_36_45_sub">Tiefe statt Breite — Gesundheit, Nachhaltigkeit, Vermächtnis.</p>
+      </div>
+      <div class="exp-grid">
+        <div class="exp-card fade-in" draggable="true" data-id="36-45-1" data-icon="🌱" data-title-de="Gärtnern" data-title-en="Gardening" data-desc-de="Kräuter, Gemüse, Bonsai — etwas erschaffen, das über dich hinauswächst." data-desc-en="Herbs, vegetables, bonsai — create something that outgrows you."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌱</div><h3>Gärtnern</h3><p>Kräuter, Gemüse, Bonsai — etwas erschaffen, das über dich hinauswächst.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="36-45-2" data-icon="❤️" data-title-de="Gesundheit" data-title-en="Health" data-desc-de="Multivitamine, Blutdruck, Körperanalyse — der Körper will gepflegt werden." data-desc-en="Multivitamins, blood pressure, body analysis — the body wants care."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">❤️</div><h3>Gesundheit</h3><p>Multivitamine, Blutdruck, Körperanalyse — der Körper will gepflegt werden.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="36-45-3" data-icon="🤝" data-title-de="Mentoring" data-title-en="Mentoring" data-desc-de="Weitergeben, was du gelernt hast — der nächste Schritt nach dem eigenen Erfolg." data-desc-en="Pass on what you have learned — the next step after your own success."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🤝</div><h3>Mentoring</h3><p>Weitergeben, was du gelernt hast — der nächste Schritt nach dem eigenen Erfolg.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="36-45-4" data-icon="🍞" data-title-de="Brot backen" data-title-en="Bread baking" data-desc-de="Eigenes Brot backen und einen Sauerteig führen — Langsamkeit und Pflege lernen." data-desc-en="Bake your own bread and maintain a sourdough — learn slowness and care."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🍞</div><h3>Brot backen</h3><p>Eigenes Brot backen und einen Sauerteig führen — Langsamkeit und Pflege lernen.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
+      </div>
+    </section>
+
+    <!-- 46-55 -->
+    <section class="section" id="46-55">
+      <div class="section-header">
+        <h2 id="section_46_55_title">🎖️ 46–55 Jahre</h2>
+        <p id="section_46_55_sub">Erfahrung nutzen — Vermächtnis, Nachhaltigkeit, Ruhe.</p>
+      </div>
+      <div class="exp-grid">
+        <div class="exp-card fade-in" draggable="true" data-id="46-55-1" data-icon="📖" data-title-de="Vermächtnis" data-title-en="Legacy" data-desc-de="Lebensbuch, Testament — was du hinterlässt, wenn du nicht mehr da bist." data-desc-en="Life book, will — what you leave behind when you are gone."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📖</div><h3>Vermächtnis</h3><p>Lebensbuch, Testament — was du hinterlässt, wenn du nicht mehr da bist.</p><div class="exp-meta"><span class="exp-age">46–55</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="46-55-2" data-icon="🌍" data-title-de="Nachhaltigkeit" data-title-en="Sustainability" data-desc-de="Zero Waste, Solar, Garten — zurück zu den Wurzeln, aber mit System." data-desc-en="Zero waste, solar, garden — back to the roots, but with a system."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌍</div><h3>Nachhaltigkeit</h3><p>Zero Waste, Solar, Garten — zurück zu den Wurzeln, aber mit System.</p><div class="exp-meta"><span class="exp-age">46–55</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="46-55-3" data-icon="📚" data-title-de="Journaling" data-title-en="Journaling" data-desc-de="Ein Journaling-System etablieren und 1 Jahr führen — Gedanken externalisieren." data-desc-en="Establish a journaling system for 1 year — externalize thoughts."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📚</div><h3>Journaling</h3><p>Ein Journaling-System etablieren und 1 Jahr führen — Gedanken externalisieren, Muster erkennen.</p><div class="exp-meta"><span class="exp-age">46–55</span><span class="exp-products">3 Produkte</span></div></div>
+      </div>
+    </section>
+
+    <!-- 55+ -->
+    <section class="section" id="55plus">
+      <div class="section-header">
+        <h2 id="section_55plus_title">🌟 55+ Jahre</h2>
+        <p id="section_55plus_sub">Jetzt oder nie — Technologie, Kreativität, Gesundheit.</p>
+      </div>
+      <div class="exp-grid">
+        <div class="exp-card fade-in" draggable="true" data-id="55-1" data-icon="📱" data-title-de="Technologie nutzen" data-title-en="Use technology" data-desc-de="E-Reader, Smart Display — Geräte, die das Leben leichter machen." data-desc-en="E-reader, smart display — devices that make life easier."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📱</div><h3>Technologie nutzen</h3><p>E-Reader, Smart Display — Geräte, die das Leben leichter machen.</p><div class="exp-meta"><span class="exp-age">55+</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="55-2" data-icon="🎨" data-title-de="Kreativität" data-title-en="Creativity" data-desc-de="Aquarell, Lebensbuch — die besten Ideen kommen oft später im Leben." data-desc-en="Watercolor, life book — the best ideas often come later in life."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎨</div><h3>Kreativität</h3><p>Aquarell, Lebensbuch — die besten Ideen kommen oft später im Leben.</p><div class="exp-meta"><span class="exp-age">55+</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="55-3" data-icon="🌳" data-title-de="Natur pflegen" data-title-en="Nurture nature" data-desc-de="Baum pflanzen, Insektenhotel bauen — etwas für die nächste Generation tun." data-desc-en="Plant a tree, build an insect hotel — do something for the next generation."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌳</div><h3>Natur pflegen</h3><p>Baum pflanzen, Insektenhotel bauen — etwas für die nächste Generation tun.</p><div class="exp-meta"><span class="exp-age">55+</span><span class="exp-products">3 Produkte</span></div></div>
+      </div>
+    </section>
+
+
+    <footer>
+      <p>© 2025 2do.shop — Was du im Leben gemacht haben solltest. | <a href="/impressum.html">Impressum</a> | <a href="/datenschutz.html">Datenschutz</a></p>
+      <p style="font-size: 0.85rem; margin-top: 0.5rem; color: #666;">*Affiliate-Links: Wenn du über unsere Links kaufst, unterstützt du uns — ohne Mehrkosten für dich.</p>
+    </footer>
+
+  </main>
+
+  <script>
+    window.skillProducts = {
+  "46-55-2": [
+    {
+      "name": "1200 Bambus Wattestäbchen (6×200 Stk.), 100% plastikfrei",
+      "asin": "B07RZQR91Z",
+      "link": "https://www.amazon.de/dp/B07RZQR91Z?tag=shops2go-21"
+    },
+    {
+      "name": "SMYLE Sonic Elektrobürstenaufsatz Bambus, 4 Stk.",
+      "asin": "B0DVTHF54Z",
+      "link": "https://www.amazon.de/dp/B0DVTHF54Z?tag=shops2go-21"
+    },
+    {
+      "name": "WENKO Baderost Indoor & Outdoor Bambus",
+      "asin": "B07PG3M18Y",
+      "link": "https://www.amazon.de/dp/B07PG3M18Y?tag=shops2go-21"
+    },
+    {
+      "name": "LARHN Schneidebrett Holz 3er Set, Bambus",
+      "asin": "B07K1Y86KN",
+      "link": "https://www.amazon.de/dp/B07K1Y86KN?tag=shops2go-21"
+    },
+    {
+      "name": "ZWILLING Schneidebrett mit Saftrille, Massives Bambus-Holz",
+      "asin": "B000XRVUI6",
+      "link": "https://www.amazon.de/dp/B000XRVUI6?tag=shops2go-21"
+    }
+  ],
+  "36-45-4": [
+    {
+      "name": "BREADLYST® Rattan Gärkörbchen Set – 23 cm + Zubehör",
+      "asin": "B0CFJNWRNQ",
+      "link": "https://www.amazon.de/dp/B0CFJNWRNQ?tag=shops2go-21"
+    },
+    {
+      "name": "KRUSTENZAUBER Brotbacktopf mit Deckel + Gärkorb 26 cm",
+      "asin": "B0B3JKJC9J",
+      "link": "https://www.amazon.de/dp/B0B3JKJC9J?tag=shops2go-21"
+    },
+    {
+      "name": "KRUSTENZAUBER Brotbackform mit Deckel, 28 cm Gusseisen",
+      "asin": "B0B219NCST",
+      "link": "https://www.amazon.de/dp/B0B219NCST?tag=shops2go-21"
+    },
+    {
+      "name": "KRUSTENZAUBER Sauerteig Starter Set mit Gärkorb + Gärglas",
+      "asin": "B0DWZD6SRC",
+      "link": "https://www.amazon.de/dp/B0DWZD6SRC?tag=shops2go-21"
+    },
+    {
+      "name": "KRUSTENZAUBER Gusseisen Topf Brot Backen im XXL-Set",
+      "asin": "B0F3JPM3TH",
+      "link": "https://www.amazon.de/dp/B0F3JPM3TH?tag=shops2go-21"
+    },
+    {
+      "name": "Yolb Sauerteig Brotbacktopf – Gusseisen Topf mit Deckel",
+      "asin": "B0FGD97LJ8",
+      "link": "https://www.amazon.de/dp/B0FGD97LJ8?tag=shops2go-21"
+    }
+  ],
+  "18-25-5": [
+    {
+      "name": "ERFOLGREICH HEIMWERKEN – do it yourself!",
+      "asin": "B09WQ4Z5LH",
+      "link": "https://www.amazon.de/dp/B09WQ4Z5LH?tag=shops2go-21"
+    },
+    {
+      "name": "Saker Hobel-Set Holzbearbeitung",
+      "asin": "B09NPSWWH7",
+      "link": "https://www.amazon.de/dp/B09NPSWWH7?tag=shops2go-21"
+    },
+    {
+      "name": "Möbelbau: Grundlagen, Konstruktionen, Tricks & Kniffe",
+      "asin": "3866309627",
+      "link": "https://www.amazon.de/dp/3866309627?tag=shops2go-21"
+    },
+    {
+      "name": "Leatherman Bond Multi-Tool 14 Werkzeuge",
+      "asin": "B094RH9JMQ",
+      "link": "https://www.amazon.de/dp/B094RH9JMQ?tag=shops2go-21"
+    },
+    {
+      "name": "MASKO Werkzeugkoffer 1400-teilig",
+      "asin": "B0FJMSSD7W",
+      "link": "https://www.amazon.de/dp/B0FJMSSD7W?tag=shops2go-21"
+    },
+    {
+      "name": "Holzbearbeitung für Anfänger: Das ultimative Handbuch",
+      "asin": "B0GQM5GDSX",
+      "link": "https://www.amazon.de/dp/B0GQM5GDSX?tag=shops2go-21"
+    },
+    {
+      "name": "Woodworks: Sitzbank, Couchtisch und mehr — Buch",
+      "asin": "B0BM4RT2P2",
+      "link": "https://www.amazon.de/dp/B0BM4RT2P2?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-kalligrafie": [
+    {
+      "name": "Faber-Castell Pitt Artist Pen Calligraphy",
+      "asin": "B086XK6WHP",
+      "link": "https://www.amazon.de/dp/B086XK6WHP?tag=shops2go-21"
+    },
+    {
+      "name": "Herlitz Calligraphy Füllhalter-Set",
+      "asin": "B000S5N5TU",
+      "link": "https://www.amazon.de/dp/B000S5N5TU?tag=shops2go-21"
+    },
+    {
+      "name": "Online Calli.Brush Brush-Pens",
+      "asin": "B00UW97700",
+      "link": "https://www.amazon.de/dp/B00UW97700?tag=shops2go-21"
+    }
+  ],
+  "18-25-2": [
+    {
+      "name": "Python Programmieren für Einsteiger",
+      "asin": "B0GTYVG43S",
+      "link": "https://www.amazon.de/dp/B0GTYVG43S?tag=shops2go-21"
+    },
+    {
+      "name": "Programmieren lernen für Dummies",
+      "asin": "B0964JFRJ5",
+      "link": "https://www.amazon.de/dp/B0964JFRJ5?tag=shops2go-21"
+    },
+    {
+      "name": "Python lernen – kurz & gut (O'Reilly)",
+      "asin": "B0C46XLPRM",
+      "link": "https://www.amazon.de/dp/B0C46XLPRM?tag=shops2go-21"
+    },
+    {
+      "name": "Python: Der Grundkurs – Michael Kofler",
+      "asin": "B0CYVLJ66R",
+      "link": "https://www.amazon.de/dp/B0CYVLJ66R?tag=shops2go-21"
+    },
+    {
+      "name": "ELEGOO UNO R3 Basic Starter Kit",
+      "asin": "B01DGD2GAO",
+      "link": "https://www.amazon.de/dp/B01DGD2GAO?tag=shops2go-21"
+    },
+    {
+      "name": "ELEGOO UNO R3 Ultimate Starter Kit",
+      "asin": "B01IHCCKKK",
+      "link": "https://www.amazon.de/dp/B01IHCCKKK?tag=shops2go-21"
+    },
+    {
+      "name": "GeeekPi Starter Kit für Raspberry Pi 5 8GB",
+      "asin": "B0CQV792B1",
+      "link": "https://www.amazon.de/dp/B0CQV792B1?tag=shops2go-21"
+    },
+    {
+      "name": "Python für Einsteiger Buch",
+      "asin": "B08P2FZCJG",
+      "link": "https://www.amazon.de/dp/B08P2FZCJG?tag=shops2go-21"
+    }
+  ],
+  "55-3": [
+    {
+      "name": "Relaxdays Vogelhaus zum Aufhängen, Vogelhäuschen Garten",
+      "asin": "B07VZFGTNG",
+      "link": "https://www.amazon.de/dp/B07VZFGTNG?tag=shops2go-21"
+    },
+    {
+      "name": "GARTENETAGE XXL Insektenchalet/Bienenhotel Groß",
+      "asin": "B09SV7XVDT",
+      "link": "https://www.amazon.de/dp/B09SV7XVDT?tag=shops2go-21"
+    },
+    {
+      "name": "ERDENFREUND® Wildbienenhotel regenfeste Graspapier",
+      "asin": "B0B2M8BNRB",
+      "link": "https://www.amazon.de/dp/B0B2M8BNRB?tag=shops2go-21"
+    },
+    {
+      "name": "moses. Blatt & Blüte Schmetterlingshotel, wetterfestes Schmetterlingshaus",
+      "asin": "B0BV726HL3",
+      "link": "https://www.amazon.de/dp/B0BV726HL3?tag=shops2go-21"
+    },
+    {
+      "name": "Navaris Insektenhotel aus Holz wetterfest",
+      "asin": "B07TZ433GC",
+      "link": "https://www.amazon.de/dp/B07TZ433GC?tag=shops2go-21"
+    },
+    {
+      "name": "CULT at home Insektenhotel groß XXL stehend mit Erdspieß",
+      "asin": "B09KNCD6G1",
+      "link": "https://www.amazon.de/dp/B09KNCD6G1?tag=shops2go-21"
+    },
+    {
+      "name": "Monsterzeug Insektenhotel mit Vogelschutz, Nistkasten",
+      "asin": "B07FKS3QZG",
+      "link": "https://www.amazon.de/dp/B07FKS3QZG?tag=shops2go-21"
+    },
+    {
+      "name": "LUXUS-INSEKTENHOTELS \"Maja II\" Design Wildbienenhotel",
+      "asin": "B017XA2CXM",
+      "link": "https://www.amazon.de/dp/B017XA2CXM?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-reaktion": [
+    {
+      "name": "SKLZ Reaction Ball",
+      "asin": "B0042XALSC",
+      "link": "https://www.amazon.de/dp/B0042XALSC?tag=shops2go-21"
+    },
+    {
+      "name": "Reflexball Set 6 Stück",
+      "asin": "B07CXL4167",
+      "link": "https://www.amazon.de/dp/B07CXL4167?tag=shops2go-21"
+    },
+    {
+      "name": "Llera Sport Skill Ball",
+      "asin": "B071998NK3",
+      "link": "https://www.amazon.de/dp/B071998NK3?tag=shops2go-21"
+    }
+  ],
+  "26-35-3": [
+    {
+      "name": "LEADERSHIP 1x1 — Die 7 goldenen Führungsprinzipien",
+      "asin": "B09VWP42VJ",
+      "link": "https://www.amazon.de/dp/B09VWP42VJ?tag=shops2go-21"
+    },
+    {
+      "name": "High Vibration Leadership: Führung neu denken",
+      "asin": "B0GSV9GWBK",
+      "link": "https://www.amazon.de/dp/B0GSV9GWBK?tag=shops2go-21"
+    },
+    {
+      "name": "Coopers Welt — Leadership für eine neue Zeit",
+      "asin": "B01IQ2J6TE",
+      "link": "https://www.amazon.de/dp/B01IQ2J6TE?tag=shops2go-21"
+    },
+    {
+      "name": "Mitarbeiter finden, einarbeiten und führen",
+      "asin": "B0BS9YGVQN",
+      "link": "https://www.amazon.de/dp/B0BS9YGVQN?tag=shops2go-21"
+    },
+    {
+      "name": "Souverän als Führungskraft: das Team motivieren",
+      "asin": "B0CM9VJ9TF",
+      "link": "https://www.amazon.de/dp/B0CM9VJ9TF?tag=shops2go-21"
+    },
+    {
+      "name": "Führung in Krisensituationen",
+      "asin": "B0B18M8QVP",
+      "link": "https://www.amazon.de/dp/B0B18M8QVP?tag=shops2go-21"
+    },
+    {
+      "name": "Remote Positive Leadership",
+      "asin": "B0CP5VBRGG",
+      "link": "https://www.amazon.de/dp/B0CP5VBRGG?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-werkzeug": [
+    {
+      "name": "Dremel 3000-15",
+      "asin": "B0073R1IZ4",
+      "link": "https://www.amazon.de/dp/B0073R1IZ4?tag=shops2go-21"
+    },
+    {
+      "name": "ENVENTOR 300W Oszillationswerkzeug",
+      "asin": "B0C2P5FV6H",
+      "link": "https://www.amazon.de/dp/B0C2P5FV6H?tag=shops2go-21"
+    },
+    {
+      "name": "Multifunktionswerkzeug Set",
+      "asin": "B0BWQYSJXP",
+      "link": "https://www.amazon.de/dp/B0BWQYSJXP?tag=shops2go-21"
+    }
+  ],
+  "36-45-1": [
+    {
+      "name": "Kynup Gartenwerkzeug-Set 7-teilig",
+      "asin": "B0D48N5Q1G",
+      "link": "https://www.amazon.de/dp/B0D48N5Q1G?tag=shops2go-21"
+    },
+    {
+      "name": "Klein Garten Werkzeug, 3 Stück",
+      "asin": "B0DLN189HZ",
+      "link": "https://www.amazon.de/dp/B0DLN189HZ?tag=shops2go-21"
+    },
+    {
+      "name": "Plantura Bio-Balkongemüse Samen-Set",
+      "asin": "B09VJ38F1G",
+      "link": "https://www.amazon.de/dp/B09VJ38F1G?tag=shops2go-21"
+    },
+    {
+      "name": "Kräuter Samen Set - 14 Kräutersamen Sorten",
+      "asin": "B0CKF9LQC3",
+      "link": "https://www.amazon.de/dp/B0CKF9LQC3?tag=shops2go-21"
+    },
+    {
+      "name": "KESSER® Gartenwerkzeug Set 10-teilig",
+      "asin": "B0F3Y1HQGR",
+      "link": "https://www.amazon.de/dp/B0F3Y1HQGR?tag=shops2go-21"
+    },
+    {
+      "name": "Gardena combisystem-Kleingeräte Set",
+      "asin": "B07NX56W1G",
+      "link": "https://www.amazon.de/dp/B07NX56W1G?tag=shops2go-21"
+    },
+    {
+      "name": "WORKPRO 7 in 1 Gartenwerkzeug Set",
+      "asin": "B07T7LN3MN",
+      "link": "https://www.amazon.de/dp/B07T7LN3MN?tag=shops2go-21"
+    },
+    {
+      "name": "Fiskars Gärtnerspaten für harte, steinige Böden",
+      "asin": "B00GHDGZM6",
+      "link": "https://www.amazon.de/dp/B00GHDGZM6?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-greifen": [
+    {
+      "name": "Bright Starts Oball Classic",
+      "asin": "B00ZRD99C0",
+      "link": "https://www.amazon.de/dp/B00ZRD99C0?tag=shops2go-21"
+    },
+    {
+      "name": "HABA 2631 Greifling Glücksbringer",
+      "asin": "B005HAW5VA",
+      "link": "https://www.amazon.de/dp/B005HAW5VA?tag=shops2go-21"
+    },
+    {
+      "name": "Eichhorn Baby Greifling 3D",
+      "asin": "B0GTQZ7BFN",
+      "link": "https://www.amazon.de/dp/B0GTQZ7BFN?tag=shops2go-21"
+    }
+  ],
+  "18-25-7": [
+    {
+      "name": "Shuttle Art 54-teiliges Acrylfarben Set mit Staffelei",
+      "asin": "B0CGLHVV7L",
+      "link": "https://www.amazon.de/dp/B0CGLHVV7L?tag=shops2go-21"
+    },
+    {
+      "name": "Artina 30-tlg Malset mit Kofferstaffelei Acrylfarben",
+      "asin": "B0774XWL23",
+      "link": "https://www.amazon.de/dp/B0774XWL23?tag=shops2go-21"
+    },
+    {
+      "name": "VISWIN professionelles All-in-One Malset",
+      "asin": "B092J4CKH7",
+      "link": "https://www.amazon.de/dp/B092J4CKH7?tag=shops2go-21"
+    },
+    {
+      "name": "Zenacolor Malkoffer XXL Holzkoffer 150-teilig",
+      "asin": "B08XLZ15Q5",
+      "link": "https://www.amazon.de/dp/B08XLZ15Q5?tag=shops2go-21"
+    },
+    {
+      "name": "Faber-Castell Colour Grip Buntstifte Set 48 Stück",
+      "asin": "B01N4E75F1",
+      "link": "https://www.amazon.de/dp/B01N4E75F1?tag=shops2go-21"
+    },
+    {
+      "name": "Sonnet Aquarellfarben Set 16 halbe Näpfchen",
+      "asin": "B08B41H627",
+      "link": "https://www.amazon.de/dp/B08B41H627?tag=shops2go-21"
+    },
+    {
+      "name": "Ohuhu Skizzenbuch Mixed-Media-Block 200g/m²",
+      "asin": "B092CXZL47",
+      "link": "https://www.amazon.de/dp/B092CXZL47?tag=shops2go-21"
+    }
+  ],
+  "36-45-2": [
+    {
+      "name": "Vihado Magnesium Complex, 180 Kapseln",
+      "asin": "B0GHP6NFCV",
+      "link": "https://www.amazon.de/dp/B0GHP6NFCV?tag=shops2go-21"
+    },
+    {
+      "name": "Vitamaze High-Dose Multivitamin A-Z, 120 Kapseln",
+      "asin": "B07F9WDKXK",
+      "link": "https://www.amazon.de/dp/B07F9WDKXK?tag=shops2go-21"
+    },
+    {
+      "name": "tetesept Bäder Geschenkset Bademomente",
+      "asin": "B00P7XF3K2",
+      "link": "https://www.amazon.de/dp/B00P7XF3K2?tag=shops2go-21"
+    },
+    {
+      "name": "Centrum 50+ Multivitamin, 60 Tabletten",
+      "asin": "B07N7JSBS9",
+      "link": "https://www.amazon.de/dp/B07N7JSBS9?tag=shops2go-21"
+    },
+    {
+      "name": "RENPHO Nackenmassagegerät mit Wärme",
+      "asin": "B07PQRWQD9",
+      "link": "https://www.amazon.de/dp/B07PQRWQD9?tag=shops2go-21"
+    },
+    {
+      "name": "Beurer MG 330 Shiatsu-Massagesitzauflage",
+      "asin": "B0BVMKFKJN",
+      "link": "https://www.amazon.de/dp/B0BVMKFKJN?tag=shops2go-21"
+    }
+  ],
+  "55-2": [
+    {
+      "name": "Awesocrafts 5D-Diamant-Malerei-Set Erwachsene/Kinder, Eule/Traumfänger",
+      "asin": "B08MVMFKC1",
+      "link": "https://www.amazon.de/dp/B08MVMFKC1?tag=shops2go-21"
+    },
+    {
+      "name": "DIY 5D Diamant Malen nach Zahlen Kit Erwachsene",
+      "asin": "B07PQMJYR8",
+      "link": "https://www.amazon.de/dp/B07PQMJYR8?tag=shops2go-21"
+    },
+    {
+      "name": "Sonnet Aquarellfarben Set 16 halbe Näpfchen",
+      "asin": "B08B41H627",
+      "link": "https://www.amazon.de/dp/B08B41H627?tag=shops2go-21"
+    },
+    {
+      "name": "Surcotto Kalligraphie Stifte Set 6 Teile für Anfänger",
+      "asin": "B08S2PHXCC",
+      "link": "https://www.amazon.de/dp/B08S2PHXCC?tag=shops2go-21"
+    }
+  ],
+  "36-45-3": [
+    {
+      "name": "Wer fragt, der führt! - Systemische Fragetechniken",
+      "asin": "B0CP9ZBYVK",
+      "link": "https://www.amazon.de/dp/B0CP9ZBYVK?tag=shops2go-21"
+    },
+    {
+      "name": "Plötzlich Chef: Praktische Werkzeuge und Strategien",
+      "asin": "3910385265",
+      "link": "https://www.amazon.de/dp/3910385265?tag=shops2go-21"
+    },
+    {
+      "name": "Systemisches Coaching für Führungskräfte",
+      "asin": "B0CHLB5DJH",
+      "link": "https://www.amazon.de/dp/B0CHLB5DJH?tag=shops2go-21"
+    },
+    {
+      "name": "Agil und erfolgreich führen: Neue Leadership-Kompetenzen",
+      "asin": "B09XVLTJ6N",
+      "link": "https://www.amazon.de/dp/B09XVLTJ6N?tag=shops2go-21"
+    },
+    {
+      "name": "Führungskraft: Das große Leadership Buch",
+      "asin": "B091CS8T1P",
+      "link": "https://www.amazon.de/dp/B091CS8T1P?tag=shops2go-21"
+    }
+  ],
+  "18-25-4": [
+    {
+      "name": "Cash-Flow Check: Finanzen für Azubi & Student",
+      "asin": "B0H6Y36DYR",
+      "link": "https://www.amazon.de/dp/B0H6Y36DYR?tag=shops2go-21"
+    },
+    {
+      "name": "Börse für Einsteiger",
+      "asin": "B0BW27P8SY",
+      "link": "https://www.amazon.de/dp/B0BW27P8SY?tag=shops2go-21"
+    },
+    {
+      "name": "ETFs von Anfang bis Ende",
+      "asin": "B0DLLB46WF",
+      "link": "https://www.amazon.de/dp/B0DLLB46WF?tag=shops2go-21"
+    },
+    {
+      "name": "BIROYAL 12 Monate Budget Planner Deutsch 2026",
+      "asin": "B0FHPZJSDH",
+      "link": "https://www.amazon.de/dp/B0FHPZJSDH?tag=shops2go-21"
+    },
+    {
+      "name": "Erfolgreich in Aktien & Indexfonds investieren",
+      "asin": "B08F6RC6M5",
+      "link": "https://www.amazon.de/dp/B08F6RC6M5?tag=shops2go-21"
+    },
+    {
+      "name": "Das einzige Buch, das Du über Finanzen lesen solltest",
+      "asin": "3548065848",
+      "link": "https://www.amazon.de/dp/3548065848?tag=shops2go-21"
+    },
+    {
+      "name": "Aktien – Das Buch für Einsteiger",
+      "asin": "B08NYDTWNJ",
+      "link": "https://www.amazon.de/dp/B08NYDTWNJ?tag=shops2go-21"
+    },
+    {
+      "name": "ETFs für Einsteiger: Das große ETF Buch",
+      "asin": "B08NF9WBQF",
+      "link": "https://www.amazon.de/dp/B08NF9WBQF?tag=shops2go-21"
+    }
+  ],
+  "26-35-1": [
+    {
+      "name": "So schön ist kündigen!: Anleitung zum Weg in die Selbstständigkeit",
+      "asin": "B0DHMXF69R",
+      "link": "https://www.amazon.de/dp/B0DHMXF69R?tag=shops2go-21"
+    },
+    {
+      "name": "Erfolgreiches Self-Publishing mit Amazon KDP",
+      "asin": "B08TYSB8WG",
+      "link": "https://www.amazon.de/dp/B08TYSB8WG?tag=shops2go-21"
+    },
+    {
+      "name": "Die 4-Stunden-Woche: Mehr Zeit, mehr Geld, mehr Leben",
+      "asin": "B001O3AN7W",
+      "link": "https://www.amazon.de/dp/B001O3AN7W?tag=shops2go-21"
+    },
+    {
+      "name": "Projektmanagement: Systematisch zum Erfolg",
+      "asin": "B09243C6ZK",
+      "link": "https://www.amazon.de/dp/B09243C6ZK?tag=shops2go-21"
+    },
+    {
+      "name": "The Pumpkin Plan: A Simple Strategy to Grow a Remarkable Business",
+      "asin": "B00D9T9OM4",
+      "link": "https://www.amazon.de/dp/B00D9T9OM4?tag=shops2go-21"
+    },
+    {
+      "name": "Kopf schlägt Kapital: Die ganz andere Art, ein Unternehmen zu gründen",
+      "asin": "B00AAB9848",
+      "link": "https://www.amazon.de/dp/B00AAB9848?tag=shops2go-21"
+    }
+  ],
+  "55-1": [
+    {
+      "name": "Retekess TA007 Kabellose Kopfhörer, Funkkopfhörer TV",
+      "asin": "B0CCJ63SL5",
+      "link": "https://www.amazon.de/dp/B0CCJ63SL5?tag=shops2go-21"
+    },
+    {
+      "name": "PRUNUS J-666 FM/AM/SW Retro Radio mit Bluetooth",
+      "asin": "B0FJY3KFG5",
+      "link": "https://www.amazon.de/dp/B0FJY3KFG5?tag=shops2go-21"
+    },
+    {
+      "name": "MANTO 100W GaN USB C Ladegerät mit LED Anzeige",
+      "asin": "B0BRKWCBWG",
+      "link": "https://www.amazon.de/dp/B0BRKWCBWG?tag=shops2go-21"
+    },
+    {
+      "name": "Kodak 7 Zoll Digitale Bilderrahmen",
+      "asin": "B0D9LGWJGP",
+      "link": "https://www.amazon.de/dp/B0D9LGWJGP?tag=shops2go-21"
+    },
+    {
+      "name": "BLAVOR Solar Powerbank 20000mAh",
+      "asin": "B0C9LYGG1D",
+      "link": "https://www.amazon.de/dp/B0C9LYGG1D?tag=shops2go-21"
+    },
+    {
+      "name": "TECLAST Tablet 10 Zoll 120Hz Display, Android 16",
+      "asin": "B09FL2971Z",
+      "link": "https://www.amazon.de/dp/B09FL2971Z?tag=shops2go-21"
+    },
+    {
+      "name": "Xiaomi Redmi Pad SE",
+      "asin": "B0CDLVCQ5C",
+      "link": "https://www.amazon.de/dp/B0CDLVCQ5C?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-balancieren": [
+    {
+      "name": "GONGE River Stones",
+      "asin": "B000ANIVRG",
+      "link": "https://www.amazon.de/dp/B000ANIVRG?tag=shops2go-21"
+    },
+    {
+      "name": "Majestic Sport Balanciersteine 5er",
+      "asin": "B0G4WKS9CG",
+      "link": "https://www.amazon.de/dp/B0G4WKS9CG?tag=shops2go-21"
+    },
+    {
+      "name": "Nene Toys Holz-Steckspiel ab 2 J.",
+      "asin": "B0CZRXF94G",
+      "link": "https://www.amazon.de/dp/B0CZRXF94G?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-finger": [
+    {
+      "name": "D'Addario Varigrip Handtrainer",
+      "asin": "B001OCGGEM",
+      "link": "https://www.amazon.de/dp/B001OCGGEM?tag=shops2go-21"
+    },
+    {
+      "name": "4er Fingertrainer Set",
+      "asin": "B0GX1DVZ11",
+      "link": "https://www.amazon.de/dp/B0GX1DVZ11?tag=shops2go-21"
+    },
+    {
+      "name": "FitBeast Handtrainer",
+      "asin": "B0CTK9LQFV",
+      "link": "https://www.amazon.de/dp/B0CTK9LQFV?tag=shops2go-21"
+    }
+  ],
+  "26-35-7": [
+    {
+      "name": "Programmieren lernen mit ChatGPT: Einführung in Python & Java",
+      "asin": "B0DJ8KGWPX",
+      "link": "https://www.amazon.de/dp/B0DJ8KGWPX?tag=shops2go-21"
+    },
+    {
+      "name": "Programmierprojekte für Einsteiger: 25 Projekte zum sofort Loslegen",
+      "asin": "B0D3YBWZN1",
+      "link": "https://www.amazon.de/dp/B0D3YBWZN1?tag=shops2go-21"
+    },
+    {
+      "name": "Python für Einsteiger: Der ultimative Schnellkurs",
+      "asin": "B0DDXSJD8X",
+      "link": "https://www.amazon.de/dp/B0DDXSJD8X?tag=shops2go-21"
+    },
+    {
+      "name": "Clean Code: A Handbook of Agile Software Craftsmanship",
+      "asin": "B08X8SDSZ5",
+      "link": "https://www.amazon.de/dp/B08X8SDSZ5?tag=shops2go-21"
+    },
+    {
+      "name": "Miuzei Elektronik Starter Kit",
+      "asin": "B08TLTHWD7",
+      "link": "https://www.amazon.de/dp/B08TLTHWD7?tag=shops2go-21"
+    },
+    {
+      "name": "Python meistern Übungsbuch",
+      "asin": "B0F61SNK64",
+      "link": "https://www.amazon.de/dp/B0F61SNK64?tag=shops2go-21"
+    },
+    {
+      "name": "Python 3: Das umfassende Handbuch",
+      "asin": "3836236338",
+      "link": "https://www.amazon.de/dp/3836236338?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-pinzette": [
+    {
+      "name": "Learning Resources Steggy der Dino",
+      "asin": "B081PD1F62",
+      "link": "https://www.amazon.de/dp/B081PD1F62?tag=shops2go-21"
+    },
+    {
+      "name": "HaoVrisn Montessori Feinmotorik Holz",
+      "asin": "B0GH744T6R",
+      "link": "https://www.amazon.de/dp/B0GH744T6R?tag=shops2go-21"
+    },
+    {
+      "name": "ZOOI Busy Board Montessori",
+      "asin": "B0DSKBWD8Z",
+      "link": "https://www.amazon.de/dp/B0DSKBWD8Z?tag=shops2go-21"
+    }
+  ],
+  "26-35-5": [
+    {
+      "name": "Vierundzwanzigsieben kochen: Mit über 100 Rezepten — Tim Mälzer",
+      "asin": "B0BZ4MPPRG",
+      "link": "https://www.amazon.de/dp/B0BZ4MPPRG?tag=shops2go-21"
+    },
+    {
+      "name": "Jetzt koche ich!: Das coolste Kochbuch für Teenager und Anfänger",
+      "asin": "B0CCTY29J5",
+      "link": "https://www.amazon.de/dp/B0CCTY29J5?tag=shops2go-21"
+    },
+    {
+      "name": "Kochbuch für Anfänger mit 5 Zutaten – Emelie Arne",
+      "asin": "B0DFWRH4Z6",
+      "link": "https://www.amazon.de/dp/B0DFWRH4Z6?tag=shops2go-21"
+    },
+    {
+      "name": "Das große Abnehm-Kochbuch 2025: 280 schnelle und gesunde Rezepte",
+      "asin": "B0DQ3QYRYP",
+      "link": "https://www.amazon.de/dp/B0DQ3QYRYP?tag=shops2go-21"
+    },
+    {
+      "name": "The Taste — Das Siegerbuch 2025/2026",
+      "asin": "B0F66QZHGF",
+      "link": "https://www.amazon.de/dp/B0F66QZHGF?tag=shops2go-21"
+    },
+    {
+      "name": "Das grosse Buch vom Kochen. – Essen und Trinken",
+      "asin": "B0026CG5GS",
+      "link": "https://www.amazon.de/dp/B0026CG5GS?tag=shops2go-21"
+    },
+    {
+      "name": "365 Low-Carb-Rezepte: Das Kochbuch zum Abnehmen",
+      "asin": "3625181398",
+      "link": "https://www.amazon.de/dp/3625181398?tag=shops2go-21"
+    }
+  ],
+  "26-35-4": [
+    {
+      "name": "Der Weg zur finanziellen Freiheit – Bodo Schäfer",
+      "asin": "B08WR748T8",
+      "link": "https://www.amazon.de/dp/B08WR748T8?tag=shops2go-21"
+    },
+    {
+      "name": "The Psychology of Money – Morgan Housel",
+      "asin": "B091CFFXHX",
+      "link": "https://www.amazon.de/dp/B091CFFXHX?tag=shops2go-21"
+    },
+    {
+      "name": "Finanzen ganz einfach – Finanztip-Prinzip",
+      "asin": "3426563010",
+      "link": "https://www.amazon.de/dp/3426563010?tag=shops2go-21"
+    },
+    {
+      "name": "Aktien & ETF Komplettset für Einsteiger",
+      "asin": "391156905X",
+      "link": "https://www.amazon.de/dp/391156905X?tag=shops2go-21"
+    },
+    {
+      "name": "Aktien – Das Buch für Einsteiger",
+      "asin": "B08NYDTWNJ",
+      "link": "https://www.amazon.de/dp/B08NYDTWNJ?tag=shops2go-21"
+    },
+    {
+      "name": "Das einzige Buch, das Du über Finanzen lesen solltest",
+      "asin": "3548065848",
+      "link": "https://www.amazon.de/dp/3548065848?tag=shops2go-21"
+    },
+    {
+      "name": "ETFs für Einsteiger – Das verständliche Grundlagenbuch",
+      "asin": "B09NRR7LQ7",
+      "link": "https://www.amazon.de/dp/B09NRR7LQ7?tag=shops2go-21"
+    },
+    {
+      "name": "Das kleine Handbuch des vernünftigen Investierens",
+      "asin": "3959721323",
+      "link": "https://www.amazon.de/dp/3959721323?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-werfen-fangen": [
+    {
+      "name": "Schildkröt Neopren Klettball Set",
+      "asin": "B01N7PLCDW",
+      "link": "https://www.amazon.de/dp/B01N7PLCDW?tag=shops2go-21"
+    }
+  ],
+  "26-35-2": [
+    {
+      "name": "Bogenbau 1: Langbogen – Matthias Wiltschko",
+      "asin": "B07JLHYV4M",
+      "link": "https://www.amazon.de/dp/B07JLHYV4M?tag=shops2go-21"
+    },
+    {
+      "name": "Drechseln für Einsteiger: Grundlagen Holzwerken",
+      "asin": "B0C152T6CP",
+      "link": "https://www.amazon.de/dp/B0C152T6CP?tag=shops2go-21"
+    },
+    {
+      "name": "Das große Buch der Holzarbeiten – Chris Simpson",
+      "asin": "3833157798",
+      "link": "https://www.amazon.de/dp/3833157798?tag=shops2go-21"
+    },
+    {
+      "name": "Praxishandbuch Holzwerken für Einsteiger",
+      "asin": "B0D7654321",
+      "link": "https://www.amazon.de/dp/B0D7654321?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-hammer": [
+    {
+      "name": "Hape Pound & Sigikid",
+      "asin": "B00712O2D6",
+      "link": "https://www.amazon.de/dp/B00712O2D6?tag=shops2go-21"
+    },
+    {
+      "name": "howa Kinderwerkbank Holz",
+      "asin": "B09M4BJWQ4",
+      "link": "https://www.amazon.de/dp/B09M4BJWQ4?tag=shops2go-21"
+    },
+    {
+      "name": "Eichhorn Klopfbank",
+      "asin": "B0G5Z9Y728",
+      "link": "https://www.amazon.de/dp/B0G5Z9Y728?tag=shops2go-21"
+    }
+  ],
+  "18-25-8": [
+    {
+      "name": "Klein Garten Werkzeug, 3 Stück",
+      "asin": "B0DLN189HZ",
+      "link": "https://www.amazon.de/dp/B0DLN189HZ?tag=shops2go-21"
+    },
+    {
+      "name": "BIO Kräuter Samen Set",
+      "asin": "B085JNL67W",
+      "link": "https://www.amazon.de/dp/B085JNL67W?tag=shops2go-21"
+    },
+    {
+      "name": "Grenebo Gartenwerkzeug Set 9 Stück",
+      "asin": "B09F9C3KFS",
+      "link": "https://www.amazon.de/dp/B09F9C3KFS?tag=shops2go-21"
+    },
+    {
+      "name": "CULTIVEA Bonsai Starter Kit 6 Samen",
+      "asin": "B08BTZK7CT",
+      "link": "https://www.amazon.de/dp/B08BTZK7CT?tag=shops2go-21"
+    },
+    {
+      "name": "Gärtnern für Anfänger: Obst, Gemüse und Kräuter",
+      "asin": "3897368706",
+      "link": "https://www.amazon.de/dp/3897368706?tag=shops2go-21"
+    },
+    {
+      "name": "BonPrime Bonsai Starter Kit Beginner-Friendly",
+      "asin": "B09RFCVZ7M",
+      "link": "https://www.amazon.de/dp/B09RFCVZ7M?tag=shops2go-21"
+    },
+    {
+      "name": "KESSER® Gartenwerkzeug Set 10-teilig",
+      "asin": "B0F3Y1HQGR",
+      "link": "https://www.amazon.de/dp/B0F3Y1HQGR?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-rhythmus": [
+    {
+      "name": "Cascha Sopran Ukulele Set",
+      "asin": "B06X6LYZ7B",
+      "link": "https://www.amazon.de/dp/B06X6LYZ7B?tag=shops2go-21"
+    },
+    {
+      "name": "Martin Smith Sopran Ukulele",
+      "asin": "B00413PFDE",
+      "link": "https://www.amazon.de/dp/B00413PFDE?tag=shops2go-21"
+    },
+    {
+      "name": "Martin Smith Ukulele + Tasche",
+      "asin": "B000GG4B1C",
+      "link": "https://www.amazon.de/dp/B000GG4B1C?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-werfen": [
+    {
+      "name": "Schildkröt Neopren Klettball Set",
+      "asin": "B01N7PLCDW",
+      "link": "https://www.amazon.de/dp/B01N7PLCDW?tag=shops2go-21"
+    },
+    {
+      "name": "Idena Fangballspiel XXL",
+      "asin": "B0DYV3WDF4",
+      "link": "https://www.amazon.de/dp/B0DYV3WDF4?tag=shops2go-21"
+    },
+    {
+      "name": "Wurf- & Fangspiel Kinder",
+      "asin": "B09HQT8586",
+      "link": "https://www.amazon.de/dp/B09HQT8586?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-loslassen": [
+    {
+      "name": "Fisher-Price Gigantische Farbring-Pyramide",
+      "asin": "B07PFYWVDQ",
+      "link": "https://www.amazon.de/dp/B07PFYWVDQ?tag=shops2go-21"
+    }
+  ],
+  "18-25-3": [
+    {
+      "name": "Fotografie to go: 99 Tipps für bessere Fotos",
+      "asin": "B0D14JX61P",
+      "link": "https://www.amazon.de/dp/B0D14JX61P?tag=shops2go-21"
+    },
+    {
+      "name": "Digitale Fotografie für Einsteiger — Stephanie Roller",
+      "asin": "B01MTII2D1",
+      "link": "https://www.amazon.de/dp/B01MTII2D1?tag=shops2go-21"
+    },
+    {
+      "name": "BAGSMART Kameratasche Spiegelreflex SLR",
+      "asin": "B01JICUW30",
+      "link": "https://www.amazon.de/dp/B01JICUW30?tag=shops2go-21"
+    },
+    {
+      "name": "Fotografieren!: Der Fotokurs zum Mitmachen",
+      "asin": "3842102062",
+      "link": "https://www.amazon.de/dp/3842102062?tag=shops2go-21"
+    },
+    {
+      "name": "Vanguard Vesta 233AP Einsteiger-Stativ",
+      "asin": "B07P977KWF",
+      "link": "https://www.amazon.de/dp/B07P977KWF?tag=shops2go-21"
+    },
+    {
+      "name": "Victiv 182 cm Aluminium Kamera-Stativ",
+      "asin": "B08ZKF1WCB",
+      "link": "https://www.amazon.de/dp/B08ZKF1WCB?tag=shops2go-21"
+    },
+    {
+      "name": "Canon EOS R50 + RF-S 18–45mm",
+      "asin": "B0BV6TXW8W",
+      "link": "https://www.amazon.de/dp/B0BV6TXW8W?tag=shops2go-21"
+    },
+    {
+      "name": "Grundlagen der Fotografie Kompakt-Buch",
+      "asin": "B0BBFLPRRJ",
+      "link": "https://www.amazon.de/dp/B0BBFLPRRJ?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-tischtennis": [
+    {
+      "name": "JOOLA Team School Set",
+      "asin": "B00140H35U",
+      "link": "https://www.amazon.de/dp/B00140H35U?tag=shops2go-21"
+    },
+    {
+      "name": "Tischtennis Set Kinder",
+      "asin": "B0BRJTRKSB",
+      "link": "https://www.amazon.de/dp/B0BRJTRKSB?tag=shops2go-21"
+    },
+    {
+      "name": "Tischtennis Komplettset",
+      "asin": "B0B8S5YWYT",
+      "link": "https://www.amazon.de/dp/B0B8S5YWYT?tag=shops2go-21"
+    }
+  ],
+  "18-25-1": [
+    {
+      "name": "POFET DIY-Lautsprecher-Kit Löt-Übungs-Kit",
+      "asin": "B0C4L9YP37",
+      "link": "https://www.amazon.de/dp/B0C4L9YP37?tag=shops2go-21"
+    },
+    {
+      "name": "ScienSta DIY Handheld Spielkonsole Löten Bausatz",
+      "asin": "B0CW33BT3T",
+      "link": "https://www.amazon.de/dp/B0CW33BT3T?tag=shops2go-21"
+    },
+    {
+      "name": "AECCN 0.8mm Bleifreies Lötdraht / Flussmittel-Set",
+      "asin": "B083DC38TZ",
+      "link": "https://www.amazon.de/dp/B083DC38TZ?tag=shops2go-21"
+    },
+    {
+      "name": "Whadda elektronischer Würfel Lötbausatz",
+      "asin": "B08M97HRNP",
+      "link": "https://www.amazon.de/dp/B08M97HRNP?tag=shops2go-21"
+    },
+    {
+      "name": "Beizkna Präzisions Lötkolben Akku Set LED",
+      "asin": "B0FQP5B965",
+      "link": "https://www.amazon.de/dp/B0FQP5B965?tag=shops2go-21"
+    },
+    {
+      "name": "Velleman Lötstation 48W mit Keramikheizelement",
+      "asin": "B0BSG3MZF3",
+      "link": "https://www.amazon.de/dp/B0BSG3MZF3?tag=shops2go-21"
+    },
+    {
+      "name": "Lytool 60W Lötstation mit Display",
+      "asin": "B0987H26KP",
+      "link": "https://www.amazon.de/dp/B0987H26KP?tag=shops2go-21"
+    },
+    {
+      "name": "Elektronik-Basteln für Dummies — Buch",
+      "asin": "B08GSBZVYD",
+      "link": "https://www.amazon.de/dp/B08GSBZVYD?tag=shops2go-21"
+    }
+  ],
+  "18-25-6": [
+    {
+      "name": "Der Quintenzirkel Für Gitarre",
+      "asin": "3980378632",
+      "link": "https://www.amazon.de/dp/3980378632?tag=shops2go-21"
+    },
+    {
+      "name": "Schule für Gitarre mit Video Anleitungen",
+      "asin": "B09LGWL64R",
+      "link": "https://www.amazon.de/dp/B09LGWL64R?tag=shops2go-21"
+    },
+    {
+      "name": "MAX SoloArt 4/4 Akustikgitarre für Anfänger",
+      "asin": "B08LH9G1X8",
+      "link": "https://www.amazon.de/dp/B08LH9G1X8?tag=shops2go-21"
+    },
+    {
+      "name": "Winzz Sopran Ukulele Starter Kit für Anfänger",
+      "asin": "B0DCN2M93K",
+      "link": "https://www.amazon.de/dp/B0DCN2M93K?tag=shops2go-21"
+    },
+    {
+      "name": "Classic Cantabile AS-851 4/4 Konzertgitarre",
+      "asin": "B003DKMVQU",
+      "link": "https://www.amazon.de/dp/B003DKMVQU?tag=shops2go-21"
+    },
+    {
+      "name": "Akustik-Gitarre Lernen: Das ultimative Gitarrenbuch",
+      "asin": "B09HFVCWYB",
+      "link": "https://www.amazon.de/dp/B09HFVCWYB?tag=shops2go-21"
+    }
+  ],
+  "46-55-1": [
+    {
+      "name": "Walhalla Rechtshilfen - So schreibe ich mein Testament",
+      "asin": "3802940997",
+      "link": "https://www.amazon.de/dp/3802940997?tag=shops2go-21"
+    },
+    {
+      "name": "Vererben und Erben - Ratgeber von Stiftung Warentest",
+      "asin": "B0B9NNCD55",
+      "link": "https://www.amazon.de/dp/B0B9NNCD55?tag=shops2go-21"
+    },
+    {
+      "name": "Richtig vererben und verschenken",
+      "asin": "B0DG5Y89X9",
+      "link": "https://www.amazon.de/dp/B0DG5Y89X9?tag=shops2go-21"
+    },
+    {
+      "name": "Immobilien verschenken und vererben - Steuer- und Erbrecht",
+      "asin": "B0CL9T4242",
+      "link": "https://www.amazon.de/dp/B0CL9T4242?tag=shops2go-21"
+    },
+    {
+      "name": "Der VorsorgePlaner: mit Checklisten, Formularen und Dokumenten",
+      "asin": "B0D98KVL63",
+      "link": "https://www.amazon.de/dp/B0D98KVL63?tag=shops2go-21"
+    },
+    {
+      "name": "Immobilie sicher vererben – Wie Sie Ihr Haus vor Pflegeheimkosten schützen",
+      "asin": "B0G3F3PYXK",
+      "link": "https://www.amazon.de/dp/B0G3F3PYXK?tag=shops2go-21"
+    },
+    {
+      "name": "Stiftung Warentest Bücherset: Vorsorge-Set 2024 & Nachlass-Set",
+      "asin": "B0DYDKVLTQ",
+      "link": "https://www.amazon.de/dp/B0DYDKVLTQ?tag=shops2go-21"
+    },
+    {
+      "name": "Erbschaft ohne Streit: So schützt du deine Liebsten",
+      "asin": "B0FG39VLQT",
+      "link": "https://www.amazon.de/dp/B0FG39VLQT?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-faedeln": [
+    {
+      "name": "HABA Fädelspiel Auf dem Land",
+      "asin": "B005HAW5JM",
+      "link": "https://www.amazon.de/dp/B005HAW5JM?tag=shops2go-21"
+    },
+    {
+      "name": "Umikk Montessori Fädelspiel",
+      "asin": "B0H5CHHCDN",
+      "link": "https://www.amazon.de/dp/B0H5CHHCDN?tag=shops2go-21"
+    },
+    {
+      "name": "Farben, Formen, Fädeln und Stapeln",
+      "asin": "B0F32TBTF4",
+      "link": "https://www.amazon.de/dp/B0F32TBTF4?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-naehen": [
+    {
+      "name": "Brother CS10s Classic Nähmaschine",
+      "asin": "B08D9S4V9V",
+      "link": "https://www.amazon.de/dp/B08D9S4V9V?tag=shops2go-21"
+    },
+    {
+      "name": "VERITAS Claire Nähmaschine",
+      "asin": "B08PFDNGTH",
+      "link": "https://www.amazon.de/dp/B08PFDNGTH?tag=shops2go-21"
+    },
+    {
+      "name": "Emerio Nähmaschine Kinder",
+      "asin": "B08Z48FBBQ",
+      "link": "https://www.amazon.de/dp/B08Z48FBBQ?tag=shops2go-21"
+    }
+  ],
+  "46-55-3": [
+    {
+      "name": "Häfft paper&you® Premium Journal dotted A5",
+      "asin": "B08YK8VHYF",
+      "link": "https://www.amazon.de/dp/B08YK8VHYF?tag=shops2go-21"
+    },
+    {
+      "name": "6-Minuten Erfolgsjournal – #1 Tagesplaner 2026",
+      "asin": "B08294Q3QV",
+      "link": "https://www.amazon.de/dp/B08294Q3QV?tag=shops2go-21"
+    },
+    {
+      "name": "Lani Art Dotted Bullet Journal Notizbuch A5",
+      "asin": "B08JLTW1YT",
+      "link": "https://www.amazon.de/dp/B08JLTW1YT?tag=shops2go-21"
+    },
+    {
+      "name": "RETTACY Notizbuch Liniert A4",
+      "asin": "B0D5HSB27Q",
+      "link": "https://www.amazon.de/dp/B0D5HSB27Q?tag=shops2go-21"
+    },
+    {
+      "name": "Victoria's Journals Tagebuch, Kunstleder, Hardcover",
+      "asin": "B09B79HN53",
+      "link": "https://www.amazon.de/dp/B09B79HN53?tag=shops2go-21"
+    },
+    {
+      "name": "LEUCHTTURM1917 Notizbuch Medium (A5), Hardcover",
+      "asin": "B096WJGYGC",
+      "link": "https://www.amazon.de/dp/B096WJGYGC?tag=shops2go-21"
+    },
+    {
+      "name": "6-Minuten® Tagebuch für Erwachsene 2026 (Das Original)",
+      "asin": "B099MXVPTY",
+      "link": "https://www.amazon.de/dp/B099MXVPTY?tag=shops2go-21"
+    },
+    {
+      "name": "LEUCHTTURM1917 Some Lines A Day, 5-Jahres-Buch",
+      "asin": "B01MY8XEMV",
+      "link": "https://www.amazon.de/dp/B01MY8XEMV?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-stecke": [
+    {
+      "name": "Fisher-Price Gigantische Farbring-Pyramide",
+      "asin": "B07PFYWVDQ",
+      "link": "https://www.amazon.de/dp/B07PFYWVDQ?tag=shops2go-21"
+    },
+    {
+      "name": "Steckspiel 18 Monate Montessori",
+      "asin": "B0C6DP4MM1",
+      "link": "https://www.amazon.de/dp/B0C6DP4MM1?tag=shops2go-21"
+    },
+    {
+      "name": "HaoVrisn 3-in-1 Montessori",
+      "asin": "B0DZ2HCVCW",
+      "link": "https://www.amazon.de/dp/B0DZ2HCVCW?tag=shops2go-21"
+    }
+  ],
+  "26-35-6": [
+    {
+      "name": "Wecke den Heimwerker in dir! – Tim Staudinger",
+      "asin": "B08HRRD891",
+      "link": "https://www.amazon.de/dp/B08HRRD891?tag=shops2go-21"
+    },
+    {
+      "name": "Kleine Reparaturen selbst gemacht – für Haus und Wohnung",
+      "asin": "B0I1234567",
+      "link": "https://www.amazon.de/dp/B0I1234567?tag=shops2go-21"
+    },
+    {
+      "name": "DAS XXL HEIMWERKER HANDBUCH – Die besten DIY Hacks",
+      "asin": "3989350366",
+      "link": "https://www.amazon.de/dp/3989350366?tag=shops2go-21"
+    },
+    {
+      "name": "Das große Heimwerkerbuch: Techniken, Geräte, Materialien",
+      "asin": "3800175940",
+      "link": "https://www.amazon.de/dp/3800175940?tag=shops2go-21"
+    },
+    {
+      "name": "Reparieren statt wegwerfen – Das umfassende Handbuch fürs Haus",
+      "asin": "B0H1234567",
+      "link": "https://www.amazon.de/dp/B0H1234567?tag=shops2go-21"
+    },
+    {
+      "name": "Das Heimwerker Handbuch für Männer: Werkzeug, Techniken, Projekte",
+      "asin": "B0H7654321",
+      "link": "https://www.amazon.de/dp/B0H7654321?tag=shops2go-21"
+    },
+    {
+      "name": "Das große Buch vom Heimwerken – Grundlagen, Projekte, Materialien",
+      "asin": "B0J1234567",
+      "link": "https://www.amazon.de/dp/B0J1234567?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-beide-haende": [
+    {
+      "name": "Learning Resources Snap-n-Learn Zählschafe",
+      "asin": "B082VYTJHB",
+      "link": "https://www.amazon.de/dp/B082VYTJHB?tag=shops2go-21"
+    }
+  ],
+  "koerperskills-finger-unabhaengig": [
+    {
+      "name": "D'Addario Varigrip Handtrainer",
+      "asin": "B001OCGGEM",
+      "link": "https://www.amazon.de/dp/B001OCGGEM?tag=shops2go-21"
+    }
+  ]
+};
+    // i18n data
+    const i18nData = {
+      'de': {
+        'heroTitle': '2do.shop',
+        'heroSub': 'Was du im Leben gemacht haben solltest — nach Alter, mit konkreten Erfahrungen und kaufbaren Produkten.',
+        'section_18_25_title': '🎯 18–25 Jahre',
+        'section_18_25_sub': 'Grundlagen schaffen — Erfahrungen, die dir später Vorteile bringen.',
+        'section_26_35_title': '🔥 26–35 Jahre',
+        'section_26_35_sub': 'Breiter werden — Business, Handwerk, Führung, Beziehungen.',
+        'section_36_45_title': '⚡ 36–45 Jahre',
+        'section_36_45_sub': 'Tiefe statt Breite — Gesundheit, Nachhaltigkeit, Vermächtnis.',
+        'section_46_55_title': '🎖️ 46–55 Jahre',
+        'section_46_55_sub': 'Erfahrung nutzen — Vermächtnis, Nachhaltigkeit, Ruhe.',
+        'section_55plus_title': '🌟 55+ Jahre',
+        'section_55plus_sub': 'Jetzt oder nie — Technologie, Kreativität, Gesundheit.',
+        'section_koerperskills_title': '🧸 KLEINKIND',
+        'section_koerperskills_sub': 'Motorik, Bewegung und Körperskills spielerisch üben — vom ersten Greifen bis zur Koordination.',
+        'langSwitch': 'EN',
+        'locationBtn': '📍 Location',
+        'sidebar_title': '🎯 Meine Auswahl',
+        'sidebar_hint': 'Ziehe Erlebnisse hierher oder klicke sie an.',
+        'sidebar_empty': 'Noch keine Auswahl',
+        'sidebar_clear': 'Leeren',
+        'drop_zone': '📥 Erlebnis hierher ziehen',
+        'drag_over': '✅ Loslassen!',
+      },
+      'en': {
+        'heroTitle': '2do.shop',
+        'heroSub': 'Things you should do in life — by age, with concrete experiences and purchasable products.',
+        'section_18_25_title': '🎯 18–25 years',
+        'section_18_25_sub': 'Build foundations — experiences that will benefit you later.',
+        'section_26_35_title': '🔥 26–35 years',
+        'section_26_35_sub': 'Broaden yourself — business, craft, leadership, relationships.',
+        'section_36_45_title': '⚡ 36–45 years',
+        'section_36_45_sub': 'Depth over breadth — health, sustainability, legacy.',
+        'section_46_55_title': '🎖️ 46–55 years',
+        'section_46_55_sub': 'Use your experience — legacy, sustainability, calm.',
+        'section_55plus_title': '🌟 55+ years',
+        'section_55plus_sub': 'Now or never — technology, creativity, health.',
+        'section_koerperskills_title': '🧸 TODDLER',
+        'section_koerperskills_sub': 'Motor skills, movement and body control — practiced playfully from first grasp to coordination.',
+        'langSwitch': 'DE',
+        'locationBtn': '📍 Standort',
+        'sidebar_title': '🎯 My Selection',
+        'sidebar_hint': 'Drag experiences here or click them.',
+        'sidebar_empty': 'No selection yet',
+        'sidebar_clear': 'Clear',
+        'drop_zone': '📥 Drop experience here',
+        'drag_over': '✅ Drop here!',
+      }
+    };
+
+    let currentLang = 'de'; // Sprachumschalter entfernt
+    let userCountry = localStorage.getItem('country') || 'default';
+
+
+    function updateLang() {
+      const data = i18nData[currentLang];
+      document.getElementById('heroTitle').textContent = data.heroTitle;
+      document.getElementById('heroSub').textContent = data.heroSub;
+      document.getElementById('locationBtn').textContent = data.locationBtn;
+      
+      const sections = ['kleinkind','18-25','26-35','36-45','46-55','55plus'];
+      sections.forEach(s => {
+        document.getElementById('section_' + s + '_title').textContent = data['section_' + s + '_title'];
+        document.getElementById('section_' + s + '_sub').textContent = data['section_' + s + '_sub'];
+      });
+
+      document.querySelector('.sidebar-title').textContent = data.sidebar_title;
+      document.querySelector('.sidebar-hint').textContent = data.sidebar_hint;
+      document.querySelector('.sidebar-clear').textContent = data.sidebar_clear;
+      document.getElementById('sidebarDrop').textContent = data.drop_zone;
+
+      document.querySelectorAll('.exp-card').forEach(card => {
+        const titleDe = card.getAttribute('data-title-de');
+        const titleEn = card.getAttribute('data-title-en');
+        const descDe = card.getAttribute('data-desc-de');
+        const descEn = card.getAttribute('data-desc-en');
+        const titleEl = card.querySelector('h3');
+        const descEl = card.querySelector('p');
+        if (titleEl) titleEl.textContent = currentLang === 'en' ? titleEn : titleDe;
+        if (descEl) descEl.textContent = currentLang === 'en' ? descEn : descDe;
+      });
+    }
+
+    async function detectLocation() {
+      const btn = document.getElementById('locationBtn');
+      btn.textContent = '📍 ' + (currentLang === 'en' ? 'Detecting...' : 'Wird erkannt...');
+      try {
+        const resp = await fetch('https://ipapi.co/json/');
+        const data = await resp.json();
+        userCountry = data.country_code || 'default';
+        localStorage.setItem('country', userCountry);
+        btn.textContent = '📍 ' + (userCountry || 'default');
+      } catch(e) {
+        userCountry = 'default';
+        btn.textContent = '📍 default';
+      }
+    }
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    const sections = document.querySelectorAll('.section');
+    const ageBtns = document.querySelectorAll('.age-btn');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 150;
+        if (scrollY >= top) current = section.getAttribute('id') || '';
+      });
+      ageBtns.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(current)) btn.classList.add('active');
+      });
+    });
+
+    let selectedItems = [];
+    const sidebarList = document.getElementById('sidebarList');
+    const sidebarProducts = document.getElementById('sidebarProducts');
+    const sidebarCount = document.getElementById('sidebarCount');
+    const sidebarClear = document.getElementById('sidebarClear');
+    const sidebarDrop = document.getElementById('sidebarDrop');
+    const sidebarDropzone = document.getElementById('sidebarDropzone');
+
+    function updateSidebar() {
+      sidebarProducts.innerHTML = '';
+      if (selectedItems.length === 0) {
+        sidebarProducts.innerHTML = '<p class="sidebar-empty">' + (currentLang === 'en' ? 'No selection yet' : 'Noch keine Auswahl') + '</p>';
+      } else {
+        selectedItems.forEach(item => {
+          const sec = document.createElement('div');
+          sec.className = 'sel-item';
+          const title = document.createElement('div');
+          title.className = 'sel-title';
+          title.innerHTML = item.icon + ' ' + item.title;
+          sec.appendChild(title);
+          const prods = (window.skillProducts && window.skillProducts[item.id]) ? window.skillProducts[item.id] : [];
+          prods.forEach(p => {
+            const row = document.createElement('a');
+            row.className = 'sel-prod';
+            row.href = p.link;
+            row.target = '_blank';
+            row.rel = 'noopener';
+            row.textContent = '🛒 ' + p.name + ' →';
+            sec.appendChild(row);
+          });
+          sidebarProducts.appendChild(sec);
+        });
+      }
+      sidebarCount.textContent = selectedItems.length;
+    }
+
+    sidebarClear.addEventListener('click', () => {
+      localStorage.removeItem('selectedItems');
+      selectedItems = [];
+      updateSidebar();
+      sidebarProducts.innerHTML = '';
+      sidebarProducts.classList.remove('visible');
+      sidebarDrop.style.display = 'block';
+    });
+
+
+
+
+
+
+
+
+
+    // PROBLEM? - kombinierte Liste, sauber formuliert (KEINE Kind-Präfixe, da KLEINKIND eh klar)
+    const problemData = [
+      { icon:'💸', label:'Geld sparen / verstehen', ids:['18-25-4','26-35-3','26-35-4'] },
+      { icon:'🏠', label:'Etwas mit den Händen bauen', ids:['18-25-5','26-35-1','26-35-2','36-45-1'] },
+      { icon:'🍳', label:'Kochen / backen lernen', ids:['26-35-5','36-45-4','18-25-3'] },
+      { icon:'💻', label:'Programmieren lernen', ids:['26-35-7','18-25-2','26-35-2'] },
+      { icon:'🌿', label:'Nachhaltiger leben', ids:['26-35-6','46-55-2','36-45-1'] },
+      { icon:'❤️', label:'Gesünder werden', ids:['36-45-2','55-3','55-2'] },
+      { icon:'📚', label:'Etwas Neues lernen', ids:['18-25-7','18-25-8','46-55-3'] },
+      { icon:'🔧', label:'Haushaltsgerät instand halten / reparieren', ids:['26-35-6','36-45-1','koerperskills-werkzeug'] },
+      { icon:'🆘', label:'Mir selbst helfen können', ids:['36-45-2','55-2','55-3','26-35-6'] },
+      { icon:'⚡', label:'Spontaner werden', ids:['18-25-7','18-25-8','46-55-3','koerperskills-reaktion'] },
+      { icon:'🤫', label:'Weniger reden', ids:['46-55-3','55-2','36-45-4'] },
+      { icon:'🗣️', label:'Mehr reden', ids:['26-35-3','26-35-7','18-25','koerperskills-rhythmus'] },
+      { icon:'🎯', label:'Fokussierter sein', ids:['18-25-1','26-35-2','koerperskills-finger-unabhaengig'] },
+      { icon:'💪', label:'Mehr bewegen', ids:['koerperskills-balancieren','koerperskills-werfen','koerperskills-hammer'] },
+      { icon:'🧸', label:'Körper besser steuern (für Kleinkinder)', ids:['koerperskills-greifen','koerperskills-pinzette','koerperskills-faedeln','koerperskills-balancieren'] },
+      { icon:'📚', label:'Bücher für Life Skills', ids:['buecher'] }
+    ];
+    const pb = document.getElementById('problemButtons');
+    problemData.forEach(p => {
+      const b = document.createElement('button');
+      b.className = 'problem-btn';
+      b.innerHTML = p.icon + ' ' + p.label;
+      b.onclick = () => addProblemSkills(p.ids);
+      pb.appendChild(b);
+    });
+
+    function addProblemSkills(ids) {
+      if (ids.length === 1 && ids[0] === 'buecher') { window.location.href = '/detail/buecher.html'; return; }
+      ids.forEach(id => {
+        if (!selectedItems.find(s => s.id === id)) {
+          const card = document.querySelector('.exp-card[data-id="'+id+'"]');
+          if (card) {
+            selectedItems.push({ id: id, icon: card.getAttribute('data-icon'), title: currentLang === 'en' ? card.getAttribute('data-title-en') : card.getAttribute('data-title-de') });
+          }
+        }
+      });
+      localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+      updateSidebar();
+    }
+
+
+    document.querySelectorAll('.exp-card[draggable="true"]').forEach(card => {
+      card.addEventListener('dragstart', (e) => {
+        const id = card.getAttribute('data-id');
+        const icon = card.getAttribute('data-icon');
+        const titleDe = card.getAttribute('data-title-de');
+        const titleEn = card.getAttribute('data-title-en');
+        e.dataTransfer.setData('text/plain', JSON.stringify({ id, icon, title_de: titleDe, title_en: titleEn }));
+        card.style.opacity = '0.5';
+      });
+      card.addEventListener('dragend', () => {
+        card.style.opacity = '1';
+      });
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-id');
+        window.location.href = '/detail/' + id + '.html';
+      });
+    });
+
+    sidebarDropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      sidebarDrop.classList.add('drag-over');
+    });
+    sidebarDropzone.addEventListener('dragleave', () => {
+      sidebarDrop.classList.remove('drag-over');
+    });
+    sidebarDropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      sidebarDrop.classList.remove('drag-over');
+      const data = e.dataTransfer.getData('text/plain');
+      if (!data) return;
+      try {
+        const item = JSON.parse(data);
+        if (!selectedItems.find(s => s.id === item.id)) {
+          selectedItems.push({ id: item.id, icon: item.icon, title: currentLang === 'en' ? item.title_en : item.title_de });
+          localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+          updateSidebar();
+        }
+      } catch (err) {
+        console.error('Drop parse error', err);
+      }
+    });
+
+
+    // PUNKT 2: Auswahl + Scroll bei Rückkehr aus Detail wiederherstellen
+    (function(){
+      const saved = localStorage.getItem('selectedItems');
+      if (saved) {
+        try {
+          selectedItems = JSON.parse(saved);
+          updateSidebar();
+        } catch(e){}
+      }
+      const ret = sessionStorage.getItem('returnToDetail');
+      if (ret) {
+        const card = document.querySelector('.exp-card[data-id="'+ret.replace('.html','')+'"]');
+        if (card) card.scrollIntoView({behavior:'auto', block:'center'});
+        sessionStorage.removeItem('returnToDetail');
+      }
+    })();
+
+    detectLocation();
+    updateLang();
+  </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rhythmus & Handkoordination — 2do.shop</title>
+  <meta name="description" content="Rhythmus & Handkoordination: Warum dieser Körperskill wichtig ist und wie du ihn spielerisch übst. Ab ab ca. 8 J..">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root { --bg:#0a0a0a; --surface:#141414; --text:#e5e5e5; --text-muted:#888; --accent:#ff5e00; --accent-2:#ff8c42; --border:#2a2a2a; }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+    a { color:var(--accent); text-decoration:none; }
+    .back-nav { padding:2rem; max-width:1200px; margin:0 auto; }
+    .back-nav a { color:var(--text-muted); }
+    .back-nav a:hover { color:var(--accent); }
+    .detail-header { padding:3rem 2rem; max-width:1200px; margin:0 auto; border-top:1px solid var(--border); }
+    .detail-header h1 { font-size:2.2rem; margin-bottom:0.5rem; }
+    .detail-header .age { color:var(--accent); font-weight:600; }
+    .detail-header .trains { color:var(--text-muted); margin-top:0.5rem; }
+    .why { max-width:1200px; margin:2rem auto; padding:1.5rem 2rem; background:var(--surface); border:1px solid var(--border); border-radius:12px; }
+    .why h2 { margin-bottom:0.8rem; }
+    .why p { color:var(--text); }
+    .challenges { max-width:1200px; margin:2rem auto; padding:0 2rem; }
+    .challenges h2 { margin-bottom:1rem; }
+    .challenge { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1rem 1.5rem; margin-bottom:0.8rem; }
+    .products-section { max-width:1200px; margin:2rem auto; padding:0 2rem 4rem; }
+    .products-section h2 { margin-bottom:1rem; }
+    .product-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:1rem; }
+    .product-card h3 { margin-bottom:0.5rem; }
+    .product-card .buy-link { display:inline-block; margin-top:1rem; padding:0.7rem 1.5rem; background:var(--accent); color:#fff; border-radius:8px; font-weight:600; }
+    .product-card .buy-link:hover { background:var(--accent-2); }
+    footer { padding:3rem 2rem; text-align:center; border-top:1px solid var(--border); color:var(--text-muted); }
+    footer a { color:var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="back-nav">
+    <a href="../index.html" onclick="sessionStorage.setItem('returnToDetail', location.pathname.split('/').pop());">← Zurück zu 2do.shop</a>
+  </div>
+
+  <div class="detail-header">
+    <div class="detail-icon">🎵</div>
+    <h1>Rhythmus & Handkoordination</h1>
+    <p class="age">Alter: ab ca. 8 J.</p>
+    <p class="trains">Trainiert: Beidhändig · Rhythmus · Synchronisation</p>
+  </div>
+
+  <div class="why">
+    <h2>🤔 Warum dieser Skill?</h2>
+    <p>Ein Instrument ist das perfekte Training für beidhändige Koordination: die linke Hand formt Akkorde, die rechte schlägt den Rhythmus, die Augen kontrollieren die Position. Ukulele ist der einfachste Einstieg – schnell ein Lied spielbar.</p>
+  </div>
+
+  <div class="challenges">
+    <h2>🎯 Mini-Challenges</h2>
+        <div class="challenge">✅ Akkord greifen</div>
+    <div class="challenge">✅ Schlag halten</div>
+    <div class="challenge">✅ Lied spielen</div>
+  </div>
+
+  <div class="products-section">
+    <h2>🛒 Passendes Werkzeug & Produkte</h2>
+        <div class="product-card">
+      <h3>Cascha Sopran Ukulele Set</h3>
+      <a href="https://www.amazon.de/dp/B06X6LYZ7B?tag=shops2go-21" class="buy-link" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+    </div>
+    <div class="product-card">
+      <h3>Martin Smith Sopran Ukulele</h3>
+      <a href="https://www.amazon.de/dp/B00413PFDE?tag=shops2go-21" class="buy-link" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+    </div>
+    <div class="product-card">
+      <h3>Martin Smith Ukulele + Tasche</h3>
+      <a href="https://www.amazon.de/dp/B000GG4B1C?tag=shops2go-21" class="buy-link" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2025 2do.shop — Was du im Leben gemacht haben solltest. | <a href="../impressum.html">Impressum</a> | <a href="../datenschutz.html">Datenschutz</a></p>
+    <p style="font-size:0.8rem;margin-top:1rem;">Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.</p>
+  </footer>
+
+  <script>
+    const relTitles = { de:'🔗 Verwandte Skills', en:'🔗 Related Skills' };
+    const related = <a href="koerperskills-finger.html">finger</a> · <a href="koerperskills-tischtennis.html">tischtennis</a> · <a href="koerperskills-naehen.html">naehen</a>;
+    const rt = document.createElement('section');
+    rt.className = 'products-section';
+    rt.innerHTML = '<h2 id="relatedTitle">'+relTitles[localStorage.getItem('lang')||'de']+'</h2>'+related;
+    document.body.insertBefore(rt, document.querySelector('footer'));
+    function goHome() { sessionStorage.setItem('returnToDetail', location.pathname.split('/').pop()); window.location.href='../index.html'; }
+  </script>
+</body>
+</html>
