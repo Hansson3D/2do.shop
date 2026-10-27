@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills 55+ – 2do.shop</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0a; --surface: #141414; --surface-hover: #1e1e1e;
+    --text: #e5e5e5; --text-muted: #888; --accent: #ff5e00; --accent-2: #ff8c42;
+    --border: #2a2a2a; --radius: 8px;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem;
+    max-width: 1600px; margin: 0 auto;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-2); }
+  .back {
+    display: inline-block; padding: 0.5rem 1rem; background: var(--surface);
+    border: 1px solid var(--border); color: var(--text); border-radius: 8px;
+    margin-bottom: 2rem; font-size: 0.9rem;
+  }
+  .back:hover { border-color: var(--accent); color: var(--accent); }
+  .detail-header { margin-bottom: 2rem; border-left: 4px solid var(--accent); padding-left: 1rem; }
+  .detail-icon { font-size: 4rem; margin-bottom: 1rem; }
+  .detail-header h1 {
+    font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 0.75rem;
+  }
+  .detail-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; }
+
+  /* Hauptprodukte oben */
+  .products-section { margin-bottom: 2rem; }
+  .section-title {
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;
+    padding-left: 1rem; border-left: 3px solid var(--accent);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-icon { font-size: 1.5rem; }
+  .products-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .column {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+  }
+  .column-header {
+    padding: 1rem;
+    background: var(--surface-hover);
+    border-bottom: 2px solid var(--accent);
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .column-icon { font-size: 1.3rem; }
+  .column-content {
+    overflow-y: auto;
+    flex: 1;
+    padding: 0.5rem;
+  }
+  .column-content::-webkit-scrollbar { width: 6px; }
+  .column-content::-webkit-scrollbar-track { background: var(--bg); }
+  .column-content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+  .product-item {
+    padding: 0.8rem;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .product-item:last-child { border-bottom: none; }
+  .product-item:hover { background: var(--surface-hover); }
+  .product-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+  .product-desc {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+  .product-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+  .product-price {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .product-rating {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .product-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.3rem;
+  }
+  .product-btn:hover { background: var(--accent-2); color: #000; }
+
+  /* Community-Tipps unten */
+  .community-tips {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border);
+  }
+  .community-tips h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .tips-intro {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  .filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .filter-tab {
+    padding: 0.5rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+  .filter-tab:hover { border-color: var(--accent); }
+  .filter-tab.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  .community-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    transition: all 0.2s;
+  }
+  .product-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+  }
+  .product-name { font-size: 0.95rem; font-weight: 600; line-height: 1.3; flex: 1; }
+  .product-badge {
+    background: var(--accent);
+    color: #000;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .product-desc { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.8rem; line-height: 1.4; }
+  .product-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .product-price { font-size: 1rem; font-weight: 700; color: var(--accent); }
+  .product-rating { font-size: 0.85rem; color: var(--text-muted); }
+  .product-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .product-btn:hover { background: var(--accent-2); color: #000; }
+
+  /* Vorschlagsformular */
+  .suggestion-box {
+    margin-top: 2rem;
+    padding: 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    max-width: 800px;
+  }
+  .suggestion-box h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
+  .suggestion-box > p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+  .suggestion-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .form-group label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .form-group input {
+    padding: 0.5rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.85rem;
+  }
+  .form-group.full { grid-column: 1 / -1; }
+  .submit-btn {
+    grid-column: 1 / -1;
+    padding: 0.6rem 1rem;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .submit-btn:hover { background: var(--accent-2); }
+  .form-note {
+    grid-column: 1 / -1;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+  }
+
+  footer {
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    margin-top: 3rem;
+  }
+  @media (max-width: 1200px) {
+    .products-columns { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    body { padding: 1.5rem; }
+    .suggestion-form { grid-template-columns: 1fr; }
+    .products-columns { grid-template-columns: 1fr; }
+    .column { max-height: none; }
+  }
+  /* Skill-Tabs (Merged-Detail) */
+  .category-title {
+    font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; margin: 0 0 1rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .skill-tabs {
+    display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+    margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border);
+  }
+  .skill-tab {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.55rem 1rem; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 999px;
+    color: var(--text); cursor: pointer; font-size: 0.9rem;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .skill-tab:hover { border-color: var(--accent); color: var(--accent); }
+  .skill-tab.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
+  .skill-tab-icon { font-size: 1.1rem; }
+  .skill-panel { display: none; }
+  .skill-panel.active { display: block; }
+</style>
+</head>
+<body>
+  <a href="../index.html" class="back">← Zurück zur Übersicht</a>
+
+  <h2 class="category-title">🧓 Skills für 55+</h2>
+
+  <div class="skill-tabs" id="skillTabs">
+
+    <button class="skill-tab active" data-tab="altersvorsorge"><span class="skill-tab-icon">💰</span> Altersvorsorge &amp; Rente planen</button>
+    <button class="skill-tab" data-tab="technologie"><span class="skill-tab-icon">📱</span> Neue Technologien lernen</button>
+    <button class="skill-tab" data-tab="mentoring"><span class="skill-tab-icon">🎓</span> Wissen weitergeben &amp; Mentoring</button>
+
+  </div>
+
+
+
+  <div class="skill-panel active" id="altersvorsorge">
+    <div class="detail-header">
+    <div class="detail-icon">💰</div>
+    <h1>Altersvorsorge &amp; Rente planen</h1>
+    <p>Rente, Riester &amp; Rürup, ETF-Altersvorsorge, Vermögensaufbau für die Jahre vor dem Ruhestand.</p>
+  </div>
+    <!-- Hauptprodukte: 4 Spalten -->
+  <div class="products-section">
+    <div class="section-title"><span class="section-icon">🛠️</span> Aus Nischen-Communitys aufgespürt</div>
+    <p class="tips-intro">
+      Unsere Redaktion recherchiert kontinuierlich in Foren, Erfahrungsberichten und Community-Diskussionen
+      nach praxiserprobten Produkten. Hier findest du unsere aktuelle Auswahl — übersichtlich nach
+      Preisklassen sortiert.
+    </p>
+    <div class="products-columns">
+      <div class="column">
+        <div class="column-header"><span class="column-icon">💸</span> Günstig</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Der leichte Einstieg in die Welt der ETFs – Unkompliziert vorsorgen, Starterbuch für Finanzanfänger</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/3959725434.jpg" alt="Produktbild 3959725434" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3959725434?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Mein ETF Portfolio für die Rentenvorsorge – Wissen für Ihren Vermögensaufbau</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B07RTG6ZXX.jpg" alt="Produktbild B07RTG6ZXX" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B07RTG6ZXX?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Mach deine Rente zu deinem Projekt – Altersvorsorge aktiv in die Hand nehmen</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/3802940857.jpg" alt="Produktbild 3802940857" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3802940857?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⚖️</span> Preis/Leistung</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Souverän investieren für Einsteiger – Wie Sie mit ETFs ein Vermögen bilden (Gerd Kommer)</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/3593518686.jpg" alt="Produktbild 3593518686" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3593518686?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Das einzige Buch, das du über Finanzen lesen solltest – Der entspannte Weg zum Vermögen (Finanzfluss)</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/3548065848.jpg" alt="Produktbild 3548065848" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3548065848?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Riester-Rente – Förderungen, Verträge und Wechsel richtig nutzen</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/342336274X.jpg" alt="Produktbild 342336274X" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/342336274X?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⭐</span> Marke</div>
+        <div class="column-content"></div>
+      </div>
+
+      <div class="column">
+        <div class="column-header"><span class="column-icon">📚</span> Bücher</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Anlegen mit ETF – Kapitalanlage und Altersvorsorge leicht gemacht (Stiftung Warentest)</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B0B3HXQVYK.jpg" alt="Produktbild B0B3HXQVYK" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0B3HXQVYK?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Souverän investieren mit Indexfonds und ETFs – für fortgeschrittene Privatanleger</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B0DKX7KWWH.jpg" alt="Produktbild B0DKX7KWWH" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0DKX7KWWH?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Kaufen oder mieten? – Wie Sie für sich die richtige Entscheidung treffen (Gerd Kommer)</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/3593501570.jpg" alt="Produktbild 3593501570" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3593501570?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+    </div>
+  </div>
+    <div class="community-tips">
+    <h3>💡 Eure Community-Vorschläge</h3>
+    <p class="tips-intro">
+      Hier teilt die Community ihre favorisierten Produkte und Erfahrungen.
+      Du hast ein Produkt entdeckt, das hier fehlt? Reiche es gerne ein —
+      unser Team prüft jeden Vorschlag.
+    </p>
+
+    <div class="filter-tabs" data-grid="0">
+      <button class="filter-tab active" data-filter="all">Alle</button>
+      <button class="filter-tab" data-filter="guenstig">💸 Günstig</button>
+      <button class="filter-tab" data-filter="preis-leistung">⚖️ Preis/Leistung</button>
+      <button class="filter-tab" data-filter="marke">⭐ Markenprodukt</button>
+    </div>
+
+    <div id="community-products-0" class="community-grid"></div>
+  </div>
+    <section class="related-skills" style="max-width:1200px;margin:2rem auto;padding:0 2rem;">
+    <h2 class="related-title">🔗 Verwandte Skills</h2>
+    <p><a href="../detail/46-55.html#vermaechtnis">Vermächtnis</a> · <a href="../detail/36-45.html#gesundheit">Gesundheit</a> · <a href="../detail/46-55.html#nachhaltigkeit">Nachhaltigkeit</a></p>
+  </section>
+    <script type="application/json" id="community-data-0">[{"name": "Der leichte Einstieg in die Welt der ETFs", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€16,90", "rating": "4,5★", "link": "https://www.amazon.de/dp/3959725434?tag=shops2go-21", "category": "guenstig"}, {"name": "Souverän investieren für Einsteiger", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€9,99", "rating": "4,6★", "link": "https://www.amazon.de/dp/3593518686?tag=shops2go-21", "category": "preis-leistung"}, {"name": "Anlegen mit ETF – Altersvorsorge leicht gemacht", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€19,90", "rating": "4,4★", "link": "https://www.amazon.de/dp/B0B3HXQVYK?tag=shops2go-21", "category": "marke"}]</script>
+  </div>
+
+  <div class="skill-panel" id="technologie">
+    <div class="detail-header">
+    <div class="detail-icon">📱</div>
+    <h1>Neue Technologien lernen</h1>
+    <p>Tablet &amp; Smartphone, Senioren-Handys, Videotelefonie und digitale Kommunikation im Alltag.</p>
+  </div>
+    <!-- Hauptprodukte: 4 Spalten -->
+  <div class="products-section">
+    <div class="section-title"><span class="section-icon">🛠️</span> Aus Nischen-Communitys aufgespürt</div>
+    <p class="tips-intro">
+      Unsere Redaktion recherchiert kontinuierlich in Foren, Erfahrungsberichten und Community-Diskussionen
+      nach praxiserprobten Produkten. Hier findest du unsere aktuelle Auswahl — übersichtlich nach
+      Preisklassen sortiert.
+    </p>
+    <div class="products-columns">
+      <div class="column">
+        <div class="column-header"><span class="column-icon">💸</span> Günstig</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Doro PhoneEasy 110 DECT Senior Schnurlostelefon, große Tasten</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B006LW2L7Q.jpg" alt="Produktbild B006LW2L7Q" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B006LW2L7Q?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Doro 6820 Seniorenhandy, 4G mit großen Tasten und Ladestation</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B09PFB4C61.jpg" alt="Produktbild B09PFB4C61" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B09PFB4C61?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Tschisen Diktiergerät Digital 8GB, One-Touch-Aufnahme</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B07QY1TKQS.jpg" alt="Produktbild B07QY1TKQS" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B07QY1TKQS?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⚖️</span> Preis/Leistung</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">MUTSAY Tablet 10 Zoll, Android, Octa-Core, 128 GB</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B0H6HXY3SP.jpg" alt="Produktbild B0H6HXY3SP" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0H6HXY3SP?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Lylu Senioren Tablet 10,1″ mit WhatsApp, SIM &amp; fertiger Einrichtung</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B0CHG4F5B8.jpg" alt="Produktbild B0CHG4F5B8" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0CHG4F5B8?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Vivaniir 60H Diktiergerät Digital, 64GB, Sprachaktivierung</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B0BQQTBKGS.jpg" alt="Produktbild B0BQQTBKGS" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0BQQTBKGS?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⭐</span> Marke</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Doro Tablet, 10,4″ Full HD, Seniorentablet mit EVA-Oberfläche, Android 12</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B0BKPVDVC1.jpg" alt="Produktbild B0BKPVDVC1" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0BKPVDVC1?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Doro Leva X10 4G Seniorenhandy, große Tasten, GPS-Notruf</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B0DQ5Z19K6.jpg" alt="Produktbild B0DQ5Z19K6" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0DQ5Z19K6?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+
+      <div class="column">
+        <div class="column-header"><span class="column-icon">📚</span> Bücher</div>
+        <div class="column-content"></div>
+      </div>
+    </div>
+  </div>
+    <div class="community-tips">
+    <h3>💡 Eure Community-Vorschläge</h3>
+    <p class="tips-intro">
+      Hier teilt die Community ihre favorisierten Produkte und Erfahrungen.
+      Du hast ein Produkt entdeckt, das hier fehlt? Reiche es gerne ein —
+      unser Team prüft jeden Vorschlag.
+    </p>
+
+    <div class="filter-tabs" data-grid="1">
+      <button class="filter-tab active" data-filter="all">Alle</button>
+      <button class="filter-tab" data-filter="guenstig">💸 Günstig</button>
+      <button class="filter-tab" data-filter="preis-leistung">⚖️ Preis/Leistung</button>
+      <button class="filter-tab" data-filter="marke">⭐ Markenprodukt</button>
+    </div>
+
+    <div id="community-products-1" class="community-grid"></div>
+  </div>
+    <section class="related-skills" style="max-width:1200px;margin:2rem auto;padding:0 2rem;">
+    <h2 class="related-title">🔗 Verwandte Skills</h2>
+    <p><a href="../detail/46-55.html#journaling">Journaling</a> · <a href="../detail/36-45.html#mentoring">Mentoring</a> · <a href="../detail/46-55.html#vermaechtnis">Vermächtnis</a></p>
+  </section>
+    <script type="application/json" id="community-data-1">[{"name": "Doro Tablet 10,4\" Seniorentablet", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€—", "rating": "4,3★", "link": "https://www.amazon.de/dp/B0BKPVDVC1?tag=shops2go-21", "category": "guenstig"}, {"name": "Lylu Senioren Tablet 10,1\"", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€—", "rating": "4,2★", "link": "https://www.amazon.de/dp/B0CHG4F5B8?tag=shops2go-21", "category": "preis-leistung"}, {"name": "Doro Leva X10 4G Seniorenhandy", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€—", "rating": "4,0★", "link": "https://www.amazon.de/dp/B0DQ5Z19K6?tag=shops2go-21", "category": "marke"}]</script>
+  </div>
+
+  <div class="skill-panel" id="mentoring">
+    <div class="detail-header">
+    <div class="detail-icon">🎓</div>
+    <h1>Wissen weitergeben &amp; Mentoring</h1>
+    <p>Erinnerungsbücher, Lebensgeschichte festhalten, Diktiergerät &amp; Stammbaum — Wissen an die nächste Generation weitergeben.</p>
+  </div>
+    <!-- Hauptprodukte: 4 Spalten -->
+  <div class="products-section">
+    <div class="section-title"><span class="section-icon">🛠️</span> Aus Nischen-Communitys aufgespürt</div>
+    <p class="tips-intro">
+      Unsere Redaktion recherchiert kontinuierlich in Foren, Erfahrungsberichten und Community-Diskussionen
+      nach praxiserprobten Produkten. Hier findest du unsere aktuelle Auswahl — übersichtlich nach
+      Preisklassen sortiert.
+    </p>
+    <div class="products-columns">
+      <div class="column">
+        <div class="column-header"><span class="column-icon">💸</span> Günstig</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Lanpn Opa/Oma Erinnerungsbuch – Mama &amp; Papa, erzähl mir von deinem Leben, zum Ausfüllen</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B0DK14ZDYY.jpg" alt="Produktbild B0DK14ZDYY" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0DK14ZDYY?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Oma, erzähl mir deine Geschichte – Das Erinnerungsbuch zum Ausfüllen (Clara Valentin)</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/3911062125.jpg" alt="Produktbild 3911062125" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3911062125?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⚖️</span> Preis/Leistung</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Vivaniir 60H Diktiergerät Digital, 64GB, One-Touch-Aufnahme</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B0BQQTBKGS.jpg" alt="Produktbild B0BQQTBKGS" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0BQQTBKGS?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Oma, erzähl mir deine Geschichte – Großmutter Erinnerungsbuch (Amarcord)</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B09HFXGNV6.jpg" alt="Produktbild B09HFXGNV6" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B09HFXGNV6?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⭐</span> Marke</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">SMT SECURITY Diktiergerät Digital mit Ultraqualitativem Klang, 32 GB</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B09MJKR5SQ.jpg" alt="Produktbild B09MJKR5SQ" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B09MJKR5SQ?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Philips DVT2015 VoiceTracer Diktiergerät, MP3, HiFi Stereo, inkl. Sembly AI</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B0C68G57YF.jpg" alt="Produktbild B0C68G57YF" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0C68G57YF?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+
+      <div class="column">
+        <div class="column-header"><span class="column-icon">📚</span> Bücher</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Mama, erzähl mir von deinem Leben – Das Erinnerungsbuch zum Ausfüllen</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/3912189005.jpg" alt="Produktbild 3912189005" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3912189005?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Mama, erzähl mir von dir! – Das Erinnerungsbuch mit über 210 Fragen</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B0G2GMTKM7.jpg" alt="Produktbild B0G2GMTKM7" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0G2GMTKM7?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Stammbuch der Familie mit Ahnentafel – Familien-Stammbuch zum Ausfüllen</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+
+            <img src="../images/asin/B09QNZV4KD.jpg" alt="Produktbild B09QNZV4KD" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B09QNZV4KD?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+    </div>
+  </div>
+    <div class="community-tips">
+    <h3>💡 Eure Community-Vorschläge</h3>
+    <p class="tips-intro">
+      Hier teilt die Community ihre favorisierten Produkte und Erfahrungen.
+      Du hast ein Produkt entdeckt, das hier fehlt? Reiche es gerne ein —
+      unser Team prüft jeden Vorschlag.
+    </p>
+
+    <div class="filter-tabs" data-grid="2">
+      <button class="filter-tab active" data-filter="all">Alle</button>
+      <button class="filter-tab" data-filter="guenstig">💸 Günstig</button>
+      <button class="filter-tab" data-filter="preis-leistung">⚖️ Preis/Leistung</button>
+      <button class="filter-tab" data-filter="marke">⭐ Markenprodukt</button>
+    </div>
+
+    <div id="community-products-2" class="community-grid"></div>
+  </div>
+    <section class="related-skills" style="max-width:1200px;margin:2rem auto;padding:0 2rem;">
+    <h2 class="related-title">🔗 Verwandte Skills</h2>
+    <p><a href="../detail/36-45.html#mentoring">Mentoring</a> · <a href="../detail/46-55.html#vermaechtnis">Vermächtnis</a> · <a href="../detail/46-55.html#journaling">Journaling</a></p>
+  </section>
+    <script type="application/json" id="community-data-2">[{"name": "Oma, erzähl mir deine Geschichte", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€—", "rating": "4,7★", "link": "https://www.amazon.de/dp/B09HFXGNV6?tag=shops2go-21", "category": "guenstig"}, {"name": "Vivaniir Diktiergerät 64GB", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€—", "rating": "4,4★", "link": "https://www.amazon.de/dp/B0BQQTBKGS?tag=shops2go-21", "category": "preis-leistung"}, {"name": "Stammbuch der Familie mit Ahnentafel", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€—", "rating": "4,5★", "link": "https://www.amazon.de/dp/B09QNZV4KD?tag=shops2go-21", "category": "marke"}]</script>
+  </div>
+
+
+
+  <div class="suggestion-box">
+    <h3>💬 Produkt vorschlagen</h3>
+    <p>Kennst du ein gutes Produkt für diese Erfahrung? Schlag es uns vor!</p>
+    <form class="suggestion-form" action="mailto:info@vegadelux.de" method="post" enctype="text/plain">
+      <div class="form-group">
+        <label for="prod-name">Produktname</label>
+        <input type="text" id="prod-name" name="Produktname" placeholder="z.B. XYZ Werkzeugset" required>
+      </div>
+      <div class="form-group">
+        <label for="prod-alias">Dein Alias-Name</label>
+        <input type="text" id="prod-alias" name="Alias" placeholder="z.B. Hans">
+      </div>
+      <div class="form-group full">
+        <label for="prod-desc">Warum empfehlst du dieses Produkt?</label>
+        <input type="text" id="prod-desc" name="Begründung" placeholder="z.B. Hält 10 Jahre, super Qualität...">
+      </div>
+      <div class="form-group">
+        <label for="prod-search">Suchbegriff</label>
+        <input type="text" id="prod-search" name="Suchbegriff" placeholder="z.B. garten werkzeug set">
+      </div>
+      <div class="form-group">
+        <label for="prod-vendor">Händler</label>
+        <input type="text" id="prod-vendor" name="Händler" placeholder="z.B. Amazon">
+      </div>
+      <div class="form-group full">
+        <label for="prod-link">Link</label>
+        <input type="url" id="prod-link" name="Link" placeholder="https://...">
+      </div>
+      <button type="submit" class="submit-btn">Vorschlag senden →</button>
+      <p class="form-note">Keine Speicherung personenbezogener Daten.</p>
+    </form>
+  </div>
+
+
+
+  <footer>
+    <p>© 2026 Tobias Eric Wolk — 2do.shop | <a href="/impressum.html">Impressum</a> | <a href="/datenschutz.html">Datenschutz</a></p>
+      <p style="margin-top:1rem;font-size:0.8rem;">Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.</p>
+  </footer>
+
+
+
+  <script>
+    // Scroll-Position speichern und wiederherstellen
+    (function() {
+      const storageKey = '2do-scroll-pos-' + window.location.pathname;
+      window.addEventListener('beforeunload', function() {
+        sessionStorage.setItem(storageKey, window.scrollY);
+      });
+      window.addEventListener('DOMContentLoaded', function() {
+        const savedPos = sessionStorage.getItem(storageKey);
+        if (savedPos) { window.scrollTo(0, parseInt(savedPos, 10)); }
+      });
+    })();
+  </script>
+
+
+  <script>
+    // Tab-Navigation zwischen Skills
+    (function() {
+      const tabs = Array.prototype.slice.call(document.querySelectorAll('.skill-tab'));
+      const panels = Array.prototype.slice.call(document.querySelectorAll('.skill-panel'));
+      function activate(slug, updateHash) {
+        const panel = document.getElementById(slug);
+        if (!panel) return;
+        tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.tab === slug); });
+        panels.forEach(function(p){ p.classList.toggle('active', p.id === slug); });
+        if (updateHash !== false) { history.replaceState(null, '', '#' + slug); }
+        window.scrollTo(0, 0);
+      }
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() { activate(tab.dataset.tab); });
+      });
+      var initial = (window.location.hash || '').slice(1);
+      if (initial && document.getElementById(initial)) { activate(initial, false); }
+    })();
+  </script>
+
+
+  <script>
+    // Community-Tipps Filter-Logik (pro Skill)
+    function renderCommunity(gridId, data, filter) {
+      const container = document.getElementById(gridId);
+      if (!container) return;
+      container.innerHTML = '';
+      const filtered = filter === 'all' ? data : data.filter(function(p){ return p.category === filter; });
+      if (filtered.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted)">Keine Produkte in dieser Kategorie.</p>';
+        return;
+      }
+      filtered.forEach(function(product) {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        const badge = product.category === 'guenstig' ? 'Günstig' : product.category === 'preis-leistung' ? 'Preis/Leistung' : 'Marke';
+        card.innerHTML = '<div class="product-header"><div class="product-name">' + product.name + '</div><span class="product-badge">' + badge + '</span></div><div class="product-desc">' + product.desc + '</div><div class="product-meta"><div class="product-price">' + product.price + '</div><div class="product-rating">' + product.rating + '</div></div><a href="' + product.link + '" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>';
+        container.appendChild(card);
+      });
+    }
+    document.querySelectorAll('.filter-tabs').forEach(function(tabs) {
+      const i = tabs.dataset.grid;
+      const dataEl = document.getElementById('community-data-' + i);
+      const data = dataEl ? JSON.parse(dataEl.textContent) : [];
+      tabs.addEventListener('click', function(e) {
+        const tab = e.target.closest('.filter-tab');
+        if (!tab) return;
+        tabs.querySelectorAll('.filter-tab').forEach(function(t){ t.classList.remove('active'); });
+        tab.classList.add('active');
+        renderCommunity('community-products-' + i, data, tab.dataset.filter);
+      });
+      renderCommunity('community-products-' + i, data, 'all');
+    });
+  </script>
+
+
+  <script>
+    function goHome() {
+      sessionStorage.setItem('returnToDetail', location.pathname.split('/').pop());
+      window.location.href = '../index.html';
+    }
+  </script>
+
+
+  <script>
+    const relI18n = { de: '🔗 Verwandte Skills', en: '🔗 Related Skills' };
+    document.querySelectorAll('.related-title').forEach(function(rt){
+      rt.textContent = relI18n[localStorage.getItem('lang') || 'de'];
+    });
+  </script>
+
+</body>
+</html>

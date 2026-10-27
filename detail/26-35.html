@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills 26–35 – 2do.shop</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0a; --surface: #141414; --surface-hover: #1e1e1e;
+    --text: #e5e5e5; --text-muted: #888; --accent: #ff5e00; --accent-2: #ff8c42;
+    --border: #2a2a2a; --radius: 8px;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem;
+    max-width: 1600px; margin: 0 auto;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-2); }
+  .back {
+    display: inline-block; padding: 0.5rem 1rem; background: var(--surface);
+    border: 1px solid var(--border); color: var(--text); border-radius: 8px;
+    margin-bottom: 2rem; font-size: 0.9rem;
+  }
+  .back:hover { border-color: var(--accent); color: var(--accent); }
+  .detail-header { margin-bottom: 2rem; border-left: 4px solid var(--accent); padding-left: 1rem; }
+  .detail-icon { font-size: 4rem; margin-bottom: 1rem; }
+  .detail-header h1 {
+    font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 0.75rem;
+  }
+  .detail-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; }
+  
+  /* Hauptprodukte oben */
+  .products-section { margin-bottom: 2rem; }
+  .section-title {
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;
+    padding-left: 1rem; border-left: 3px solid var(--accent);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-icon { font-size: 1.5rem; }
+  .products-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .column {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+  }
+  .column-header {
+    padding: 1rem;
+    background: var(--surface-hover);
+    border-bottom: 2px solid var(--accent);
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .column-icon { font-size: 1.3rem; }
+  .column-content {
+    overflow-y: auto;
+    flex: 1;
+    padding: 0.5rem;
+  }
+  .column-content::-webkit-scrollbar { width: 6px; }
+  .column-content::-webkit-scrollbar-track { background: var(--bg); }
+  .column-content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+  
+  .product-item {
+    padding: 0.8rem;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .product-item:last-child { border-bottom: none; }
+  .product-item:hover { background: var(--surface-hover); }
+  .product-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+  .product-desc {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+  .product-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+  .product-price {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .product-rating {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .product-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.3rem;
+  }
+  .product-btn:hover { background: var(--accent-2); color: #000; }
+  
+  /* Community-Tipps unten */
+  .community-tips {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border);
+  }
+  .community-tips h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .tips-intro {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  .filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .filter-tab {
+    padding: 0.5rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+  .filter-tab:hover { border-color: var(--accent); }
+  .filter-tab.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  .community-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    transition: all 0.2s;
+  }
+  .product-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+  }
+  .product-name { font-size: 0.95rem; font-weight: 600; line-height: 1.3; flex: 1; }
+  .product-badge {
+    background: var(--accent);
+    color: #000;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .product-desc { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.8rem; line-height: 1.4; }
+  .product-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .product-price { font-size: 1rem; font-weight: 700; color: var(--accent); }
+  .product-rating { font-size: 0.85rem; color: var(--text-muted); }
+  .product-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .product-btn:hover { background: var(--accent-2); color: #000; }
+  
+  /* Vorschlagsformular */
+  .suggestion-box {
+    margin-top: 2rem;
+    padding: 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    max-width: 800px;
+  }
+  .suggestion-box h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
+  .suggestion-box > p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+  .suggestion-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .form-group label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .form-group input {
+    padding: 0.5rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.85rem;
+  }
+  .form-group.full { grid-column: 1 / -1; }
+  .submit-btn {
+    grid-column: 1 / -1;
+    padding: 0.6rem 1rem;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .submit-btn:hover { background: var(--accent-2); }
+  .form-note {
+    grid-column: 1 / -1;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+  }
+  
+  footer {
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    margin-top: 3rem;
+  }
+  @media (max-width: 1200px) {
+    .products-columns { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    body { padding: 1.5rem; }
+    .suggestion-form { grid-template-columns: 1fr; }
+    .products-columns { grid-template-columns: 1fr; }
+    .column { max-height: none; }
+  }
+  /* Skill-Tabs (Merged-Detail) */
+  .category-title {
+    font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; margin: 0 0 1rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .skill-tabs {
+    display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+    margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border);
+  }
+  .skill-tab {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.55rem 1rem; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 999px;
+    color: var(--text); cursor: pointer; font-size: 0.9rem;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .skill-tab:hover { border-color: var(--accent); color: var(--accent); }
+  .skill-tab.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
+  .skill-tab-icon { font-size: 1.1rem; }
+  .skill-panel { display: none; }
+  .skill-panel.active { display: block; }
+</style>
+</head>
+<body>
+  <a href="/" class="back">← Zurück zur Übersicht</a>
+
+  <h2 class="category-title">🧭 Skills für 26–35</h2>
+
+  <div class="skill-tabs" id="skillTabs">
+
+    <button class="skill-tab active" data-tab="business-gruenden"><span class="skill-tab-icon">🚀</span> Business gründen</button>
+    <button class="skill-tab" data-tab="handwerk-lernen"><span class="skill-tab-icon">🔨</span> Handwerk lernen</button>
+    <button class="skill-tab" data-tab="fuehren-lernen"><span class="skill-tab-icon">👥</span> Führen lernen</button>
+    <button class="skill-tab" data-tab="investieren"><span class="skill-tab-icon">📈</span> Investieren</button>
+    <button class="skill-tab" data-tab="kochen-meistern"><span class="skill-tab-icon">🍳</span> Kochen meistern</button>
+    <button class="skill-tab" data-tab="reparieren-statt-ersetzen"><span class="skill-tab-icon">🛠️</span> Reparieren statt ersetzen</button>
+    <button class="skill-tab" data-tab="programmieren"><span class="skill-tab-icon">⚡</span> Programmieren</button>
+
+  </div>
+
+
+
+  <div class="skill-panel active" id="business-gruenden">
+    <div class="detail-header">
+    <div class="detail-icon">🚀</div>
+    <h1>Business gründen</h1>
+    <p>Von der Idee zum ersten Kunden.</p>
+  </div>
+    <!-- Hauptprodukte: 4 Spalten -->
+  <div class="products-section">
+    <div class="section-title"><span class="section-icon">🛠️</span> Aus Nischen-Communitys aufgespürt</div>
+    <p class="tips-intro">
+      Unsere Redaktion recherchiert kontinuierlich in Foren, Erfahrungsberichten und Community-Diskussionen 
+      nach praxiserprobten Produkten. Hier findest du unsere aktuelle Auswahl — übersichtlich nach 
+      Preisklassen sortiert.
+    </p>
+    <div class="products-columns">
+      <div class="column">
+        <div class="column-header"><span class="column-icon">💸</span> Günstig</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">So schön ist kündigen!: Anleitung zum Weg in die Selbstständigkeit</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0DHMXF69R.jpg" alt="Produktbild B0DHMXF69R" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0DHMXF69R?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Erfolgreiches Self-Publishing mit Amazon KDP</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B08TYSB8WG.jpg" alt="Produktbild B08TYSB8WG" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B08TYSB8WG?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Die 4-Stunden-Woche: Mehr Zeit, mehr Geld, mehr Leben</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B001O3AN7W.jpg" alt="Produktbild B001O3AN7W" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B001O3AN7W?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⚖️</span> Preis/Leistung</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Projektmanagement: Systematisch zum Erfolg</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B09243C6ZK.jpg" alt="Produktbild B09243C6ZK" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B09243C6ZK?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">The Pumpkin Plan: A Simple Strategy to Grow a Remarkable Business</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B00D9T9OM4.jpg" alt="Produktbild B00D9T9OM4" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B00D9T9OM4?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Kopf schlägt Kapital: Die ganz andere Art, ein Unternehmen zu gründen</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B00AAB9848.jpg" alt="Produktbild B00AAB9848" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B00AAB9848?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⭐</span> Marke</div>
+        <div class="column-content"></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">📚</span> Bücher</div>
+        <div class="column-content"></div>
+      </div>
+    </div>
+  </div>
+    <div class="community-tips">
+    <h3>💡 Eure Community-Vorschläge</h3>
+    <p class="tips-intro">
+      Hier teilt die Community ihre favorisierten Produkte und Erfahrungen. 
+      Du hast ein Produkt entdeckt, das hier fehlt? Reiche es gerne ein — 
+      unser Team prüft jeden Vorschlag.
+    </p>
+    
+    <div class="filter-tabs" data-grid="0">
+      <button class="filter-tab active" data-filter="all">Alle</button>
+      <button class="filter-tab" data-filter="guenstig">💸 Günstig</button>
+      <button class="filter-tab" data-filter="preis-leistung">⚖️ Preis/Leistung</button>
+      <button class="filter-tab" data-filter="marke">⭐ Markenprodukt</button>
+    </div>
+    
+    <div id="community-products-0" class="community-grid"></div>
+  </div>
+    <section class="related-skills" style="max-width:1200px;margin:2rem auto;padding:0 2rem;">
+    <h2 class="related-title">🔗 Verwandte Skills</h2>
+    <p><a ../detail/handwerk-lernen.html>Handwerk lernen</a> · <a ../detail/18-25.html#moebel-bauen>Möbel bauen</a> · <a ../detail/loeten-lernen.html>Löten lernen</a></p>
+  </section>
+    <script type="application/json" id="community-data-0">[{"name": "Amazon Basics Laptop Rucksack", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€29,99", "rating": "4.5★", "link": "https://www.amazon.de/dp/B0CZXNP7NQ?tag=shops2go-21", "category": "guenstig"}, {"name": "MARK RYDEN Business Laptop Rucksack", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€59,99", "rating": "4.8★", "link": "https://www.amazon.de/dp/B0BCW7DTYF?tag=shops2go-21", "category": "preis-leistung"}, {"name": "Piquadro Laptop Rucksack Leder", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€129,99", "rating": "4.9★", "link": "https://www.amazon.de/dp/B0FNXCZ3Z5?tag=shops2go-21", "category": "marke"}]</script>
+  </div>
+
+  <div class="skill-panel" id="handwerk-lernen">
+    <div class="detail-header">
+    <div class="detail-icon">🔨</div>
+    <h1>Handwerk lernen</h1>
+    <p>Drechseln, Bogenbau, Holzbearbeitung.</p>
+  </div>
+    <!-- Hauptprodukte: 4 Spalten -->
+  <div class="products-section">
+    <div class="section-title"><span class="section-icon">🛠️</span> Aus Nischen-Communitys aufgespürt</div>
+    <p class="tips-intro">
+      Unsere Redaktion recherchiert kontinuierlich in Foren, Erfahrungsberichten und Community-Diskussionen 
+      nach praxiserprobten Produkten. Hier findest du unsere aktuelle Auswahl — übersichtlich nach 
+      Preisklassen sortiert.
+    </p>
+    <div class="products-columns">
+      <div class="column">
+        <div class="column-header"><span class="column-icon">💸</span> Günstig</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Bogenbau 1: Langbogen – Matthias Wiltschko</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B07JLHYV4M.jpg" alt="Produktbild B07JLHYV4M" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B07JLHYV4M?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Drechseln für Einsteiger: Grundlagen Holzwerken</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0C152T6CP.jpg" alt="Produktbild B0C152T6CP" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0C152T6CP?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⚖️</span> Preis/Leistung</div>
+        <div class="column-content"></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⭐</span> Marke</div>
+        <div class="column-content"></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">📚</span> Bücher</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Das große Buch der Holzarbeiten – Chris Simpson</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/3833157798.jpg" alt="Produktbild 3833157798" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3833157798?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Praxishandbuch Holzwerken für Einsteiger</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0D7654321.jpg" alt="Produktbild B0D7654321" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0D7654321?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+    </div>
+  </div>
+    <div class="community-tips">
+    <h3>💡 Eure Community-Vorschläge</h3>
+    <p class="tips-intro">
+      Hier teilt die Community ihre favorisierten Produkte und Erfahrungen. 
+      Du hast ein Produkt entdeckt, das hier fehlt? Reiche es gerne ein — 
+      unser Team prüft jeden Vorschlag.
+    </p>
+    
+    <div class="filter-tabs" data-grid="1">
+      <button class="filter-tab active" data-filter="all">Alle</button>
+      <button class="filter-tab" data-filter="guenstig">💸 Günstig</button>
+      <button class="filter-tab" data-filter="preis-leistung">⚖️ Preis/Leistung</button>
+      <button class="filter-tab" data-filter="marke">⭐ Markenprodukt</button>
+    </div>
+    
+    <div id="community-products-1" class="community-grid"></div>
+  </div>
+    <section class="related-skills" style="max-width:1200px;margin:2rem auto;padding:0 2rem;">
+    <h2 class="related-title">🔗 Verwandte Skills</h2>
+    <p><a ../detail/loeten-lernen.html>Löten lernen</a> · <a ../detail/reparieren-statt-ersetzen.html>Reparieren statt ersetzen</a> · <a ../detail/18-25.html#programmieren>Programmieren</a></p>
+  </section>
+    <script type="application/json" id="community-data-1">[{"name": "DEKOPRO Werkzeugkiste", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€29,99", "rating": "4.5★", "link": "https://www.amazon.de/dp/B0CD6ZPCDQ?tag=shops2go-21", "category": "guenstig"}, {"name": "Brüder Mannesmann Werkzeugkoffer 160tlg", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€59,99", "rating": "4.8★", "link": "https://www.amazon.de/dp/B01MUDSH34?tag=shops2go-21", "category": "preis-leistung"}, {"name": "GEDORE Werkzeugsortiment 100tlg", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€129,99", "rating": "4.9★", "link": "https://www.amazon.de/dp/B075S5N2D3?tag=shops2go-21", "category": "marke"}]</script>
+  </div>
+
+  <div class="skill-panel" id="fuehren-lernen">
+    <div class="detail-header">
+    <div class="detail-icon">👥</div>
+    <h1>Führen lernen</h1>
+    <p>Teams leiten, Mitarbeiter motivieren.</p>
+  </div>
+    <!-- Hauptprodukte: 4 Spalten -->
+  <div class="products-section">
+    <div class="section-title"><span class="section-icon">🛠️</span> Aus Nischen-Communitys aufgespürt</div>
+    <p class="tips-intro">
+      Unsere Redaktion recherchiert kontinuierlich in Foren, Erfahrungsberichten und Community-Diskussionen 
+      nach praxiserprobten Produkten. Hier findest du unsere aktuelle Auswahl — übersichtlich nach 
+      Preisklassen sortiert.
+    </p>
+    <div class="products-columns">
+      <div class="column">
+        <div class="column-header"><span class="column-icon">💸</span> Günstig</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">LEADERSHIP 1x1 — Die 7 goldenen Führungsprinzipien</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B09VWP42VJ.jpg" alt="Produktbild B09VWP42VJ" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B09VWP42VJ?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">High Vibration Leadership: Führung neu denken</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0GSV9GWBK.jpg" alt="Produktbild B0GSV9GWBK" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0GSV9GWBK?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Coopers Welt — Leadership für eine neue Zeit</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B01IQ2J6TE.jpg" alt="Produktbild B01IQ2J6TE" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B01IQ2J6TE?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Mitarbeiter finden, einarbeiten und führen</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0BS9YGVQN.jpg" alt="Produktbild B0BS9YGVQN" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0BS9YGVQN?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⚖️</span> Preis/Leistung</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Souverän als Führungskraft: das Team motivieren</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0CM9VJ9TF.jpg" alt="Produktbild B0CM9VJ9TF" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0CM9VJ9TF?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Führung in Krisensituationen</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0B18M8QVP.jpg" alt="Produktbild B0B18M8QVP" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0B18M8QVP?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Remote Positive Leadership</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0CP5VBRGG.jpg" alt="Produktbild B0CP5VBRGG" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0CP5VBRGG?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⭐</span> Marke</div>
+        <div class="column-content"></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">📚</span> Bücher</div>
+        <div class="column-content"></div>
+      </div>
+    </div>
+  </div>
+    <div class="community-tips">
+    <h3>💡 Eure Community-Vorschläge</h3>
+    <p class="tips-intro">
+      Hier teilt die Community ihre favorisierten Produkte und Erfahrungen. 
+      Du hast ein Produkt entdeckt, das hier fehlt? Reiche es gerne ein — 
+      unser Team prüft jeden Vorschlag.
+    </p>
+    
+    <div class="filter-tabs" data-grid="2">
+      <button class="filter-tab active" data-filter="all">Alle</button>
+      <button class="filter-tab" data-filter="guenstig">💸 Günstig</button>
+      <button class="filter-tab" data-filter="preis-leistung">⚖️ Preis/Leistung</button>
+      <button class="filter-tab" data-filter="marke">⭐ Markenprodukt</button>
+    </div>
+    
+    <div id="community-products-2" class="community-grid"></div>
+  </div>
+    <section class="related-skills" style="max-width:1200px;margin:2rem auto;padding:0 2rem;">
+    <h2 class="related-title">🔗 Verwandte Skills</h2>
+    <p><a ../detail/26-35.html#investieren>Investieren</a> · <a ../detail/18-25.html#finanzen-verstehen>Finanzen verstehen</a> · <a ../detail/26-35.html#business-gruenden>Business gründen</a></p>
+  </section>
+    <script type="application/json" id="community-data-2">[{"name": "Mindful Leadership", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€29,99", "rating": "4.5★", "link": "https://www.amazon.de/dp/3867811296?tag=shops2go-21", "category": "guenstig"}, {"name": "Moderne Führung 4-in-1", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€59,99", "rating": "4.8★", "link": "https://www.amazon.de/dp/B0BYSPJ661?tag=shops2go-21", "category": "preis-leistung"}, {"name": "Humble Leadership", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€129,99", "rating": "4.9★", "link": "https://www.amazon.de/dp/3897970961?tag=shops2go-21", "category": "marke"}]</script>
+  </div>
+
+  <div class="skill-panel" id="investieren">
+    <div class="detail-header">
+    <div class="detail-icon">📈</div>
+    <h1>Investieren</h1>
+    <p>Aktien, ETFs, Immobilien — verstehe Finanzmärkte.</p>
+  </div>
+    <!-- Hauptprodukte: 4 Spalten -->
+  <div class="products-section">
+    <div class="section-title"><span class="section-icon">🛠️</span> Aus Nischen-Communitys aufgespürt</div>
+    <p class="tips-intro">
+      Unsere Redaktion recherchiert kontinuierlich in Foren, Erfahrungsberichten und Community-Diskussionen 
+      nach praxiserprobten Produkten. Hier findest du unsere aktuelle Auswahl — übersichtlich nach 
+      Preisklassen sortiert.
+    </p>
+    <div class="products-columns">
+      <div class="column">
+        <div class="column-header"><span class="column-icon">💸</span> Günstig</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Der Weg zur finanziellen Freiheit – Bodo Schäfer</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B08WR748T8.jpg" alt="Produktbild B08WR748T8" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B08WR748T8?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">The Psychology of Money – Morgan Housel</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B091CFFXHX.jpg" alt="Produktbild B091CFFXHX" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B091CFFXHX?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⚖️</span> Preis/Leistung</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Finanzen ganz einfach – Finanztip-Prinzip</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/3426563010.jpg" alt="Produktbild 3426563010" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3426563010?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Aktien & ETF Komplettset für Einsteiger</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/391156905X.jpg" alt="Produktbild 391156905X" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/391156905X?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⭐</span> Marke</div>
+        <div class="column-content"></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">📚</span> Bücher</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Aktien – Das Buch für Einsteiger</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B08NYDTWNJ.jpg" alt="Produktbild B08NYDTWNJ" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B08NYDTWNJ?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Das einzige Buch, das Du über Finanzen lesen solltest</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/3548065848.jpg" alt="Produktbild 3548065848" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3548065848?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">ETFs für Einsteiger – Das verständliche Grundlagenbuch</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B09NRR7LQ7.jpg" alt="Produktbild B09NRR7LQ7" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B09NRR7LQ7?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Das kleine Handbuch des vernünftigen Investierens</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/3959721323.jpg" alt="Produktbild 3959721323" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3959721323?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+    </div>
+  </div>
+    <div class="community-tips">
+    <h3>💡 Eure Community-Vorschläge</h3>
+    <p class="tips-intro">
+      Hier teilt die Community ihre favorisierten Produkte und Erfahrungen. 
+      Du hast ein Produkt entdeckt, das hier fehlt? Reiche es gerne ein — 
+      unser Team prüft jeden Vorschlag.
+    </p>
+    
+    <div class="filter-tabs" data-grid="3">
+      <button class="filter-tab active" data-filter="all">Alle</button>
+      <button class="filter-tab" data-filter="guenstig">💸 Günstig</button>
+      <button class="filter-tab" data-filter="preis-leistung">⚖️ Preis/Leistung</button>
+      <button class="filter-tab" data-filter="marke">⭐ Markenprodukt</button>
+    </div>
+    
+    <div id="community-products-3" class="community-grid"></div>
+  </div>
+    <section class="related-skills" style="max-width:1200px;margin:2rem auto;padding:0 2rem;">
+    <h2 class="related-title">🔗 Verwandte Skills</h2>
+    <p><a ../detail/26-35.html#kochen-meistern>Kochen meistern</a> · <a ../detail/36-45.html#brot-backen>Brot backen</a> · <a ../detail/18-25.html#gaertnern>Gärtnern</a></p>
+  </section>
+    <script type="application/json" id="community-data-3">[{"name": "Geldanlage für Anfänger", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€29,99", "rating": "4.5★", "link": "https://www.amazon.de/dp/3747104533?tag=shops2go-21", "category": "guenstig"}, {"name": "Aktien für Einsteiger", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€59,99", "rating": "4.8★", "link": "https://www.amazon.de/dp/B0GCF3BQ84?tag=shops2go-21", "category": "preis-leistung"}, {"name": "Anlegen mit ETF", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€129,99", "rating": "4.9★", "link": "https://www.amazon.de/dp/B0B3HXQVYK?tag=shops2go-21", "category": "marke"}]</script>
+  </div>
+
+  <div class="skill-panel" id="kochen-meistern">
+    <div class="detail-header">
+    <div class="detail-icon">🍳</div>
+    <h1>Kochen meistern</h1>
+    <p>Von der ersten Pasta zum kompletten Menü.</p>
+  </div>
+    <!-- Hauptprodukte: 4 Spalten -->
+  <div class="products-section">
+    <div class="section-title"><span class="section-icon">🛠️</span> Aus Nischen-Communitys aufgespürt</div>
+    <p class="tips-intro">
+      Unsere Redaktion recherchiert kontinuierlich in Foren, Erfahrungsberichten und Community-Diskussionen 
+      nach praxiserprobten Produkten. Hier findest du unsere aktuelle Auswahl — übersichtlich nach 
+      Preisklassen sortiert.
+    </p>
+    <div class="products-columns">
+      <div class="column">
+        <div class="column-header"><span class="column-icon">💸</span> Günstig</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Vierundzwanzigsieben kochen: Mit über 100 Rezepten — Tim Mälzer</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0BZ4MPPRG.jpg" alt="Produktbild B0BZ4MPPRG" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0BZ4MPPRG?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⚖️</span> Preis/Leistung</div>
+        <div class="column-content"></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⭐</span> Marke</div>
+        <div class="column-content"></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">📚</span> Bücher</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Jetzt koche ich!: Das coolste Kochbuch für Teenager und Anfänger</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0CCTY29J5.jpg" alt="Produktbild B0CCTY29J5" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0CCTY29J5?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Kochbuch für Anfänger mit 5 Zutaten – Emelie Arne</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0DFWRH4Z6.jpg" alt="Produktbild B0DFWRH4Z6" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0DFWRH4Z6?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Das große Abnehm-Kochbuch 2025: 280 schnelle und gesunde Rezepte</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0DQ3QYRYP.jpg" alt="Produktbild B0DQ3QYRYP" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0DQ3QYRYP?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">The Taste — Das Siegerbuch 2025/2026</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0F66QZHGF.jpg" alt="Produktbild B0F66QZHGF" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0F66QZHGF?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Das grosse Buch vom Kochen. – Essen und Trinken</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0026CG5GS.jpg" alt="Produktbild B0026CG5GS" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0026CG5GS?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">365 Low-Carb-Rezepte: Das Kochbuch zum Abnehmen</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/3625181398.jpg" alt="Produktbild 3625181398" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3625181398?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+    </div>
+  </div>
+    <div class="community-tips">
+    <h3>💡 Eure Community-Vorschläge</h3>
+    <p class="tips-intro">
+      Hier teilt die Community ihre favorisierten Produkte und Erfahrungen. 
+      Du hast ein Produkt entdeckt, das hier fehlt? Reiche es gerne ein — 
+      unser Team prüft jeden Vorschlag.
+    </p>
+    
+    <div class="filter-tabs" data-grid="4">
+      <button class="filter-tab active" data-filter="all">Alle</button>
+      <button class="filter-tab" data-filter="guenstig">💸 Günstig</button>
+      <button class="filter-tab" data-filter="preis-leistung">⚖️ Preis/Leistung</button>
+      <button class="filter-tab" data-filter="marke">⭐ Markenprodukt</button>
+    </div>
+    
+    <div id="community-products-4" class="community-grid"></div>
+  </div>
+    <section class="related-skills" style="max-width:1200px;margin:2rem auto;padding:0 2rem;">
+    <h2 class="related-title">🔗 Verwandte Skills</h2>
+    <p><a ../detail/18-25.html#programmieren>Programmieren</a> · <a ../detail/26-35.html#business-gruenden>Business gründen</a> · <a ../detail/18-25.html#finanzen-verstehen>Finanzen verstehen</a></p>
+  </section>
+    <script type="application/json" id="community-data-4">[{"name": "Ramen für alle Kochbuch", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€29,99", "rating": "4.5★", "link": "https://www.amazon.de/dp/3956143620?tag=shops2go-21", "category": "guenstig"}, {"name": "Ottolenghi Simple. Das Kochbuch", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€59,99", "rating": "4.8★", "link": "https://www.amazon.de/dp/3831035830?tag=shops2go-21", "category": "preis-leistung"}, {"name": "Ottolenghi Simple too. Das Kochbuch", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€129,99", "rating": "4.9★", "link": "https://www.amazon.de/dp/3831053359?tag=shops2go-21", "category": "marke"}]</script>
+  </div>
+
+  <div class="skill-panel" id="reparieren-statt-ersetzen">
+    <div class="detail-header">
+    <div class="detail-icon">🛠️</div>
+    <h1>Reparieren statt ersetzen</h1>
+    <p>Heimwerker-Projekte, Elektrik, Klempnerei.</p>
+  </div>
+    <!-- Hauptprodukte: 4 Spalten -->
+  <div class="products-section">
+    <div class="section-title"><span class="section-icon">🛠️</span> Aus Nischen-Communitys aufgespürt</div>
+    <p class="tips-intro">
+      Unsere Redaktion recherchiert kontinuierlich in Foren, Erfahrungsberichten und Community-Diskussionen 
+      nach praxiserprobten Produkten. Hier findest du unsere aktuelle Auswahl — übersichtlich nach 
+      Preisklassen sortiert.
+    </p>
+    <div class="products-columns">
+      <div class="column">
+        <div class="column-header"><span class="column-icon">💸</span> Günstig</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Wecke den Heimwerker in dir! – Tim Staudinger</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B08HRRD891.jpg" alt="Produktbild B08HRRD891" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B08HRRD891?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⚖️</span> Preis/Leistung</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Kleine Reparaturen selbst gemacht – für Haus und Wohnung</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0I1234567.jpg" alt="Produktbild B0I1234567" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0I1234567?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⭐</span> Marke</div>
+        <div class="column-content"></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">📚</span> Bücher</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">DAS XXL HEIMWERKER HANDBUCH – Die besten DIY Hacks</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/3989350366.jpg" alt="Produktbild 3989350366" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3989350366?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Das große Heimwerkerbuch: Techniken, Geräte, Materialien</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/3800175940.jpg" alt="Produktbild 3800175940" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3800175940?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Reparieren statt wegwerfen – Das umfassende Handbuch fürs Haus</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/3989350366.jpg" alt="Produktbild 3989350366" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3989350366?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Das Heimwerker Handbuch für Männer: Werkzeug, Techniken, Projekte</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/3800175940.jpg" alt="Produktbild 3800175940" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3800175940?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Das große Buch vom Heimwerken – Grundlagen, Projekte, Materialien</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0C8NQZ4X1.jpg" alt="Produktbild B0C8NQZ4X1" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0C8NQZ4X1?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+    </div>
+  </div>
+    <div class="community-tips">
+    <h3>💡 Eure Community-Vorschläge</h3>
+    <p class="tips-intro">
+      Hier teilt die Community ihre favorisierten Produkte und Erfahrungen. 
+      Du hast ein Produkt entdeckt, das hier fehlt? Reiche es gerne ein — 
+      unser Team prüft jeden Vorschlag.
+    </p>
+    
+    <div class="filter-tabs" data-grid="5">
+      <button class="filter-tab active" data-filter="all">Alle</button>
+      <button class="filter-tab" data-filter="guenstig">💸 Günstig</button>
+      <button class="filter-tab" data-filter="preis-leistung">⚖️ Preis/Leistung</button>
+      <button class="filter-tab" data-filter="marke">⭐ Markenprodukt</button>
+    </div>
+    
+    <div id="community-products-5" class="community-grid"></div>
+  </div>
+    <section class="related-skills" style="max-width:1200px;margin:2rem auto;padding:0 2rem;">
+    <h2 class="related-title">🔗 Verwandte Skills</h2>
+    <p><a ../detail/reparieren-statt-ersetzen.html>Reparieren statt ersetzen</a> · <a ../detail/loeten-lernen.html>Löten lernen</a> · <a ../detail/handwerk-lernen.html>Handwerk lernen</a></p>
+  </section>
+    <script type="application/json" id="community-data-5">[{"name": "Die kleine Reparatur (Warentest)", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€29,99", "rating": "4.5★", "link": "https://www.amazon.de/dp/3747101259?tag=shops2go-21", "category": "guenstig"}, {"name": "Elektro-Kleingeräte selbst reparieren", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€59,99", "rating": "4.8★", "link": "https://www.amazon.de/dp/377234223X?tag=shops2go-21", "category": "preis-leistung"}, {"name": "Leatherman Wingman Multitool", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€129,99", "rating": "4.9★", "link": "https://www.amazon.de/dp/B079ZXQ6RH?tag=shops2go-21", "category": "marke"}]</script>
+  </div>
+
+  <div class="skill-panel" id="programmieren">
+    <div class="detail-header">
+    <div class="detail-icon">⚡</div>
+    <h1>Programmieren</h1>
+    <p>Python, C++, Clean Code — vertiefe deine Coding-Skills.</p>
+  </div>
+    <!-- Hauptprodukte: 4 Spalten -->
+  <div class="products-section">
+    <div class="section-title"><span class="section-icon">🛠️</span> Aus Nischen-Communitys aufgespürt</div>
+    <p class="tips-intro">
+      Unsere Redaktion recherchiert kontinuierlich in Foren, Erfahrungsberichten und Community-Diskussionen 
+      nach praxiserprobten Produkten. Hier findest du unsere aktuelle Auswahl — übersichtlich nach 
+      Preisklassen sortiert.
+    </p>
+    <div class="products-columns">
+      <div class="column">
+        <div class="column-header"><span class="column-icon">💸</span> Günstig</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Programmieren lernen mit ChatGPT: Einführung in Python & Java</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0DJ8KGWPX.jpg" alt="Produktbild B0DJ8KGWPX" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0DJ8KGWPX?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Programmierprojekte für Einsteiger: 25 Projekte zum sofort Loslegen</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0D3YBWZN1.jpg" alt="Produktbild B0D3YBWZN1" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0D3YBWZN1?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Python für Einsteiger: Der ultimative Schnellkurs</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0DDXSJD8X.jpg" alt="Produktbild B0DDXSJD8X" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0DDXSJD8X?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⚖️</span> Preis/Leistung</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Clean Code: A Handbook of Agile Software Craftsmanship</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B08X8SDSZ5.jpg" alt="Produktbild B08X8SDSZ5" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B08X8SDSZ5?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Miuzei Elektronik Starter Kit</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B08TLTHWD7.jpg" alt="Produktbild B08TLTHWD7" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B08TLTHWD7?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">⭐</span> Marke</div>
+        <div class="column-content"></div>
+      </div>
+      
+      <div class="column">
+        <div class="column-header"><span class="column-icon">📚</span> Bücher</div>
+        <div class="column-content">
+          <div class="product-item">
+            <div class="product-name">Python meistern Übungsbuch</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/B0F61SNK64.jpg" alt="Produktbild B0F61SNK64" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/B0F61SNK64?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div>
+          <div class="product-item">
+            <div class="product-name">Python 3: Das umfassende Handbuch</div>
+            <div class="product-desc"></div>
+            <div class="product-meta">
+              <div class="product-price">€—</div>
+              <div class="product-rating">—</div>
+            </div>
+            
+            <img src="../images/asin/3836236338.jpg" alt="Produktbild 3836236338" style="width:100%;max-width:200px;border-radius:8px;margin-bottom:0.8rem;" onerror="this.style.display='none'">
+            <a href="https://www.amazon.de/dp/3836236338?tag=shops2go-21" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>
+          </div></div>
+      </div>
+    </div>
+  </div>
+    <div class="community-tips">
+    <h3>💡 Eure Community-Vorschläge</h3>
+    <p class="tips-intro">
+      Hier teilt die Community ihre favorisierten Produkte und Erfahrungen. 
+      Du hast ein Produkt entdeckt, das hier fehlt? Reiche es gerne ein — 
+      unser Team prüft jeden Vorschlag.
+    </p>
+    
+    <div class="filter-tabs" data-grid="6">
+      <button class="filter-tab active" data-filter="all">Alle</button>
+      <button class="filter-tab" data-filter="guenstig">💸 Günstig</button>
+      <button class="filter-tab" data-filter="preis-leistung">⚖️ Preis/Leistung</button>
+      <button class="filter-tab" data-filter="marke">⭐ Markenprodukt</button>
+    </div>
+    
+    <div id="community-products-6" class="community-grid"></div>
+  </div>
+    <section class="related-skills" style="max-width:1200px;margin:2rem auto;padding:0 2rem;">
+    <h2 class="related-title">🔗 Verwandte Skills</h2>
+    <p><a ../detail/18-25.html#gaertnern>Gärtnern</a> · <a ../detail/36-45.html#brot-backen>Brot backen</a> · <a ../detail/26-35.html#kochen-meistern>Kochen meistern</a></p>
+  </section>
+    <script type="application/json" id="community-data-6">[{"name": "Raspberry Pi 5 8GB", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€29,99", "rating": "4.5★", "link": "https://www.amazon.de/dp/B0CK2FCG1K?tag=shops2go-21", "category": "guenstig"}, {"name": "Raspberry Pi 5 Starter Set", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€59,99", "rating": "4.8★", "link": "https://www.amazon.de/dp/B0CRPF47RG?tag=shops2go-21", "category": "preis-leistung"}, {"name": "Raspberry Pi 5 NVMe Kit", "desc": "Beispiel Produkt — von einem Community-Mitglied empfohlen.", "price": "€129,99", "rating": "4.9★", "link": "https://www.amazon.de/dp/B0CRMQCYXH?tag=shops2go-21", "category": "marke"}]</script>
+  </div>
+
+
+
+  <div class="suggestion-box">
+    <h3>💬 Produkt vorschlagen</h3>
+    <p>Kennst du ein gutes Produkt für diese Erfahrung? Schlag es uns vor!</p>
+    <form class="suggestion-form" action="mailto:info@vegadelux.de" method="post" enctype="text/plain">
+      <div class="form-group">
+        <label for="prod-name">Produktname</label>
+        <input type="text" id="prod-name" name="Produktname" placeholder="z.B. XYZ Werkzeugset" required>
+      </div>
+      <div class="form-group">
+        <label for="prod-alias">Dein Alias-Name</label>
+        <input type="text" id="prod-alias" name="Alias" placeholder="z.B. Hans">
+      </div>
+      <div class="form-group full">
+        <label for="prod-desc">Warum empfehlst du dieses Produkt?</label>
+        <input type="text" id="prod-desc" name="Begründung" placeholder="z.B. Hält 10 Jahre, super Qualität...">
+      </div>
+      <div class="form-group">
+        <label for="prod-search">Suchbegriff</label>
+        <input type="text" id="prod-search" name="Suchbegriff" placeholder="z.B. garten werkzeug set">
+      </div>
+      <div class="form-group">
+        <label for="prod-vendor">Händler</label>
+        <input type="text" id="prod-vendor" name="Händler" placeholder="z.B. Amazon">
+      </div>
+      <div class="form-group full">
+        <label for="prod-link">Link</label>
+        <input type="url" id="prod-link" name="Link" placeholder="https://...">
+      </div>
+      <button type="submit" class="submit-btn">Vorschlag senden →</button>
+      <p class="form-note">Keine Speicherung personenbezogener Daten.</p>
+    </form>
+  </div>
+
+
+
+  <footer>
+    <p>© 2026 Tobias Eric Wolk — 2do.shop | <a href="/impressum.html">Impressum</a> | <a href="/datenschutz.html">Datenschutz</a></p>
+      <p style="margin-top:1rem;font-size:0.8rem;">Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.</p>
+  </footer>
+
+
+
+  <script>
+    // Scroll-Position speichern und wiederherstellen
+    (function() {
+      const storageKey = '2do-scroll-pos-' + window.location.pathname;
+      window.addEventListener('beforeunload', function() {
+        sessionStorage.setItem(storageKey, window.scrollY);
+      });
+      window.addEventListener('DOMContentLoaded', function() {
+        const savedPos = sessionStorage.getItem(storageKey);
+        if (savedPos) { window.scrollTo(0, parseInt(savedPos, 10)); }
+      });
+    })();
+  </script>
+
+
+  <script>
+    // Tab-Navigation zwischen Skills
+    (function() {
+      const tabs = Array.prototype.slice.call(document.querySelectorAll('.skill-tab'));
+      const panels = Array.prototype.slice.call(document.querySelectorAll('.skill-panel'));
+      function activate(slug, updateHash) {
+        const panel = document.getElementById(slug);
+        if (!panel) return;
+        tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.tab === slug); });
+        panels.forEach(function(p){ p.classList.toggle('active', p.id === slug); });
+        if (updateHash !== false) { history.replaceState(null, '', '#' + slug); }
+        window.scrollTo(0, 0);
+      }
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() { activate(tab.dataset.tab); });
+      });
+      var initial = (window.location.hash || '').slice(1);
+      if (initial && document.getElementById(initial)) { activate(initial, false); }
+    })();
+  </script>
+
+
+  <script>
+    // Community-Tipps Filter-Logik (pro Skill)
+    function renderCommunity(gridId, data, filter) {
+      const container = document.getElementById(gridId);
+      if (!container) return;
+      container.innerHTML = '';
+      const filtered = filter === 'all' ? data : data.filter(function(p){ return p.category === filter; });
+      if (filtered.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted)">Keine Produkte in dieser Kategorie.</p>';
+        return;
+      }
+      filtered.forEach(function(product) {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        const badge = product.category === 'guenstig' ? 'Günstig' : product.category === 'preis-leistung' ? 'Preis/Leistung' : 'Marke';
+        card.innerHTML = '<div class="product-header"><div class="product-name">' + product.name + '</div><span class="product-badge">' + badge + '</span></div><div class="product-desc">' + product.desc + '</div><div class="product-meta"><div class="product-price">' + product.price + '</div><div class="product-rating">' + product.rating + '</div></div><a href="' + product.link + '" class="product-btn" target="_blank" rel="noopener">Bei Amazon ansehen →</a>';
+        container.appendChild(card);
+      });
+    }
+    document.querySelectorAll('.filter-tabs').forEach(function(tabs) {
+      const i = tabs.dataset.grid;
+      const dataEl = document.getElementById('community-data-' + i);
+      const data = dataEl ? JSON.parse(dataEl.textContent) : [];
+      tabs.addEventListener('click', function(e) {
+        const tab = e.target.closest('.filter-tab');
+        if (!tab) return;
+        tabs.querySelectorAll('.filter-tab').forEach(function(t){ t.classList.remove('active'); });
+        tab.classList.add('active');
+        renderCommunity('community-products-' + i, data, tab.dataset.filter);
+      });
+      renderCommunity('community-products-' + i, data, 'all');
+    });
+  </script>
+
+
+  <script>
+    function goHome() {
+      sessionStorage.setItem('returnToDetail', location.pathname.split('/').pop());
+      window.location.href = '../index.html';
+    }
+  </script>
+
+
+  <script>
+    const relI18n = { de: '🔗 Verwandte Skills', en: '🔗 Related Skills' };
+    document.querySelectorAll('.related-title').forEach(function(rt){
+      rt.textContent = relI18n[localStorage.getItem('lang') || 'de'];
+    });
+  </script>
+
+</body>
+</html>

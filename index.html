@@ -3,498 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Entdecke praktische Life Skills nach Ziel und Lebensphase - mit Starterprojekten, Zeitaufwand und passenden Werkzeugen. Erstelle deine persönliche 2do-Liste.">
+  <meta name="description" content="Entdecke praktische Life Skills nach Themen und Lebensphase - mit Starterprojekten, Zeitaufwand und passenden Werkzeugen. Erstelle deine persoenliche 2do-Liste.">
   <title>24 Life Skills, die du im Leben gelernt haben solltest | 2do.shop</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg: #0a0a0a;
-      --surface: #141414;
-      --surface-hover: #1e1e1e;
-      --text: #e5e5e5;
-      --text-muted: #888;
-      --accent: #ff5e00;
-      --accent-2: #ff8c42;
-      --border: #2a2a2a;
-      --radius: 12px;
-      --sidebar-width: 300px;
-    }
+    :root { --bg:#0a0a0a; --surface:#141414; --surface-hover:#1e1e1e; --text:#e5e5e5; --text-muted:#888; --accent:#ff5e00; --accent-2:#ff8c42; --border:#2a2a2a; --radius:12px; --sidebar-width:300px; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      display: flex;
-      min-height: 100vh;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { color: var(--accent-2); }
-
-    /* Sidebar */
-    .sidebar {
-      width: var(--sidebar-width);
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      padding: 2rem 1.5rem;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow-y: auto;
-      flex-shrink: 0;
-    }
-    .sidebar-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 2px solid var(--accent);
-    }
-    .sidebar-hint {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-    }
-    .sidebar-list {
-      list-style: none;
-      padding: 0;
-    }
-    .problem-box { margin-bottom: 1.5rem; }
-    .problem-btn {
-      display: block; width: 100%; text-align: left; margin-bottom: 0.5rem;
-      padding: 0.6rem 0.8rem; background: var(--surface-hover); color: var(--text);
-      border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.85rem;
-      transition: all 0.2s;
-    }
-    .problem-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-    .sidebar-list li {
-      padding: 0.4rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .sidebar-list a {
-      color: var(--text);
-      font-size: 0.85rem;
-      display: block;
-      transition: color 0.2s;
-      cursor: pointer;
-    }
-    .sidebar-list a:hover {
-      color: var(--accent);
-    }
-    .sidebar-empty {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-style: italic;
-    }
-    .sidebar-count {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.4rem 0.8rem;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-    .sidebar-clear {
-      display: inline-block;
-      margin-top: 0.5rem;
-      margin-left: 0.5rem;
-      padding: 0.4rem 0.8rem;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      border-radius: 999px;
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-    .sidebar-clear:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    .sidebar-dropzone {
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
-      padding: 2rem 1rem;
-      text-align: center;
-      margin-top: 1rem;
-      transition: all 0.3s;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-    .sidebar-dropzone.drag-over {
-      border-color: var(--accent);
-      background: rgba(255, 94, 0, 0.1);
-      color: var(--accent);
-    }
-    .sidebar-products {
-      margin-top: 1rem;
-      display: none;
-    }
-    .sidebar-products.visible {
-      display: block;
-    }
-    .sidebar-product {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.75rem;
-      margin-bottom: 0.75rem;
-      transition: all 0.2s;
-    }
-    .sidebar-product:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-    .sidebar-product h4 {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-    .sidebar-product p {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-    }
-    .sidebar-product .price {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-    .sidebar-product a {
-      display: inline-block;
-      padding: 0.4rem 0.8rem;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-    .sidebar-product a:hover {
-      background: var(--accent-2);
-      color: #fff;
-    }
-
-    /* Main */
-    .main {
-      flex: 1;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0;
-    }
-
-    /* Hero */
-    .hero {
-      min-height: 50vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 3rem 2rem;
-      background: radial-gradient(ellipse at center, #1a1a1a 0%, var(--bg) 70%);
-      border-bottom: 1px solid var(--border);
-    }
-    .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero p {
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      color: var(--text-muted);
-      max-width: 700px;
-      margin-bottom: 2rem;
-    }
-    .top-nav {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 1.5rem;
-    }
-    .nav-btn {
-      padding: 0.6rem 1.2rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-    }
-    .nav-btn:hover, .nav-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-    .age-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      justify-content: center;
-    }
-    .age-btn {
-      padding: 0.75rem 1.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-    .age-btn:hover, .age-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    /* Section */
-    .section {
-      padding: 4rem 2rem;
-      border-top: 1px solid var(--border);
-    }
-    .section-header {
-      margin-bottom: 2.5rem;
-      border-left: 4px solid var(--accent);
-      padding-left: 1rem;
-    }
-    .section-header h2 {
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 800;
-      margin-bottom: 0.5rem;
-    }
-    .section-header p {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-    }
-
-    /* Experience Grid */
-    .exp-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-    .exp-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      transition: all 0.3s;
-      cursor: pointer;
-      position: relative;
-    }
-    .exp-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-    }
-    .exp-icon {
-      font-size: 2.5rem;
-      margin-bottom: 0.75rem;
-    }
-    .exp-card h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    .exp-card p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-    .exp-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 0.75rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.8rem;
-    }
-    .exp-age {
-      color: var(--accent);
-      font-weight: 600;
-    }
-    .exp-products {
-      color: var(--text-muted);
-    }
-    .drag-hint {
-      position: absolute;
-      top: 0.75rem;
-      right: 0.75rem;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    .exp-card:hover .drag-hint {
-      opacity: 1;
-    }
-
-    /* Footer */
-    footer {
-      padding: 3rem 2rem;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      color: var(--text-muted);
-    }
-    footer a {
-      color: var(--accent);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      body { flex-direction: column; }
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
-      .section { padding: 3rem 1.5rem; }
-      .exp-grid { grid-template-columns: 1fr; }
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.5s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* KLEINKIND eigener Kasten - kompakt, horizontal */
-    .kl-kasten {
-      margin: 1.5rem 1rem;
-      padding: 1.25rem 1.25rem 1.5rem;
-      background: #141414;
-      border: 1.5px solid var(--accent);
-      border-radius: 14px;
-    }
-    .kl-section { background: transparent; padding: 0; }
-    .kl-kasten .section-header { margin-bottom: 0.75rem; }
-    .kl-title {
-      color: var(--accent) !important;
-      font-size: 1.3rem !important;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.25rem !important;
-    }
-    .kl-kasten .section-header p { font-size: 0.8rem; margin: 0; }
-    /* horizontale Scroll-Reihe statt Grid */
-    .kl-kasten .exp-grid {
-      display: flex !important;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      gap: 1rem;
-      padding: 0.5rem 0.25rem 1rem;
-      scroll-snap-type: x mandatory;
-    }
-    .kl-kasten .exp-card {
-      flex: 0 0 240px;
-      max-width: 240px;
-      scroll-snap-align: start;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
-    }
-    .kl-kasten .exp-card {
-      scroll-snap-align: start;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1rem;
-    }
-    .kl-kasten .exp-card .exp-icon { font-size: 2rem; margin-bottom: 0.4rem; }
-    .kl-kasten .exp-card h3 { font-size: 1.05rem; margin: 0.4rem 0; }
-    .kl-kasten .exp-card p { font-size: 0.85rem; line-height: 1.45; }
-    .kl-kasten .exp-meta { font-size: 0.7rem; }
-    .kl-kasten .drag-hint { display: none; }
-    /* schlanke Scrollbar */
-    .kl-kasten .exp-grid::-webkit-scrollbar { height: 6px; }
-    .kl-kasten .exp-grid::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
-    .kl-section { background: transparent; }
-    .kl-title {
-      color: var(--accent) !important;
-      font-size: 1.8rem !important;
-      letter-spacing: 0.05em;
-    }
-    .kl-kasten .exp-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-    }
-
-    /* Sidebar: Problem-Box oben, Meine Auswahl unten */
-    .problem-box { margin-bottom: 1.5rem; }
-    .problem-btn {
-      display: block; width: 100%; text-align: left; margin-bottom: 0.5rem;
-      padding: 0.6rem 0.8rem; background: var(--surface-hover); color: var(--text);
-      border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.85rem;
-      transition: all 0.2s;
-    }
-    .problem-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateX(2px); }
-    .selection-box {
-      padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-    }
-    .sidebar-count {
-      display: inline-block; min-width: 22px; text-align: center; background: var(--accent); color: #fff;
-      border-radius: 11px; font-size: 0.75rem; padding: 0 0.4rem; margin-left: 0.3rem;
-    }
-    .sel-item {
-      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
-      padding: 0.5rem 0; border-bottom: 1px solid var(--border);
-    }
-    .sel-item:last-child { border-bottom: none; }
-    .sel-name { font-size: 0.85rem; }
-    .sel-btn {
-      flex-shrink: 0; padding: 0.3rem 0.6rem; background: var(--accent); color: #fff !important;
-      border-radius: 6px; font-size: 0.75rem; font-weight: 600;
-    }
-    .sel-btn:hover { background: var(--accent-2); }
-
-    .problem-box { margin-bottom: 1.2rem; }
-    .problem-box + .problem-box { border-top: 1px solid var(--border); padding-top: 1rem; }
-    .problem-btn {
-      display: block; width: 100%; text-align: left; margin-bottom: 0.4rem;
-      padding: 0.55rem 0.75rem; background: var(--surface-hover); color: var(--text);
-      border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.82rem;
-      transition: all 0.2s;
-    }
-    .problem-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateX(3px); }
-    .selection-box {
-      padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-    }
-    .sidebar-count {
-      display: inline-block; min-width: 22px; text-align: center; background: var(--accent); color: #fff;
-      border-radius: 11px; font-size: 0.75rem; padding: 0 0.4rem; margin-left: 0.3rem;
-    }
-    .sel-item { padding: 0.75rem 0; border-bottom: 1px solid var(--border); display: block; }
-    .sel-item:last-child { border-bottom: none; }
-    .sel-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text); }
-    .sel-prod {
-      display: block; width: 100%; box-sizing: border-box; font-size: 0.82rem;
-      padding: 0.45rem 0.5rem; margin-bottom: 0.3rem;
-      background: var(--surface-hover); border-radius: 6px; color: var(--accent) !important;
-    }
-    .sel-prod:hover { background: var(--accent); color: #fff !important; }
-    .sidebar-empty { color: var(--text-muted); font-size: 0.85rem; }
-  </style>
+    body { font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background:var(--bg); color:var(--text); line-height:1.6; display:flex; min-height:100vh; }
+    a { color:var(--accent); text-decoration:none; }
+    a:hover { color:var(--accent-2); }
+    .sidebar { width:var(--sidebar-width); background:var(--surface); border-right:1px solid var(--border); padding:2rem 1.5rem; position:sticky; top:0; height:100vh; overflow-y:auto; flex-shrink:0; }
+    .sidebar-title { font-size:1.1rem; font-weight:700; margin-bottom:0.5rem; padding-bottom:0.75rem; border-bottom:2px solid var(--accent); }
+    .sidebar-hint { font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem; }
+    .sidebar-list { list-style:none; padding:0; }
+    .sidebar-list li { padding:0.4rem 0; border-bottom:1px solid var(--border); }
+    .sidebar-list a { color:var(--text); font-size:0.85rem; display:block; transition:color 0.2s; cursor:pointer; }
+    .sidebar-list a:hover { color:var(--accent); }
+    .sidebar-empty { color:var(--text-muted); font-size:0.85rem; font-style:italic; }
+    .problem-box { margin-bottom:1.2rem; }
+    .problem-box + .problem-box { border-top:1px solid var(--border); padding-top:1rem; }
+    .problem-btn { display:block; width:100%; text-align:left; margin-bottom:0.4rem; padding:0.55rem 0.75rem; background:var(--surface-hover); color:var(--text); border:1px solid var(--border); border-radius:8px; cursor:pointer; font-size:0.82rem; transition:all 0.2s; }
+    .problem-btn:hover { border-color:var(--accent); color:var(--accent); transform:translateX(3px); }
+    .sidebar-count { display:inline-block; min-width:22px; text-align:center; background:var(--accent); color:#fff; border-radius:11px; font-size:0.75rem; padding:0 0.4rem; margin-left:0.3rem; }
+    .sidebar-clear { display:inline-block; margin-top:0.5rem; padding:0.35rem 0.7rem; background:transparent; border:1px solid var(--border); color:var(--text-muted); border-radius:999px; font-size:0.8rem; cursor:pointer; transition:all 0.2s; }
+    .sidebar-clear:hover { border-color:var(--accent); color:var(--accent); }
+    .sidebar-dropzone { border:2px dashed var(--border); border-radius:var(--radius); padding:1.5rem 1rem; text-align:center; margin-top:1rem; transition:all 0.3s; color:var(--text-muted); font-size:0.85rem; }
+    .sidebar-dropzone.drag-over { border-color:var(--accent); background:rgba(255,94,0,0.1); color:var(--accent); }
+    .sidebar-products { margin-top:1rem; }
+    .sidebar-product { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:0.75rem; margin-bottom:0.75rem; transition:all 0.2s; }
+    .sidebar-product:hover { border-color:var(--accent); transform:translateY(-2px); }
+    .sidebar-product h4 { font-size:0.9rem; font-weight:600; margin-bottom:0.25rem; }
+    .sidebar-product p { font-size:0.8rem; color:var(--text-muted); margin-bottom:0.5rem; }
+    .sidebar-product .price { font-size:0.85rem; font-weight:700; color:var(--accent); margin-bottom:0.5rem; }
+    .sidebar-product a { display:inline-block; padding:0.4rem 0.8rem; background:var(--accent); color:#fff; border-radius:6px; font-size:0.8rem; font-weight:600; }
+    .sidebar-product a:hover { background:var(--accent-2); color:#fff; }
+    .selection-box { padding:1rem; background:var(--surface); border:1px solid var(--border); border-radius:12px; }
+    .sel-item { padding:0.75rem 0; border-bottom:1px solid var(--border); display:block; }
+    .sel-item:last-child { border-bottom:none; }
+    .sel-title { font-weight:700; font-size:0.95rem; margin-bottom:0.5rem; color:var(--text); }
+    .sel-prod { display:block; width:100%; box-sizing:border-box; font-size:0.82rem; padding:0.45rem 0.5rem; margin-bottom:0.3rem; background:var(--surface-hover); border-radius:6px; color:var(--accent); }
+    .sel-prod:hover { background:var(--accent); color:#fff; }
+    .main { flex:1; max-width:940px; margin:0 auto; }
+    .hero { min-height:42vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:3rem 2rem 2.5rem; background:radial-gradient(ellipse at center, #1a1a1a 0%, var(--bg) 70%); border-bottom:1px solid var(--border); }
+    .hero h1 { font-size:clamp(2.5rem,6vw,4.2rem); font-weight:900; letter-spacing:-0.03em; margin-bottom:1rem; background:linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero p { font-size:clamp(1rem,2.5vw,1.25rem); color:var(--text-muted); max-width:680px; margin-bottom:1.75rem; }
+    .top-nav { display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; margin-bottom:1.5rem; }
+    .nav-btn { padding:0.55rem 1.1rem; background:var(--surface); border:1px solid var(--border); color:var(--text); border-radius:999px; cursor:pointer; font-weight:600; font-size:0.88rem; transition:all 0.2s; }
+    .nav-btn:hover, .nav-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; transform:translateY(-2px); }
+    .age-filter { display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap; justify-content:center; margin-top:0.5rem; }
+    .filter-label { font-size:0.78rem; color:var(--text-muted); margin-right:0.25rem; }
+    .filter-chip { padding:0.28rem 0.65rem; background:transparent; border:1px solid var(--border); color:var(--text-muted); border-radius:999px; cursor:pointer; font-size:0.76rem; font-weight:500; transition:all 0.2s; }
+    .filter-chip:hover { border-color:var(--accent); color:var(--text); }
+    .filter-chip.active { background:rgba(255,94,0,0.14); border-color:var(--accent); color:var(--accent); }
+    .theme-section { padding:3.25rem 2rem; border-top:1px solid var(--border); }
+    .theme-section.theme-empty { display:none; }
+    .theme-header { margin-bottom:1.5rem; border-left:3px solid var(--accent); padding-left:0.9rem; }
+    .theme-header h2 { font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:800; margin-bottom:0.35rem; letter-spacing:-0.02em; }
+    .theme-header p { color:var(--text-muted); font-size:1.02rem; max-width:720px; }
+    .exp-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(268px,1fr)); gap:1.25rem; }
+    .exp-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.4rem; transition:all 0.3s; cursor:pointer; position:relative; }
+    .exp-card:hover { border-color:var(--accent); transform:translateY(-3px); }
+    .exp-card.age-hidden { display:none; }
+    .exp-icon { font-size:2.3rem; margin-bottom:0.7rem; }
+    .exp-card h3 { font-size:1.15rem; font-weight:700; margin-bottom:0.45rem; }
+    .exp-card p { color:var(--text-muted); font-size:0.88rem; margin-bottom:1rem; }
+    .exp-meta { display:flex; justify-content:space-between; align-items:center; padding-top:0.7rem; border-top:1px solid var(--border); font-size:0.78rem; gap:0.5rem; }
+    .exp-age { background:rgba(255,140,66,0.12); color:var(--accent-2); padding:0.12rem 0.55rem; border-radius:999px; font-size:0.72rem; font-weight:600; white-space:nowrap; }
+    .exp-products { color:var(--text-muted); }
+    .drag-hint { position:absolute; top:0.7rem; right:0.7rem; font-size:0.72rem; color:var(--text-muted); opacity:0; transition:opacity 0.2s; }
+    .exp-card:hover .drag-hint { opacity:1; }
+    footer { padding:3rem 2rem; text-align:center; border-top:1px solid var(--border); color:var(--text-muted); }
+    footer a { color:var(--accent); }
+    @media (max-width:768px) { body{flex-direction:column;} .sidebar{width:100%;height:auto;position:relative;border-right:none;border-bottom:1px solid var(--border);} .theme-section{padding:2.5rem 1.5rem;} .exp-grid{grid-template-columns:1fr;} }
+    .fade-in { opacity:0; transform:translateY(20px); transition:all 0.5s ease; }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+</style>
 </head>
 <body>
 
+  <!-- Sidebar: Meine Auswahl -->
   <!-- Sidebar: Meine Auswahl -->
   <aside class="sidebar" id="sidebarDropzone">
     <!-- Meine Auswahl (oben) -->
@@ -519,123 +106,108 @@
     <!-- Hero -->
     <section class="hero">
       <div class="top-nav">
-        
-        <button class="nav-btn" id="locationBtn" onclick="detectLocation()">📍 Location</button>
+        <button class="nav-btn" id="locationBtn" data-i18n="locationBtn">📍 Location</button>
+        <button class="nav-btn" onclick="window.location.href='detail/test.html'">🎯 Lebenskompetenz-Test</button>
       </div>
-      <h1 id="heroTitle">2do.shop</h1>
-      <p id="heroSub">Was du im Leben gemacht haben solltest — nach Alter, mit konkreten Erfahrungen und kaufbaren Produkten.</p>
-      <div class="age-nav">
-        <button class="age-btn" onclick="scrollToSection('18-25')">18–25</button>
-        <button class="age-btn" onclick="scrollToSection('26-35')">26–35</button>
-        <button class="age-btn" onclick="scrollToSection('36-45')">36–45</button>
-        <button class="age-btn" onclick="scrollToSection('46-55')">46–55</button>
-        <button class="age-btn" onclick="scrollToSection('55plus')">55+</button>
-        <button class="age-btn" onclick="scrollToSection('kleinkind')">🤸 Körper</button>
-      </div>
-    </section>
-
-    <!-- Körperskills lernen -->
-    <div class="kl-kasten">
-    <section class="section kl-section" id="kleinkind">
-      <div class="section-header">
-        <h2 id="section_koerperskills_title" class="kl-title">🧸 KLEINKIND</h2>
-        <p id="section_koerperskills_sub">Vom Greifen bis zur Präzisionsarbeit — Bewegungen spielerisch üben, in jedem Alter.</p>
-      </div>
-      <div class="exp-grid">
-        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-greifen" data-icon="👶" data-title-de="Greifen lernen" data-title-en="Learn to grasp" data-desc-de="Erste Handkontrolle: Ball umschließen, von Hand zu Hand geben." data-desc-en="First hand control: grip a ball, pass hand to hand."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">👶</div><h3>Greifen lernen</h3><p>Erste Handkontrolle: Ball umschließen, von Hand zu Hand geben.</p><div class="exp-meta"><span class="exp-age">ab 0 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-pinzette" data-icon="✌️" data-title-de="Pinzettengriff lernen" data-title-en="Learn the pincer grip" data-desc-de="Präzision: Stacheln ziehen, gezielt einsetzen." data-desc-en="Precision: pull spikes, place deliberately."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">✌️</div><h3>Pinzettengriff lernen</h3><p>Präzision: Stacheln ziehen, gezielt einsetzen.</p><div class="exp-meta"><span class="exp-age">ab 18 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-faedeln" data-icon="🧵" data-title-de="Fädeln lernen" data-title-en="Learn to lace" data-desc-de="Beidhändig: Schnur führen, Elemente auffädeln." data-desc-en="Two-handed: guide thread, lace elements."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🧵</div><h3>Fädeln lernen</h3><p>Beidhändig: Schnur führen, Elemente auffädeln.</p><div class="exp-meta"><span class="exp-age">ab 18 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-hammer" data-icon="🔨" data-title-de="Mit dem Hammer zielen" data-title-en="Learn to aim with a hammer" data-desc-de="Zielbewegung: Hammer führen, Kugel treffen." data-desc-en="Targeted motion: guide hammer, hit the ball."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🔨</div><h3>Mit dem Hammer zielen</h3><p>Zielbewegung: Hammer führen, Kugel treffen.</p><div class="exp-meta"><span class="exp-age">ab 12 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-werfen-fangen" data-icon="⚾" data-title-de="Werfen & Fangen" data-title-en="Throwing & catching" data-desc-de="Auge-Hand: Ball werfen, fangen, bewegtes Ziel treffen." data-desc-en="Eye-hand: throw, catch, hit moving target."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">⚾</div><h3>Werfen & Fangen</h3><p>Auge-Hand: Ball werfen, fangen, bewegtes Ziel treffen.</p><div class="exp-meta"><span class="exp-age">ab 2 J.</span><span class="exp-products">1 Produkt</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-balancieren" data-icon="⚖️" data-title-de="Balancieren lernen" data-title-en="Learn to balance" data-desc-de="Gleichgewicht: von Stein zu Stein, Höhen unterscheiden." data-desc-en="Balance: stone to stone, distinguish heights."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">⚖️</div><h3>Balancieren lernen</h3><p>Gleichgewicht: von Stein zu Stein, Höhen unterscheiden.</p><div class="exp-meta"><span class="exp-age">ab 3 J.</span><span class="exp-products">1 Produkt</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-reaktion" data-icon="⚡" data-title-de="Reaktion trainieren" data-title-en="Train reactivity" data-desc-de="Reflex: unberechenbaren Absprung auffangen." data-desc-en="Reflex: catch unpredictable bounce."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">⚡</div><h3>Reaktion trainieren</h3><p>Reflex: unberechenbaren Absprung auffangen.</p><div class="exp-meta"><span class="exp-age">ab 6 J.</span><span class="exp-products">1 Produkt</span></div></div>
-      </div>
-    </section>
-    </div>
-    <!-- 18-25 -->
-    <section class="section" id="18-25">
-      <div class="section-header">
-        <h2 id="section_18_25_title">🎯 18–25 Jahre</h2>
-        <p id="section_18_25_sub">Grundlagen schaffen — Erfahrungen, die dir später Vorteile bringen.</p>
-      </div>
-      <div class="exp-grid">
-        <div class="exp-card fade-in" draggable="true" data-id="18-25-5" data-icon="🧱" data-title-de="Möbel bauen" data-title-en="Build furniture" data-desc-de="Regal, Hocker oder Tisch aus Holz — etwas Bleibendes mit den Händen schaffen." data-desc-en="Shelf, stool or table from wood — create something lasting."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🧱</div><h3>Möbel bauen</h3><p>Regal, Hocker oder Tisch aus Holz — etwas Bleibendes mit den Händen schaffen.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="18-25-3" data-icon="📸" data-title-de="Fotografie" data-title-en="Photography" data-desc-de="Kamera, Objektiv, Licht — lernen, die Welt durch den Sucher zu sehen." data-desc-en="Camera, lens, light — learn to see the world through the viewfinder."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📸</div><h3>Fotografie</h3><p>Kamera, Objektiv, Licht — lernen, die Welt durch den Sucher zu sehen.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="18-25-4" data-icon="💰" data-title-de="Finanzen verstehen" data-title-en="Understand finances" data-desc-de="Budget, ETFs, Steuern — Geld ist ein Werkzeug, lerne es zu nutzen." data-desc-en="Budget, ETFs, taxes — money is a tool, learn to use it."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">💰</div><h3>Finanzen verstehen</h3><p>Budget, ETFs, Steuern — Geld ist ein Werkzeug, lerne es zu nutzen.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="18-25-6" data-icon="🎸" data-title-de="Instrument lernen" data-title-en="Learn an instrument" data-desc-de="Gitarre, Ukulele, Klavier — Lieder spielen, die du liebst." data-desc-en="Guitar, ukulele, piano — play songs you love."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎸</div><h3>Instrument lernen</h3><p>Gitarre, Ukulele, Klavier — Lieder spielen, die du liebst.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="18-25-7" data-icon="🎨" data-title-de="Kreativ sein" data-title-en="Be creative" data-desc-de="Malen, zeichnen, designen — etwas erschaffen, das dein Name trägt." data-desc-en="Paint, draw, design — create something that bears your name."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎨</div><h3>Kreativ sein</h3><p>Malen, zeichnen, designen — etwas erschaffen, das dein Name trägt.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="18-25-8" data-icon="🌿" data-title-de="Gärtnern" data-title-en="Gardening" data-desc-de="Kräuter, Gemüse, Bonsai — etwas wachsen lassen, das du ernten kannst." data-desc-en="Herbs, vegetables, bonsai — grow something you can harvest."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌿</div><h3>Gärtnern</h3><p>Kräuter, Gemüse, Bonsai — etwas wachsen lassen, das du ernten kannst.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="18-25-1" data-icon="🔧" data-title-de="Löten lernen" data-title-en="Learn soldering" data-desc-de="Mit eigenen Händen etwas zum Laufen bringen: ein Radio, ein Roboter, eine Schaltung." data-desc-en="Make something work with your own hands: a radio, a robot, a circuit."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🔧</div><h3>Löten lernen</h3><p>Mit eigenen Händen etwas zum Laufen bringen: ein Radio, ein Roboter, eine Schaltung.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+      <h1 id="heroTitle" data-i18n="heroTitle">2do.shop</h1>
+      <p id="heroSub" data-i18n="heroSub">Was du im Leben gemacht haben solltest — nach Themen, mit konkreten Erfahrungen und kaufbaren Produkten.</p>
+      <div class="age-filter" id="ageFilter">
+        <span class="filter-label">Alter:</span>
+        <button class="filter-chip active" data-filter="all">Alle Altersgruppen</button>
+        <button class="filter-chip" data-filter="18-25">18–25</button>
+        <button class="filter-chip" data-filter="26-35">26–35</button>
+        <button class="filter-chip" data-filter="36-45">36–45</button>
+        <button class="filter-chip" data-filter="46-55">46–55</button>
+        <button class="filter-chip" data-filter="55plus">55+</button>
+        <button class="filter-chip" data-filter="kleinkind">🧸 Kleinkind</button>
       </div>
     </section>
 
-    <!-- 26-35 -->
-    <section class="section" id="26-35">
-      <div class="section-header">
-        <h2 id="section_26_35_title">🔥 26–35 Jahre</h2>
-        <p id="section_26_35_sub">Breiter werden — Business, Handwerk, Führung, Beziehungen.</p>
+    <section class="theme-section" id="theme-haushalt">
+      <div class="theme-header">
+        <h2 data-i18n="theme_haushalt_title">🏠 Haushalt & Handwerk</h2>
+        <p data-i18n="theme_haushalt_sub">Von der ersten eigenen Wohnung bis zum grünen Daumen — praktische Dinge, die du für Zuhause können solltest.</p>
       </div>
       <div class="exp-grid">
-        <div class="exp-card fade-in" draggable="true" data-id="26-35-1" data-icon="🚀" data-title-de="Business gründen" data-title-en="Start a business" data-desc-de="Lean Startup, Side-Hustle, erstes Produkt — von der Idee zum ersten Euro." data-desc-en="Lean Startup, side hustle, first product — from idea to first euro."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🚀</div><h3>Business gründen</h3><p>Lean Startup, Side-Hustle, erstes Produkt — von der Idee zum ersten Euro.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="26-35-2" data-icon="🛠️" data-title-de="Handwerk lernen" data-title-en="Learn a craft" data-desc-de="Schreinern, Löten, 3D-Druck — Dinge bauen, die funktionieren." data-desc-en="Carpentry, soldering, 3D printing — build things that work."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🛠️</div><h3>Handwerk lernen</h3><p>Schreinern, Löten, 3D-Druck — Dinge bauen, die funktionieren.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="26-35-3" data-icon="🎯" data-title-de="Führen lernen" data-title-en="Learn leadership" data-desc-de="Verantwortung übernehmen, Teams leiten, Ownership leben." data-desc-en="Take responsibility, lead teams, live ownership."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎯</div><h3>Führen lernen</h3><p>Verantwortung übernehmen, Teams leiten, Ownership leben.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="26-35-4" data-icon="📈" data-title-de="Investieren" data-title-en="Investing" data-desc-de="ETFs, Aktien, Immobilien — Geld arbeiten lassen, statt nur zu sparen." data-desc-en="ETFs, stocks, real estate — make money work instead of just saving."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📈</div><h3>Investieren</h3><p>ETFs, Aktien, Immobilien — Geld arbeiten lassen, statt nur zu sparen.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="26-35-5" data-icon="🍳" data-title-de="Kochen meistern" data-title-en="Master cooking" data-desc-de="Fünf Gerichte einer fremden Küche, eigenes Brot, 3-Gänge-Menü." data-desc-en="Five dishes from a foreign cuisine, your own bread, a 3-course menu."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🍳</div><h3>Kochen meistern</h3><p>Fünf Gerichte einer fremden Küche, eigenes Brot, 3-Gänge-Menü — von der Quelle bis zum Teller.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="26-35-6" data-icon="🔧" data-title-de="Reparieren statt ersetzen" data-title-en="Repair instead of replace" data-desc-de="Handy-Display, Laptop-Lüfter, Toaster — Ressourcen sparen." data-desc-en="Phone screen, laptop fan, toaster — save resources."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🔧</div><h3>Reparieren statt ersetzen</h3><p>Handy-Display, Laptop-Lüfter, Toaster — Ressourcen sparen und Problemlösung stärken.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="26-35-7" data-icon="💻" data-title-de="Programmieren" data-title-en="Programming" data-desc-de="Python, Web, Apps — Automatisierung, Side-Projekte, Beruf." data-desc-en="Python, Web, Apps — automation, side projects, career."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">💻</div><h3>Programmieren</h3><p>Python, Web, Apps — nicht nur zum Arbeiten, sondern zum Machen.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-5" data-age="18-25" data-detail="18-25.html#moebel-bauen" data-icon="🧱" data-title-de="Möbel bauen" data-title-en="Build furniture" data-desc-de="Regal, Hocker oder Tisch aus Holz — etwas Bleibendes mit den Händen schaffen." data-desc-en="Shelf, stool or table from wood — create something lasting."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🧱</div><h3>Möbel bauen</h3><p>Regal, Hocker oder Tisch aus Holz — etwas Bleibendes mit den Händen schaffen.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-1" data-age="18-25" data-detail="18-25.html#loeten-lernen" data-icon="🔧" data-title-de="Löten lernen" data-title-en="Learn soldering" data-desc-de="Mit eigenen Händen etwas zum Laufen bringen: ein Radio, ein Roboter, eine Schaltung." data-desc-en="Make something work with your own hands: a radio, a robot, a circuit."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🔧</div><h3>Löten lernen</h3><p>Mit eigenen Händen etwas zum Laufen bringen: ein Radio, ein Roboter, eine Schaltung.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-8" data-age="18-25" data-detail="18-25.html#gaertnern" data-icon="🌿" data-title-de="Gärtnern" data-title-en="Gardening" data-desc-de="Kräuter, Gemüse, Bonsai — etwas wachsen lassen, das du ernten kannst." data-desc-en="Herbs, vegetables, bonsai — grow something you can harvest."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌿</div><h3>Gärtnern</h3><p>Kräuter, Gemüse, Bonsai — etwas wachsen lassen, das du ernten kannst.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-2" data-age="26-35" data-detail="26-35.html#handwerk-lernen" data-icon="🛠️" data-title-de="Handwerk lernen" data-title-en="Learn a craft" data-desc-de="Schreinern, Löten, 3D-Druck — Dinge bauen, die funktionieren." data-desc-en="Carpentry, soldering, 3D printing — build things that work."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🛠️</div><h3>Handwerk lernen</h3><p>Schreinern, Löten, 3D-Druck — Dinge bauen, die funktionieren.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-5" data-age="26-35" data-detail="26-35.html#kochen-meistern" data-icon="🍳" data-title-de="Kochen meistern" data-title-en="Master cooking" data-desc-de="Fünf Gerichte einer fremden Küche, eigenes Brot, 3-Gänge-Menü." data-desc-en="Five dishes from a foreign cuisine, your own bread, a 3-course menu."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🍳</div><h3>Kochen meistern</h3><p>Fünf Gerichte einer fremden Küche, eigenes Brot, 3-Gänge-Menü — von der Quelle bis zum Teller.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-6" data-age="26-35" data-detail="26-35.html#reparieren-statt-ersetzen" data-icon="🔧" data-title-de="Reparieren statt ersetzen" data-title-en="Repair instead of replace" data-desc-de="Handy-Display, Laptop-Lüfter, Toaster — Ressourcen sparen." data-desc-en="Phone screen, laptop fan, toaster — save resources."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🔧</div><h3>Reparieren statt ersetzen</h3><p>Handy-Display, Laptop-Lüfter, Toaster — Ressourcen sparen und Problemlösung stärken.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="36-45-1" data-age="36-45" data-detail="36-45.html#gaertnern" data-icon="🌱" data-title-de="Gärtnern" data-title-en="Gardening" data-desc-de="Kräuter, Gemüse, Bonsai — etwas erschaffen, das über dich hinauswächst." data-desc-en="Herbs, vegetables, bonsai — create something that outgrows you."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌱</div><h3>Gärtnern</h3><p>Kräuter, Gemüse, Bonsai — etwas erschaffen, das über dich hinauswächst.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="36-45-4" data-age="36-45" data-detail="36-45.html#brot-backen" data-icon="🍞" data-title-de="Brot backen" data-title-en="Bread baking" data-desc-de="Eigenes Brot backen und einen Sauerteig führen — Langsamkeit und Pflege lernen." data-desc-en="Bake your own bread and maintain a sourdough — learn slowness and care."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🍞</div><h3>Brot backen</h3><p>Eigenes Brot backen und einen Sauerteig führen — Langsamkeit und Pflege lernen.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="46-55-2" data-age="46-55" data-detail="46-55.html#nachhaltigkeit" data-icon="🌍" data-title-de="Nachhaltigkeit" data-title-en="Sustainability" data-desc-de="Zero Waste, Solar, Garten — zurück zu den Wurzeln, aber mit System." data-desc-en="Zero waste, solar, garden — back to the roots, but with a system."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌍</div><h3>Nachhaltigkeit</h3><p>Zero Waste, Solar, Garten — zurück zu den Wurzeln, aber mit System.</p><div class="exp-meta"><span class="exp-age">46–55</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="55-3" data-age="55plus" data-detail="55.html#natur-pflegen" data-icon="🌳" data-title-de="Natur pflegen" data-title-en="Nurture nature" data-desc-de="Baum pflanzen, Insektenhotel bauen — etwas für die nächste Generation tun." data-desc-en="Plant a tree, build an insect hotel — do something for the next generation."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌳</div><h3>Natur pflegen</h3><p>Baum pflanzen, Insektenhotel bauen — etwas für die nächste Generation tun.</p><div class="exp-meta"><span class="exp-age">55+</span><span class="exp-products">3 Produkte</span></div></div>
       </div>
     </section>
 
-    <!-- 36-45 -->
-    <section class="section" id="36-45">
-      <div class="section-header">
-        <h2 id="section_36_45_title">⚡ 36–45 Jahre</h2>
-        <p id="section_36_45_sub">Tiefe statt Breite — Gesundheit, Nachhaltigkeit, Vermächtnis.</p>
+    <section class="theme-section" id="theme-finanzen">
+      <div class="theme-header">
+        <h2 data-i18n="theme_finanzen_title">💰 Finanzen & Karriere</h2>
+        <p data-i18n="theme_finanzen_sub">Geld verstehen, Business aufbauen, Beruf gestalten — Kompetenzen für Unabhängigkeit.</p>
       </div>
       <div class="exp-grid">
-        <div class="exp-card fade-in" draggable="true" data-id="36-45-1" data-icon="🌱" data-title-de="Gärtnern" data-title-en="Gardening" data-desc-de="Kräuter, Gemüse, Bonsai — etwas erschaffen, das über dich hinauswächst." data-desc-en="Herbs, vegetables, bonsai — create something that outgrows you."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌱</div><h3>Gärtnern</h3><p>Kräuter, Gemüse, Bonsai — etwas erschaffen, das über dich hinauswächst.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="36-45-2" data-icon="❤️" data-title-de="Gesundheit" data-title-en="Health" data-desc-de="Multivitamine, Blutdruck, Körperanalyse — der Körper will gepflegt werden." data-desc-en="Multivitamins, blood pressure, body analysis — the body wants care."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">❤️</div><h3>Gesundheit</h3><p>Multivitamine, Blutdruck, Körperanalyse — der Körper will gepflegt werden.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="36-45-3" data-icon="🤝" data-title-de="Mentoring" data-title-en="Mentoring" data-desc-de="Weitergeben, was du gelernt hast — der nächste Schritt nach dem eigenen Erfolg." data-desc-en="Pass on what you have learned — the next step after your own success."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🤝</div><h3>Mentoring</h3><p>Weitergeben, was du gelernt hast — der nächste Schritt nach dem eigenen Erfolg.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="36-45-4" data-icon="🍞" data-title-de="Brot backen" data-title-en="Bread baking" data-desc-de="Eigenes Brot backen und einen Sauerteig führen — Langsamkeit und Pflege lernen." data-desc-en="Bake your own bread and maintain a sourdough — learn slowness and care."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🍞</div><h3>Brot backen</h3><p>Eigenes Brot backen und einen Sauerteig führen — Langsamkeit und Pflege lernen.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-4" data-age="18-25" data-detail="18-25.html#finanzen-verstehen" data-icon="💰" data-title-de="Finanzen verstehen" data-title-en="Understand finances" data-desc-de="Budget, ETFs, Steuern — Geld ist ein Werkzeug, lerne es zu nutzen." data-desc-en="Budget, ETFs, taxes — money is a tool, learn to use it."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">💰</div><h3>Finanzen verstehen</h3><p>Budget, ETFs, Steuern — Geld ist ein Werkzeug, lerne es zu nutzen.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-1" data-age="26-35" data-detail="26-35.html#business-gruenden" data-icon="🚀" data-title-de="Business gründen" data-title-en="Start a business" data-desc-de="Lean Startup, Side-Hustle, erstes Produkt — von der Idee zum ersten Euro." data-desc-en="Lean Startup, side hustle, first product — from idea to first euro."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🚀</div><h3>Business gründen</h3><p>Lean Startup, Side-Hustle, erstes Produkt — von der Idee zum ersten Euro.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-3" data-age="26-35" data-detail="26-35.html#fuehren-lernen" data-icon="🎯" data-title-de="Führen lernen" data-title-en="Learn leadership" data-desc-de="Verantwortung übernehmen, Teams leiten, Ownership leben." data-desc-en="Take responsibility, lead teams, live ownership."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎯</div><h3>Führen lernen</h3><p>Verantwortung übernehmen, Teams leiten, Ownership leben.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-4" data-age="26-35" data-detail="26-35.html#investieren" data-icon="📈" data-title-de="Investieren" data-title-en="Investing" data-desc-de="ETFs, Aktien, Immobilien — Geld arbeiten lassen, statt nur zu sparen." data-desc-en="ETFs, stocks, real estate — make money work instead of just saving."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📈</div><h3>Investieren</h3><p>ETFs, Aktien, Immobilien — Geld arbeiten lassen, statt nur zu sparen.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="26-35-7" data-age="26-35" data-detail="26-35.html#programmieren" data-icon="💻" data-title-de="Programmieren" data-title-en="Programming" data-desc-de="Python, Web, Apps — Automatisierung, Side-Projekte, Beruf." data-desc-en="Python, Web, Apps — automation, side projects, career."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">💻</div><h3>Programmieren</h3><p>Python, Web, Apps — nicht nur zum Arbeiten, sondern zum Machen.</p><div class="exp-meta"><span class="exp-age">26–35</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="36-45-3" data-age="36-45" data-detail="36-45.html#mentoring" data-icon="🤝" data-title-de="Mentoring" data-title-en="Mentoring" data-desc-de="Weitergeben, was du gelernt hast — der nächste Schritt nach dem eigenen Erfolg." data-desc-en="Pass on what you have learned — the next step after your own success."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🤝</div><h3>Mentoring</h3><p>Weitergeben, was du gelernt hast — der nächste Schritt nach dem eigenen Erfolg.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="55-1" data-age="55plus" data-detail="55.html#technologie-nutzen" data-icon="📱" data-title-de="Technologie nutzen" data-title-en="Use technology" data-desc-de="E-Reader, Smart Display — Geräte, die das Leben leichter machen." data-desc-en="E-reader, smart display — devices that make life easier."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📱</div><h3>Technologie nutzen</h3><p>E-Reader, Smart Display — Geräte, die das Leben leichter machen.</p><div class="exp-meta"><span class="exp-age">55+</span><span class="exp-products">3 Produkte</span></div></div>
       </div>
     </section>
 
-    <!-- 46-55 -->
-    <section class="section" id="46-55">
-      <div class="section-header">
-        <h2 id="section_46_55_title">🎖️ 46–55 Jahre</h2>
-        <p id="section_46_55_sub">Erfahrung nutzen — Vermächtnis, Nachhaltigkeit, Ruhe.</p>
+    <section class="theme-section" id="theme-gesundheit">
+      <div class="theme-header">
+        <h2 data-i18n="theme_gesundheit_title">❤️ Gesundheit & Beziehung</h2>
+        <p data-i18n="theme_gesundheit_sub">Auf den Körper hören, Verbindungen pflegen, Klarheit im Kopf gewinnen.</p>
       </div>
       <div class="exp-grid">
-        <div class="exp-card fade-in" draggable="true" data-id="46-55-1" data-icon="📖" data-title-de="Vermächtnis" data-title-en="Legacy" data-desc-de="Lebensbuch, Testament — was du hinterlässt, wenn du nicht mehr da bist." data-desc-en="Life book, will — what you leave behind when you are gone."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📖</div><h3>Vermächtnis</h3><p>Lebensbuch, Testament — was du hinterlässt, wenn du nicht mehr da bist.</p><div class="exp-meta"><span class="exp-age">46–55</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="46-55-2" data-icon="🌍" data-title-de="Nachhaltigkeit" data-title-en="Sustainability" data-desc-de="Zero Waste, Solar, Garten — zurück zu den Wurzeln, aber mit System." data-desc-en="Zero waste, solar, garden — back to the roots, but with a system."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌍</div><h3>Nachhaltigkeit</h3><p>Zero Waste, Solar, Garten — zurück zu den Wurzeln, aber mit System.</p><div class="exp-meta"><span class="exp-age">46–55</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="46-55-3" data-icon="📚" data-title-de="Journaling" data-title-en="Journaling" data-desc-de="Ein Journaling-System etablieren und 1 Jahr führen — Gedanken externalisieren." data-desc-en="Establish a journaling system for 1 year — externalize thoughts."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📚</div><h3>Journaling</h3><p>Ein Journaling-System etablieren und 1 Jahr führen — Gedanken externalisieren, Muster erkennen.</p><div class="exp-meta"><span class="exp-age">46–55</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="36-45-2" data-age="36-45" data-detail="36-45.html#gesundheit" data-icon="❤️" data-title-de="Gesundheit" data-title-en="Health" data-desc-de="Multivitamine, Blutdruck, Körperanalyse — der Körper will gepflegt werden." data-desc-en="Multivitamins, blood pressure, body analysis — the body wants care."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">❤️</div><h3>Gesundheit</h3><p>Multivitamine, Blutdruck, Körperanalyse — der Körper will gepflegt werden.</p><div class="exp-meta"><span class="exp-age">36–45</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="46-55-1" data-age="46-55" data-detail="46-55.html#vermaechtnis" data-icon="📖" data-title-de="Vermächtnis" data-title-en="Legacy" data-desc-de="Lebensbuch, Testament — was du hinterlässt, wenn du nicht mehr da bist." data-desc-en="Life book, will — what you leave behind when you are gone."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📖</div><h3>Vermächtnis</h3><p>Lebensbuch, Testament — was du hinterlässt, wenn du nicht mehr da bist.</p><div class="exp-meta"><span class="exp-age">46–55</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="46-55-3" data-age="46-55" data-detail="46-55.html#journaling" data-icon="📚" data-title-de="Journaling" data-title-en="Journaling" data-desc-de="Ein Journaling-System etablieren und 1 Jahr führen — Gedanken externalisieren." data-desc-en="Establish a journaling system for 1 year — externalize thoughts."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📚</div><h3>Journaling</h3><p>Ein Journaling-System etablieren und 1 Jahr führen — Gedanken externalisieren, Muster erkennen.</p><div class="exp-meta"><span class="exp-age">46–55</span><span class="exp-products">3 Produkte</span></div></div>
       </div>
     </section>
 
-    <!-- 55+ -->
-    <section class="section" id="55plus">
-      <div class="section-header">
-        <h2 id="section_55plus_title">🌟 55+ Jahre</h2>
-        <p id="section_55plus_sub">Jetzt oder nie — Technologie, Kreativität, Gesundheit.</p>
+    <section class="theme-section" id="theme-kreativ">
+      <div class="theme-header">
+        <h2 data-i18n="theme_kreativ_title">🎨 Kreativ & Lernen</h2>
+        <p data-i18n="theme_kreativ_sub">Malen, spielen, schreiben, entdecken — Kreativität und neues Wissen fürs Leben.</p>
       </div>
       <div class="exp-grid">
-        <div class="exp-card fade-in" draggable="true" data-id="55-1" data-icon="📱" data-title-de="Technologie nutzen" data-title-en="Use technology" data-desc-de="E-Reader, Smart Display — Geräte, die das Leben leichter machen." data-desc-en="E-reader, smart display — devices that make life easier."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📱</div><h3>Technologie nutzen</h3><p>E-Reader, Smart Display — Geräte, die das Leben leichter machen.</p><div class="exp-meta"><span class="exp-age">55+</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="55-2" data-icon="🎨" data-title-de="Kreativität" data-title-en="Creativity" data-desc-de="Aquarell, Lebensbuch — die besten Ideen kommen oft später im Leben." data-desc-en="Watercolor, life book — the best ideas often come later in life."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎨</div><h3>Kreativität</h3><p>Aquarell, Lebensbuch — die besten Ideen kommen oft später im Leben.</p><div class="exp-meta"><span class="exp-age">55+</span><span class="exp-products">3 Produkte</span></div></div>
-        <div class="exp-card fade-in" draggable="true" data-id="55-3" data-icon="🌳" data-title-de="Natur pflegen" data-title-en="Nurture nature" data-desc-de="Baum pflanzen, Insektenhotel bauen — etwas für die nächste Generation tun." data-desc-en="Plant a tree, build an insect hotel — do something for the next generation."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🌳</div><h3>Natur pflegen</h3><p>Baum pflanzen, Insektenhotel bauen — etwas für die nächste Generation tun.</p><div class="exp-meta"><span class="exp-age">55+</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-3" data-age="18-25" data-detail="18-25.html#fotografie" data-icon="📸" data-title-de="Fotografie" data-title-en="Photography" data-desc-de="Kamera, Objektiv, Licht — lernen, die Welt durch den Sucher zu sehen." data-desc-en="Camera, lens, light — learn to see the world through the viewfinder."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">📸</div><h3>Fotografie</h3><p>Kamera, Objektiv, Licht — lernen, die Welt durch den Sucher zu sehen.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-6" data-age="18-25" data-detail="18-25.html#instrument-lernen" data-icon="🎸" data-title-de="Instrument lernen" data-title-en="Learn an instrument" data-desc-de="Gitarre, Ukulele, Klavier — Lieder spielen, die du liebst." data-desc-en="Guitar, ukulele, piano — play songs you love."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎸</div><h3>Instrument lernen</h3><p>Gitarre, Ukulele, Klavier — Lieder spielen, die du liebst.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="18-25-7" data-age="18-25" data-detail="18-25.html#kreativ-sein" data-icon="🎨" data-title-de="Kreativ sein" data-title-en="Be creative" data-desc-de="Malen, zeichnen, designen — etwas erschaffen, das dein Name trägt." data-desc-en="Paint, draw, design — create something that bears your name."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎨</div><h3>Kreativ sein</h3><p>Malen, zeichnen, designen — etwas erschaffen, das dein Name trägt.</p><div class="exp-meta"><span class="exp-age">18–25</span><span class="exp-products">3 Produkte</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="55-2" data-age="55plus" data-detail="55.html#kreativitaet" data-icon="🎨" data-title-de="Kreativität" data-title-en="Creativity" data-desc-de="Aquarell, Lebensbuch — die besten Ideen kommen oft später im Leben." data-desc-en="Watercolor, life book — the best ideas often come later in life."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🎨</div><h3>Kreativität</h3><p>Aquarell, Lebensbuch — die besten Ideen kommen oft später im Leben.</p><div class="exp-meta"><span class="exp-age">55+</span><span class="exp-products">3 Produkte</span></div></div>
       </div>
     </section>
 
+    <section class="theme-section" id="theme-kleinkind">
+      <div class="theme-header">
+        <h2 data-i18n="theme_kleinkind_title">🧸 Kleinkind & Körperskills</h2>
+        <p data-i18n="theme_kleinkind_sub">Motorik und Körperskills spielerisch üben — vom ersten Greifen bis zur Koordination.</p>
+      </div>
+      <div class="exp-grid">
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-greifen" data-age="kleinkind" data-icon="👶" data-title-de="Greifen lernen" data-title-en="Learn to grasp" data-desc-de="Erste Handkontrolle: Ball umschließen, von Hand zu Hand geben." data-desc-en="First hand control: grip a ball, pass hand to hand."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">👶</div><h3>Greifen lernen</h3><p>Erste Handkontrolle: Ball umschließen, von Hand zu Hand geben.</p><div class="exp-meta"><span class="exp-age">ab 0 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-pinzette" data-age="kleinkind" data-icon="✌️" data-title-de="Pinzettengriff lernen" data-title-en="Learn the pincer grip" data-desc-de="Präzision: Stacheln ziehen, gezielt einsetzen." data-desc-en="Precision: pull spikes, place deliberately."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">✌️</div><h3>Pinzettengriff lernen</h3><p>Präzision: Stacheln ziehen, gezielt einsetzen.</p><div class="exp-meta"><span class="exp-age">ab 18 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-faedeln" data-age="kleinkind" data-icon="🧵" data-title-de="Fädeln lernen" data-title-en="Learn to lace" data-desc-de="Beidhändig: Schnur führen, Elemente auffädeln." data-desc-en="Two-handed: guide thread, lace elements."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🧵</div><h3>Fädeln lernen</h3><p>Beidhändig: Schnur führen, Elemente auffädeln.</p><div class="exp-meta"><span class="exp-age">ab 18 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-hammer" data-age="kleinkind" data-icon="🔨" data-title-de="Mit dem Hammer zielen" data-title-en="Learn to aim with a hammer" data-desc-de="Zielbewegung: Hammer führen, Kugel treffen." data-desc-en="Targeted motion: guide hammer, hit the ball."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">🔨</div><h3>Mit dem Hammer zielen</h3><p>Zielbewegung: Hammer führen, Kugel treffen.</p><div class="exp-meta"><span class="exp-age">ab 12 Mon.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-werfen-fangen" data-age="kleinkind" data-icon="⚾" data-title-de="Werfen & Fangen" data-title-en="Throwing & catching" data-desc-de="Auge-Hand: Ball werfen, fangen, bewegtes Ziel treffen." data-desc-en="Eye-hand: throw, catch, hit moving target."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">⚾</div><h3>Werfen & Fangen</h3><p>Auge-Hand: Ball werfen, fangen, bewegtes Ziel treffen.</p><div class="exp-meta"><span class="exp-age">ab 2 J.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-balancieren" data-age="kleinkind" data-icon="⚖️" data-title-de="Balancieren lernen" data-title-en="Learn to balance" data-desc-de="Gleichgewicht: von Stein zu Stein, Höhen unterscheiden." data-desc-en="Balance: stone to stone, distinguish heights."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">⚖️</div><h3>Balancieren lernen</h3><p>Gleichgewicht: von Stein zu Stein, Höhen unterscheiden.</p><div class="exp-meta"><span class="exp-age">ab 3 J.</span><span class="exp-products">1 Produkt</span></div></div>
+        <div class="exp-card fade-in" draggable="true" data-id="koerperskills-reaktion" data-age="kleinkind" data-icon="⚡" data-title-de="Reaktion trainieren" data-title-en="Train reactivity" data-desc-de="Reflex: unberechenbaren Absprung auffangen." data-desc-en="Reflex: catch unpredictable bounce."><span class="drag-hint">↕ Ziehen</span><div class="exp-icon">⚡</div><h3>Reaktion trainieren</h3><p>Reflex: unberechenbaren Absprung auffangen.</p><div class="exp-meta"><span class="exp-age">ab 6 J.</span><span class="exp-products">1 Produkt</span></div></div>
+      </div>
+    </section>
 
     <footer>
       <p>© 2025 2do.shop — Was du im Leben gemacht haben solltest. | <a href="/impressum.html">Impressum</a> | <a href="/datenschutz.html">Datenschutz</a></p>
-      <p style="font-size: 0.85rem; margin-top: 0.5rem; color: #666;">*Affiliate-Links: Wenn du über unsere Links kaufst, unterstützt du uns — ohne Mehrkosten für dich.</p>
+      <p style="font-size:0.85rem; margin-top:0.5rem; color:#666;">*Affiliate-Links: Wenn du über unsere Links kaufst, unterstützt du uns — ohne Mehrkosten für dich.</p>
     </footer>
 
   </main>
 
   <script>
-    window.skillProducts = {
+window.skillProducts = {
   "46-55-2": [
     {
       "name": "1200 Bambus Wattestäbchen (6×200 Stk.), 100% plastikfrei",
@@ -1803,88 +1375,61 @@
     }
   ]
 };
-    // i18n data
+
     const i18nData = {
       'de': {
         'heroTitle': '2do.shop',
-        'heroSub': 'Was du im Leben gemacht haben solltest — nach Alter, mit konkreten Erfahrungen und kaufbaren Produkten.',
-        'section_18_25_title': '🎯 18–25 Jahre',
-        'section_18_25_sub': 'Grundlagen schaffen — Erfahrungen, die dir später Vorteile bringen.',
-        'section_26_35_title': '🔥 26–35 Jahre',
-        'section_26_35_sub': 'Breiter werden — Business, Handwerk, Führung, Beziehungen.',
-        'section_36_45_title': '⚡ 36–45 Jahre',
-        'section_36_45_sub': 'Tiefe statt Breite — Gesundheit, Nachhaltigkeit, Vermächtnis.',
-        'section_46_55_title': '🎖️ 46–55 Jahre',
-        'section_46_55_sub': 'Erfahrung nutzen — Vermächtnis, Nachhaltigkeit, Ruhe.',
-        'section_55plus_title': '🌟 55+ Jahre',
-        'section_55plus_sub': 'Jetzt oder nie — Technologie, Kreativität, Gesundheit.',
-        'section_koerperskills_title': '🧸 KLEINKIND',
-        'section_koerperskills_sub': 'Motorik, Bewegung und Körperskills spielerisch üben — vom ersten Greifen bis zur Koordination.',
-        'langSwitch': 'EN',
+        'heroSub': 'Was du im Leben gemacht haben solltest — nach Themen, mit konkreten Erfahrungen und kaufbaren Produkten.',
         'locationBtn': '📍 Location',
-        'sidebar_title': '🎯 Meine Auswahl',
-        'sidebar_hint': 'Ziehe Erlebnisse hierher oder klicke sie an.',
-        'sidebar_empty': 'Noch keine Auswahl',
-        'sidebar_clear': 'Leeren',
-        'drop_zone': '📥 Erlebnis hierher ziehen',
-        'drag_over': '✅ Loslassen!',
+        'theme_haushalt_title': '🏠 Haushalt & Handwerk',
+        'theme_haushalt_sub': 'Von der ersten eigenen Wohnung bis zum grünen Daumen — praktische Dinge, die du für Zuhause können solltest.',
+        'theme_finanzen_title': '💰 Finanzen & Karriere',
+        'theme_finanzen_sub': 'Geld verstehen, Business aufbauen, Beruf gestalten — Kompetenzen für Unabhängigkeit.',
+        'theme_gesundheit_title': '❤️ Gesundheit & Beziehung',
+        'theme_gesundheit_sub': 'Auf den Körper hören, Verbindungen pflegen, Klarheit im Kopf gewinnen.',
+        'theme_kreativ_title': '🎨 Kreativ & Lernen',
+        'theme_kreativ_sub': 'Malen, spielen, schreiben, entdecken — Kreativität und neues Wissen fürs Leben.',
+        'theme_kleinkind_title': '🧸 Kleinkind & Körperskills',
+        'theme_kleinkind_sub': 'Motorik und Körperskills spielerisch üben — vom ersten Greifen bis zur Koordination.',
+        'sidebar_title': '🎯 Meine Auswahl', 'sidebar_hint': 'Ziehe Erlebnisse hierher oder klicke sie an.',
+        'sidebar_clear': 'Leeren', 'drop_zone': '📥 Erlebnis hierher ziehen', 'drag_over': '✅ Loslassen!',
       },
       'en': {
         'heroTitle': '2do.shop',
-        'heroSub': 'Things you should do in life — by age, with concrete experiences and purchasable products.',
-        'section_18_25_title': '🎯 18–25 years',
-        'section_18_25_sub': 'Build foundations — experiences that will benefit you later.',
-        'section_26_35_title': '🔥 26–35 years',
-        'section_26_35_sub': 'Broaden yourself — business, craft, leadership, relationships.',
-        'section_36_45_title': '⚡ 36–45 years',
-        'section_36_45_sub': 'Depth over breadth — health, sustainability, legacy.',
-        'section_46_55_title': '🎖️ 46–55 years',
-        'section_46_55_sub': 'Use your experience — legacy, sustainability, calm.',
-        'section_55plus_title': '🌟 55+ years',
-        'section_55plus_sub': 'Now or never — technology, creativity, health.',
-        'section_koerperskills_title': '🧸 TODDLER',
-        'section_koerperskills_sub': 'Motor skills, movement and body control — practiced playfully from first grasp to coordination.',
-        'langSwitch': 'DE',
+        'heroSub': 'Things you should do in life — organized by theme, with concrete experiences and purchasable products.',
         'locationBtn': '📍 Standort',
-        'sidebar_title': '🎯 My Selection',
-        'sidebar_hint': 'Drag experiences here or click them.',
-        'sidebar_empty': 'No selection yet',
-        'sidebar_clear': 'Clear',
-        'drop_zone': '📥 Drop experience here',
-        'drag_over': '✅ Drop here!',
+        'theme_haushalt_title': '🏠 Household & Craft',
+        'theme_haushalt_sub': 'From your first apartment to a green thumb — practical things you should be able to do at home.',
+        'theme_finanzen_title': '💰 Finance & Career',
+        'theme_finanzen_sub': 'Understand money, build a business, shape a career — skills for independence.',
+        'theme_gesundheit_title': '❤️ Health & Relationships',
+        'theme_gesundheit_sub': 'Listen to your body, nurture connections, gain clarity of mind.',
+        'theme_kreativ_title': '🎨 Creativity & Learning',
+        'theme_kreativ_sub': 'Paint, play, write, discover — creativity and new skills for life.',
+        'theme_kleinkind_title': '🧸 Toddler & Body Skills',
+        'theme_kleinkind_sub': 'Practice motor and body skills playfully — from first grasp to coordination.',
+        'sidebar_title': '🎯 My Selection', 'sidebar_hint': 'Drag experiences here or click them.',
+        'sidebar_clear': 'Clear', 'drop_zone': '📥 Drop experience here', 'drag_over': '✅ Drop here!',
       }
     };
-
-    let currentLang = 'de'; // Sprachumschalter entfernt
+    let currentLang = 'de';
     let userCountry = localStorage.getItem('country') || 'default';
-
 
     function updateLang() {
       const data = i18nData[currentLang];
-      document.getElementById('heroTitle').textContent = data.heroTitle;
-      document.getElementById('heroSub').textContent = data.heroSub;
-      document.getElementById('locationBtn').textContent = data.locationBtn;
-      
-      const sections = ['kleinkind','18-25','26-35','36-45','46-55','55plus'];
-      sections.forEach(s => {
-        document.getElementById('section_' + s + '_title').textContent = data['section_' + s + '_title'];
-        document.getElementById('section_' + s + '_sub').textContent = data['section_' + s + '_sub'];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (data[k] != null) el.textContent = data[k];
       });
-
-      document.querySelector('.sidebar-title').textContent = data.sidebar_title;
-      document.querySelector('.sidebar-hint').textContent = data.sidebar_hint;
-      document.querySelector('.sidebar-clear').textContent = data.sidebar_clear;
-      document.getElementById('sidebarDrop').textContent = data.drop_zone;
-
+      const st = document.querySelector('.sidebar-title'); if (st) st.textContent = data.sidebar_title;
+      const sh = document.querySelector('.sidebar-hint'); if (sh) sh.textContent = data.sidebar_hint;
+      const sc = document.querySelector('.sidebar-clear'); if (sc) sc.textContent = data.sidebar_clear;
+      const sd = document.getElementById('sidebarDrop'); if (sd) sd.textContent = data.drop_zone;
       document.querySelectorAll('.exp-card').forEach(card => {
-        const titleDe = card.getAttribute('data-title-de');
-        const titleEn = card.getAttribute('data-title-en');
-        const descDe = card.getAttribute('data-desc-de');
-        const descEn = card.getAttribute('data-desc-en');
         const titleEl = card.querySelector('h3');
         const descEl = card.querySelector('p');
-        if (titleEl) titleEl.textContent = currentLang === 'en' ? titleEn : titleDe;
-        if (descEl) descEl.textContent = currentLang === 'en' ? descEn : descDe;
+        if (titleEl) titleEl.textContent = currentLang === 'en' ? card.getAttribute('data-title-en') : card.getAttribute('data-title-de');
+        if (descEl) descEl.textContent = currentLang === 'en' ? card.getAttribute('data-desc-en') : card.getAttribute('data-desc-de');
       });
     }
 
@@ -1897,39 +1442,34 @@
         userCountry = data.country_code || 'default';
         localStorage.setItem('country', userCountry);
         btn.textContent = '📍 ' + (userCountry || 'default');
-      } catch(e) {
-        userCountry = 'default';
-        btn.textContent = '📍 default';
-      }
+      } catch(e) { userCountry = 'default'; btn.textContent = '📍 default'; }
     }
 
-    function scrollToSection(id) {
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    // Age filter (secondary: filters cards across all themes)
+    const filterChips = document.querySelectorAll('.filter-chip');
+    function applyAgeFilter(f) {
+      document.querySelectorAll('.theme-section').forEach(sec => {
+        sec.querySelectorAll('.exp-card').forEach(card => {
+          const show = (f === 'all') || (card.getAttribute('data-age') === f);
+          card.classList.toggle('age-hidden', !show);
+        });
+        sec.classList.toggle('theme-empty', sec.querySelectorAll('.exp-card:not(.age-hidden)').length === 0);
+      });
     }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    const sections = document.querySelectorAll('.section');
-    const ageBtns = document.querySelectorAll('.age-btn');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const top = section.offsetTop - 150;
-        if (scrollY >= top) current = section.getAttribute('id') || '';
-      });
-      ageBtns.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(current)) btn.classList.add('active');
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        applyAgeFilter(chip.getAttribute('data-filter'));
       });
     });
 
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
     let selectedItems = [];
-    const sidebarList = document.getElementById('sidebarList');
     const sidebarProducts = document.getElementById('sidebarProducts');
     const sidebarCount = document.getElementById('sidebarCount');
     const sidebarClear = document.getElementById('sidebarClear');
@@ -1942,21 +1482,14 @@
         sidebarProducts.innerHTML = '<p class="sidebar-empty">' + (currentLang === 'en' ? 'No selection yet' : 'Noch keine Auswahl') + '</p>';
       } else {
         selectedItems.forEach(item => {
-          const sec = document.createElement('div');
-          sec.className = 'sel-item';
-          const title = document.createElement('div');
-          title.className = 'sel-title';
-          title.innerHTML = item.icon + ' ' + item.title;
-          sec.appendChild(title);
+          const sec = document.createElement('div'); sec.className = 'sel-item';
+          const title = document.createElement('div'); title.className = 'sel-title';
+          title.innerHTML = item.icon + ' ' + item.title; sec.appendChild(title);
           const prods = (window.skillProducts && window.skillProducts[item.id]) ? window.skillProducts[item.id] : [];
           prods.forEach(p => {
-            const row = document.createElement('a');
-            row.className = 'sel-prod';
-            row.href = p.link;
-            row.target = '_blank';
-            row.rel = 'noopener';
-            row.textContent = '🛒 ' + p.name + ' →';
-            sec.appendChild(row);
+            const row = document.createElement('a'); row.className = 'sel-prod'; row.href = p.link;
+            row.target = '_blank'; row.rel = 'noopener';
+            row.textContent = '🛒 ' + p.name + ' →'; sec.appendChild(row);
           });
           sidebarProducts.appendChild(sec);
         });
@@ -1965,24 +1498,12 @@
     }
 
     sidebarClear.addEventListener('click', () => {
-      localStorage.removeItem('selectedItems');
-      selectedItems = [];
-      updateSidebar();
-      sidebarProducts.innerHTML = '';
-      sidebarProducts.classList.remove('visible');
-      sidebarDrop.style.display = 'block';
+      localStorage.removeItem('selectedItems'); selectedItems = [];
+      updateSidebar(); sidebarProducts.innerHTML = ''; sidebarDrop.style.display = 'block';
     });
 
-
-
-
-
-
-
-
-
-    // PROBLEM? - kombinierte Liste, sauber formuliert (KEINE Kind-Präfixe, da KLEINKIND eh klar)
-    const problemData = [
+    // Problem? quick-add
+const problemData = [
       { icon:'💸', label:'Geld sparen / verstehen', ids:['18-25-4','26-35-3','26-35-4'] },
       { icon:'🏠', label:'Etwas mit den Händen bauen', ids:['18-25-5','26-35-1','26-35-2','36-45-1'] },
       { icon:'🍳', label:'Kochen / backen lernen', ids:['26-35-5','36-45-4','18-25-3'] },
@@ -2002,90 +1523,66 @@
     ];
     const pb = document.getElementById('problemButtons');
     problemData.forEach(p => {
-      const b = document.createElement('button');
-      b.className = 'problem-btn';
-      b.innerHTML = p.icon + ' ' + p.label;
-      b.onclick = () => addProblemSkills(p.ids);
-      pb.appendChild(b);
+      const b = document.createElement('button'); b.className = 'problem-btn';
+      b.innerHTML = p.icon + ' ' + p.label; b.onclick = () => addProblemSkills(p.ids); pb.appendChild(b);
     });
 
     function addProblemSkills(ids) {
-      if (ids.length === 1 && ids[0] === 'buecher') { window.location.href = '/detail/buecher.html'; return; }
+      if (ids.length === 1 && ids[0] === 'buecher') { window.location.href = 'detail/buecher.html'; return; }
       ids.forEach(id => {
         if (!selectedItems.find(s => s.id === id)) {
           const card = document.querySelector('.exp-card[data-id="'+id+'"]');
-          if (card) {
-            selectedItems.push({ id: id, icon: card.getAttribute('data-icon'), title: currentLang === 'en' ? card.getAttribute('data-title-en') : card.getAttribute('data-title-de') });
-          }
+          if (card) selectedItems.push({ id: id, icon: card.getAttribute('data-icon'), title: currentLang === 'en' ? card.getAttribute('data-title-en') : card.getAttribute('data-title-de') });
         }
       });
       localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
       updateSidebar();
     }
 
-
+    // Drag to sidebar + click to open detail
     document.querySelectorAll('.exp-card[draggable="true"]').forEach(card => {
-      card.addEventListener('dragstart', (e) => {
-        const id = card.getAttribute('data-id');
-        const icon = card.getAttribute('data-icon');
-        const titleDe = card.getAttribute('data-title-de');
-        const titleEn = card.getAttribute('data-title-en');
-        e.dataTransfer.setData('text/plain', JSON.stringify({ id, icon, title_de: titleDe, title_en: titleEn }));
+      let sx=0, sy=0, moved=false;
+      card.addEventListener('pointerdown', e => { sx=e.clientX; sy=e.clientY; moved=false; });
+      card.addEventListener('pointermove', e => { if (Math.abs(e.clientX-sx)>5 || Math.abs(e.clientY-sy)>5) moved=true; });
+      card.addEventListener('dragstart', e => {
+        moved=true;
+        e.dataTransfer.setData('text/plain', JSON.stringify({ id: card.getAttribute('data-id'), icon: card.getAttribute('data-icon'), title_de: card.getAttribute('data-title-de'), title_en: card.getAttribute('data-title-en') }));
         card.style.opacity = '0.5';
       });
-      card.addEventListener('dragend', () => {
-        card.style.opacity = '1';
-      });
-      card.addEventListener('click', () => {
-        const id = card.getAttribute('data-id');
-        window.location.href = '/detail/' + id + '.html';
+      card.addEventListener('dragend', () => card.style.opacity = '1');
+      card.addEventListener('pointerup', () => {
+        if (moved) return;
+        const _dd = card.getAttribute('data-detail');
+        const _path = _dd ? ('detail/' + _dd) : ('detail/' + card.getAttribute('data-id') + '.html');
+        window.location.href = new URL(_path, window.location.href).toString();
       });
     });
 
-    sidebarDropzone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      sidebarDrop.classList.add('drag-over');
-    });
-    sidebarDropzone.addEventListener('dragleave', () => {
-      sidebarDrop.classList.remove('drag-over');
-    });
+    sidebarDropzone.addEventListener('dragover', (e) => { e.preventDefault(); sidebarDrop.classList.add('drag-over'); });
+    sidebarDropzone.addEventListener('dragleave', () => { sidebarDrop.classList.remove('drag-over'); });
     sidebarDropzone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      sidebarDrop.classList.remove('drag-over');
-      const data = e.dataTransfer.getData('text/plain');
-      if (!data) return;
+      e.preventDefault(); sidebarDrop.classList.remove('drag-over');
+      const data = e.dataTransfer.getData('text/plain'); if (!data) return;
       try {
         const item = JSON.parse(data);
         if (!selectedItems.find(s => s.id === item.id)) {
           selectedItems.push({ id: item.id, icon: item.icon, title: currentLang === 'en' ? item.title_en : item.title_de });
-          localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
-          updateSidebar();
+          localStorage.setItem('selectedItems', JSON.stringify(selectedItems)); updateSidebar();
         }
-      } catch (err) {
-        console.error('Drop parse error', err);
-      }
+      } catch (err) { console.error('Drop parse error', err); }
     });
 
-
-    // PUNKT 2: Auswahl + Scroll bei Rückkehr aus Detail wiederherstellen
+    // Restore selection + scroll position on return
     (function(){
       const saved = localStorage.getItem('selectedItems');
-      if (saved) {
-        try {
-          selectedItems = JSON.parse(saved);
-          updateSidebar();
-        } catch(e){}
-      }
+      if (saved) { try { selectedItems = JSON.parse(saved); updateSidebar(); } catch(e){} }
       const ret = sessionStorage.getItem('returnToDetail');
-      if (ret) {
-        const card = document.querySelector('.exp-card[data-id="'+ret.replace('.html','')+'"]');
-        if (card) card.scrollIntoView({behavior:'auto', block:'center'});
-        sessionStorage.removeItem('returnToDetail');
-      }
+      if (ret) { const card = document.querySelector('.exp-card[data-id="'+ret.replace('.html','')+'"]'); if (card) card.scrollIntoView({behavior:'auto', block:'center'}); sessionStorage.removeItem('returnToDetail'); }
     })();
 
     detectLocation();
     updateLang();
+
   </script>
 </body>
 </html>

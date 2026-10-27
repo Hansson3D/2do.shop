@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lebenskompetenz-Test — 2do.shop</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --surface-hover: #1e1e1e;
+      --text: #e5e5e5;
+      --text-muted: #888;
+      --accent: #ff5e00;
+      --accent-2: #ff8c42;
+      --border: #2a2a2a;
+      --radius: 12px;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-2); }
+
+    .back-nav { margin-bottom: 2rem; }
+    .back-nav a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .back-nav a:hover { border-color: var(--accent); color: var(--accent); }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle { color: var(--text-muted); margin-bottom: 2rem; font-size: 1.05rem; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .question { margin-bottom: 2rem; }
+    .question-text { font-weight: 600; margin-bottom: 1rem; font-size: 1.1rem; }
+    .options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .option {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+    .option:hover { border-color: var(--accent); background: rgba(255, 94, 0, 0.1); }
+    .option.selected { border-color: var(--accent); background: rgba(255, 94, 0, 0.2); font-weight: 600; }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 0.3s;
+      width: 0%;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: var(--accent-2); transform: translateY(-2px); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--accent); background: var(--surface-hover); }
+
+    .hidden { display: none; }
+
+    .result {
+      background: var(--surface);
+      border: 2px solid var(--success);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .result h2 { color: var(--success); margin-bottom: 1rem; }
+
+    .skill-tree {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .skill-tree h2 { margin-bottom: 1rem; }
+    .skill-branch { margin-bottom: 1rem; }
+    .skill-branch-title {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .skill-item {
+      padding: 0.5rem 0.75rem;
+      margin: 0.25rem 0;
+      background: var(--bg);
+      border-radius: 6px;
+      border-left: 3px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .skill-item.unlocked { border-left-color: var(--success); }
+    .skill-item.in-progress { border-left-color: var(--warning); }
+    .skill-item.locked { border-left-color: var(--danger); opacity: 0.6; }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+    .badge-age { background: rgba(147, 51, 234, 0.2); color: #c4b5fd; }
+    .badge-time { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+    .badge-budget { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+
+    .meta-info {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    .meta-tag {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .note {
+      background: rgba(255, 94, 0, 0.1);
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1rem;
+      margin: 1rem 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.9rem;
+    }
+
+    .dual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .dual-column-title {
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--accent);
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 1rem; }
+      .dual-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="back-nav">
+    <a href="../index.html">← Zurück zu 2do.shop</a>
+  </div>
+
+  <h1>🎯 Lebenskompetenz-Test</h1>
+  <p class="subtitle">Beantworte 11 Fragen und erhalte einen persönlichen Plan mit passenden Lebenskompetenzen und Produktvorschlägen. <strong>Optional — nur ein Leitfaden!</strong></p>
+
+  <!-- QUIZ SECTION -->
+  <div id="quizSection">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap;">
+      <button class="btn btn-secondary" onclick="restartQuiz()">← Neu starten</button>
+      <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Weiter →</button>
+    </div>
+  </div>
+
+  <!-- RESULT SECTION -->
+  <div id="resultSection" class="hidden">
+    <div class="result">
+      <h2>✅ Dein persönlicher Plan</h2>
+      <div id="resultContent"></div>
+    </div>
+
+    <div class="skill-tree">
+      <h2>🌳 Dein Fähigkeitenbaum</h2>
+      <div id="skillTreeContent"></div>
+    </div>
+
+    <div class="note">
+      <strong>💡 Hinweis:</strong> Dieser Test ist optional und dient als Leitfaden. Du kannst auch direkt durch die Kategorien stöbern!
+    </div>
+
+    <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap;">
+      <button class="btn" onclick="restartQuiz()">Nochmal machen</button>
+      <button class="btn btn-secondary" onclick="window.location.href='../index.html'">Zurück zu 2do.shop</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 2do.shop — Was du im Leben gemacht haben solltest.</p>
+    <p style="margin-top: 0.5rem;"><a href="../impressum.html">Impressum</a> | <a href="../datenschutz.html">Datenschutz</a></p>
+  </footer>
+
+  <script>
+    const questions = [
+      {
+        id: 'q1_alltag',
+        type: 'multi_select',
+        text: 'Woraus setzt sich dein Alltag meistens zusammen? (mehrere möglich)',
+        options: [
+          'Ich lebe allein und manege alles selbst',
+          'Zu zweit, ohne Kinder im Haus',
+          'Familie mit Kleinkindern unter 6',
+          'Familie mit Schulkindern',
+          'Ich betreue pflegebedürftige Angehörige',
+          'Ich bin Alleinerziehend'
+        ]
+      },
+      {
+        id: 'q2_lebensumstaende',
+        type: 'dual_select',
+        text: 'Wie sind deine aktuellen Lebensumstände? (bitte je eine Antwort wählen)',
+        options_zustand: [
+          'Ich bin mitten im Aufbau – Karriere, Familie, Alltag',
+          'Ich bin in einer Übergangsphase – neu orientiere mich',
+          'Ich habe viel zu tragen – Belastung ist hoch',
+          'Ich habe mehr Ruhe – andere Prioritäten',
+          'Ich bin gerade am Ankommen – noch nicht etabliert'
+        ],
+        options_alter: [
+          '18–25 Jahre',
+          '26–35 Jahre',
+          '36–45 Jahre',
+          '46–55 Jahre',
+          '56+ Jahre'
+        ]
+      },
+      {
+        id: 'q4_kosten_nerven',
+        type: 'multi_select',
+        text: 'Wofür hast du gerade Lust? (mehrere möglich)',
+        options: [
+          'Etwas mit den Händen bauen',
+          'Kochen oder backen ausprobieren',
+          'Organisation & Planung verbessern',
+          'Geld besser verstehen',
+          'Mehr Bewegung im Alltag',
+          'Kreativ werden (Malen, Musik, Design)',
+          'Soziale Beziehungen pflegen'
+        ]
+      },
+      {
+        id: 'q5_abend_scenario',
+        type: 'single_select',
+        text: 'Wie sieht dein idealer freier Abend aus?',
+        options: [
+          'Ich baue oder repariere etwas',
+          'Ich koche etwas Neues',
+          'Ich plane die nächste Woche',
+          'Ich treffe mich mit Freunden',
+          'Ich entspanne und komme zur Ruhe'
+        ]
+      },
+      {
+        id: 'q6_zeit',
+        type: 'single_select',
+        text: 'Wie viel Zeit könntest du realistisch pro Woche in etwas Neues investieren?',
+        options: [
+          'Weniger als 1 Stunde',
+          '1 bis 3 Stunden',
+          '3 bis 5 Stunden',
+          'Mehr als 5 Stunden'
+        ]
+      },
+      {
+        id: 'q7_erschwernis',
+        type: 'multi_select',
+        text: 'Was würdest du gerne leichter machen? (mehrere möglich)',
+        options: [
+          'Alltag organisieren',
+          'Zeit besser nutzen',
+          'Mehr Struktur im Leben',
+          'Besser mit Menschen umgehen',
+          'Gesünder leben',
+          'Finanzen im Griff haben'
+        ]
+      },
+      {
+        id: 'q8_zweifel',
+        type: 'multi_select',
+        text: 'Was möchtest du in deinem Leben mehr haben? (mehrere möglich)',
+        options: [
+          'Mehr Zeit für mich',
+          'Mehr Klarheit im Kopf',
+          'Mehr Sicherheit',
+          'Mehr Energie',
+          'Mehr Verbindung zu Menschen'
+        ]
+      },
+      {
+        id: 'q9_budget',
+        type: 'single_select',
+        text: 'Wie steht es um dein Budget für neue Hilfsmittel und Werkzeuge?',
+        options: [
+          'Sehr knapp, jeder Euro zählt',
+          'Eingeschränkt, nur bei echtem Nutzen',
+          'Moderat, wenn es sich lohnt',
+          'Unbedenklich, Qualität geht vor'
+        ]
+      },
+      {
+        id: 'q10_wandel',
+        type: 'multi_select',
+        text: 'Was hat sich in letzter Zeit in deinem Leben verändert? (mehrere möglich)',
+        options: [
+          'Neuer Job oder Karrierewechsel',
+          'Neues Kind oder wachsende Familie',
+          'Umzug oder eigener Haushalt',
+          'Meine Gesundheit hat sich geändert',
+          'Ruhestand oder plötzlich mehr Zeit',
+          'Nichts Großes'
+        ]
+      },
+      {
+        id: 'q11_wunsch_ergebnis',
+        type: 'single_select',
+        text: 'Was würdest du im Alltag am liebsten zurückgewinnen?',
+        options: [
+          'Mehr Zeit',
+          'Weniger Chaos',
+          'Mehr Geld',
+          'Mehr Energie',
+          'Mehr Zuversicht'
+        ]
+      }
+    ];
+
+    let currentQuestion = 0;
+    let answers = {};
+
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      const container = document.getElementById('quizContainer');
+      
+      let html = `
+        <div class="question">
+          <div class="question-text">${currentQuestion + 1}. ${q.text}</div>
+      `;
+      
+      if (q.type === 'dual_select') {
+        html += `<div class="dual-grid">`;
+        
+        html += `<div>
+          <div class="dual-column-title">🎯 Lebensumstände</div>
+          <div class="options">`;
+        q.options_zustand.forEach((option) => {
+          const selected = answers[q.id]?.zustand === option ? 'selected' : '';
+          html += `<div class="option ${selected}" onclick="selectDual('${q.id}', 'zustand', '${option.replace(/'/g, "\\'")}')">${option}</div>`;
+        });
+        html += `</div></div>`;
+        
+        html += `<div>
+          <div class="dual-column-title">📅 Alter</div>
+          <div class="options">`;
+        q.options_alter.forEach((option) => {
+          const selected = answers[q.id]?.alter === option ? 'selected' : '';
+          html += `<div class="option ${selected}" onclick="selectDual('${q.id}', 'alter', '${option.replace(/'/g, "\\'")}')">${option}</div>`;
+        });
+        html += `</div></div>`;
+        
+        html += `</div>`;
+      } else {
+        html += `<div class="options">`;
+        q.options.forEach((option) => {
+          const selected = answers[q.id]?.includes(option) ? 'selected' : '';
+          html += `<div class="option ${selected}" onclick="toggleOption('${q.id}', '${option.replace(/'/g, "\\'")}')">${option}</div>`;
+        });
+        html += `</div>`;
+      }
+      
+      html += `</div>`;
+      container.innerHTML = html;
+      
+      document.getElementById('progressFill').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+      
+      let isAnswered = false;
+      if (q.type === 'dual_select') {
+        isAnswered = answers[q.id]?.zustand && answers[q.id]?.alter;
+      } else {
+        isAnswered = answers[q.id] && answers[q.id].length > 0;
+      }
+      document.getElementById('nextBtn').disabled = !isAnswered;
+    }
+
+    function selectDual(questionId, field, option) {
+      if (!answers[questionId]) answers[questionId] = { zustand: null, alter: null };
+      answers[questionId][field] = option;
+      renderQuestion();
+    }
+
+    function toggleOption(questionId, option) {
+      const q = questions.find(q => q.id === questionId);
+      
+      if (q.type === 'single_select') {
+        answers[questionId] = [option];
+      } else {
+        if (!answers[questionId]) answers[questionId] = [];
+        const idx = answers[questionId].indexOf(option);
+        if (idx > -1) {
+          answers[questionId].splice(idx, 1);
+        } else {
+          answers[questionId].push(option);
+        }
+      }
+      
+      renderQuestion();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      answers = {};
+      document.getElementById('quizSection').classList.remove('hidden');
+      document.getElementById('resultSection').classList.add('hidden');
+      renderQuestion();
+    }
+
+    function showResult() {
+      const alltag = answers.q1_alltag || [];
+      const lebensumstaende = answers.q2_lebensumstaende || {};
+      const zustand = lebensumstaende.zustand || '';
+      const alter = lebensumstaende.alter || '';
+      const kosten_nerven = answers.q4_kosten_nerven || [];
+      const zeit = answers.q6_zeit || [];
+      const budget = answers.q9_budget || [];
+      
+      let category = 'Erwachsene';
+      if (alltag.includes('Familie mit Kleinkindern unter 6')) {
+        category = 'Familie mit Kleinkindern';
+      } else if (alltag.includes('Ich betreue pflegebedürftige Angehörige')) {
+        category = 'Pflege & Betreuung';
+      } else if (alltag.includes('Ich bin Alleinerziehend')) {
+        category = 'Alleinerziehend';
+      }
+      
+      let timeBudget = 'Wenig Zeit';
+      if (zeit.includes('1 bis 3 Stunden')) timeBudget = 'Mittel';
+      if (zeit.includes('3 bis 5 Stunden') || zeit.includes('Mehr als 5 Stunden')) timeBudget = 'Viel';
+      
+      let moneyBudget = 'Knapp';
+      if (budget.includes('Moderat, wenn es sich lohnt')) moneyBudget = 'Moderat';
+      if (budget.includes('Unbedenklich, Qualität geht vor')) moneyBudget = 'Premium';
+      
+      let skills = [];
+      if (kosten_nerven.includes('Etwas mit den Händen bauen')) {
+        skills.push({ branch: 'Haushalt & Selbstversorgung', skill: 'Handwerk lernen' });
+      }
+      if (kosten_nerven.includes('Kochen oder backen ausprobieren')) {
+        skills.push({ branch: 'Haushalt & Selbstversorgung', skill: 'Kochen & Zubereiten' });
+      }
+      if (kosten_nerven.includes('Organisation & Planung verbessern')) {
+        skills.push({ branch: 'Organisation & Produktivität', skill: 'Zeitmanagement & Planung' });
+      }
+      if (kosten_nerven.includes('Geld besser verstehen')) {
+        skills.push({ branch: 'Finanzen & Wirtschaft', skill: 'Budget & Haushaltsführung' });
+      }
+      if (kosten_nerven.includes('Mehr Bewegung im Alltag')) {
+        skills.push({ branch: 'Selbstfürsorge & Körpergesundheit', skill: 'Bewegung & Sport' });
+      }
+      if (kosten_nerven.includes('Kreativ werden (Malen, Musik, Design)')) {
+        skills.push({ branch: 'Kreative Lebenskompetenzen', skill: 'Kreativ sein' });
+      }
+      if (kosten_nerven.includes('Soziale Beziehungen pflegen')) {
+        skills.push({ branch: 'Soziale Kompetenz & Beziehungen', skill: 'Beziehungen pflegen' });
+      }
+      
+      // Abend-Frage als zusätzlichen Kontext
+      const abend = answers.q5_abend_scenario || [];
+      if (abend.includes('Ich baue oder repariere etwas') && !skills.find(s => s.skill === 'Handwerk lernen')) {
+        skills.push({ branch: 'Haushalt & Selbstversorgung', skill: 'Reparieren statt ersetzen' });
+      }
+      if (abend.includes('Ich koche etwas Neues') && !skills.find(s => s.skill === 'Kochen & Zubereiten')) {
+        skills.push({ branch: 'Haushalt & Selbstversorgung', skill: 'Kochen meistern' });
+      }
+      
+      if (skills.length === 0) {
+        skills = [
+          { branch: 'Selbstfürsorge & Körpergesundheit', skill: 'Körperpflege' },
+          { branch: 'Organisation & Produktivität', skill: 'Routinen & Pünktlichkeit' }
+        ];
+      }
+      
+      // === CHALLENGE-LOGIK (Learning by Doing) ===
+      // Archetypen basierend auf Antworten
+      const archetypen = {
+        'bauen': ['Bauen & Umbauen', 'Baue etwas mit den Händen'],
+        'kochen': ['Kochen & Backen', 'Koch oder backe etwas Neues'],
+        'ordnen': ['Ordnen & Einräumen', 'Ordne einen Bereich neu'],
+        'bewegen': ['Bewegen & Koordination', 'Bewege dich heute bewusst'],
+        'basteln': ['Basteln & Upcycling', 'Baue etwas aus Altem'],
+        'pflegen': ['Pflegen & Wachsenlassen', 'Pflege etwas Lebendiges'],
+        'reparieren': ['Reparieren & Flicken', 'Repariere etwas statt es zu ersetzen'],
+        'gestalten': ['Gestalten & Kreieren', 'Kreate etwas Neues']
+      };
+      
+      // Wähle Archetyp aus Antworten (mehrere können zutreffen)
+      let archetypen_matches = [];
+      if (kosten_nerven.includes('Etwas mit den Händen bauen')) archetypen_matches.push('bauen');
+      if (kosten_nerven.includes('Kochen oder backen ausprobieren')) archetypen_matches.push('kochen');
+      if (kosten_nerven.includes('Organisation & Planung verbessern')) archetypen_matches.push('ordnen');
+      if (kosten_nerven.includes('Mehr Bewegung im Alltag')) archetypen_matches.push('bewegen');
+      if (kosten_nerven.includes('Kreativ werden (Malen, Musik, Design)')) archetypen_matches.push('gestalten');
+      if (kosten_nerven.includes('Soziale Beziehungen pflegen')) archetypen_matches.push('pflegen');
+      
+      // Abend-Frage als zusätzlichen Kontext
+      if (abend.includes('Ich baue oder repariere etwas')) {
+        if (!archetypen_matches.includes('bauen')) archetypen_matches.push('bauen');
+        if (!archetypen_matches.includes('reparieren')) archetypen_matches.push('reparieren');
+      }
+      if (abend.includes('Ich koche etwas Neues')) {
+        if (!archetypen_matches.includes('kochen')) archetypen_matches.push('kochen');
+      }
+      if (abend.includes('Ich treffe mich mit Freunden') && !archetypen_matches.includes('pflegen')) {
+        archetypen_matches.push('pflegen');
+      }
+      
+      // Default wenn keine Antworten
+      if (archetypen_matches.length === 0) archetypen_matches.push('ordnen');
+      
+      // Wähle primären Archetyp (ersten Match)
+      const archetyp = archetypen_matches[0];
+      const [archetyp_name, archetyp_action] = archetypen[archetyp];
+      
+      // Zeit-Budget bestimmen
+      let zeit_scope = 'mittel'; // Default
+      if (zeit.includes('Weniger als 1 Stunde')) zeit_scope = 'kurz';
+      else if (zeit.includes('3 bis 5 Stunden') || zeit.includes('Mehr als 5 Stunden')) zeit_scope = 'lang';
+      
+      // Budget bestimmen
+      let budget_level = 'knapp'; // Default
+      if (budget.includes('Moderat, wenn es sich lohnt')) budget_level = 'moderat';
+      if (budget.includes('Unbedenklich, Qualität geht vor')) budget_level = 'premium';
+      
+      // Adaptive Challenges pro Archetyp (mehrere Varianten je nach Zeit/Budget)
+      const challenges = {
+        'bauen': {
+          'kurz': [
+            { title: 'Baue eine kleine Wandablage', desc: 'Aus Restholz oder einer alten Palette. Maßschneidere sie für deine Stelle.', time: '1 Stunde', tools: 'Säge, Schrauben, Bohrer (optional)' },
+            { title: 'Konstruktion aus LEGO oder Bausteinen', desc: 'Baue etwas Funktionales (Kartenhalter, Tablet-Ständer).', time: '45 Minuten', tools: 'LEGO oder Bausteine' }
+          ],
+          'mittel': [
+            { title: 'Baue eine kleine Wandablage', desc: 'Aus Restholz oder einer alten Palette. Maßschneidere sie für deine Stelle.', time: '1 Stunde', tools: 'Säge, Schrauben, Bohrer (optional)' },
+            { title: 'Holz-Kleinprojekt nach Wahl', desc: 'Ein Vogelhaus, eine Schatulle oder ein Blumenständer.', time: '1-2 Stunden', tools: 'Holz, Werkzeuge' }
+          ],
+          'lang': [
+            { title: 'Baue ein Regal oder eine Kommode', desc: 'Aus Holz oder Paletten. Plan und baue es komplett.', time: '3-5 Stunden', tools: 'Vollständige Werkzeugausstattung' }
+          ]
+        },
+        'kochen': {
+          'kurz': [
+            { title: '10-Min-Ramen-Challenge', desc: 'Koch Nudeln, brat Gemüse an, bau deine Brühe aus Vorrat – heute ohne Rezept.', time: '30 Minuten', tools: 'Topf, Pfanne, Was du schon hast' },
+            { title: 'Smoothie-Bowls-Experiment', desc: 'Kombiniere 3 Zutaten, die du noch nie zusammen probiert hast.', time: '15 Minuten', tools: 'Mixer, Obst/Gemüse' }
+          ],
+          'mittel': [
+            { title: '10-Min-Ramen-Challenge', desc: 'Koch Nudeln, brat Gemüse an, bau deine Brühe aus Vorrat – heute ohne Rezept.', time: '30 Minuten', tools: 'Topf, Pfanne, Was du schon hast' },
+            { title: 'Ein neues Land kochen', desc: 'Such ein Rezept aus einer fremden Küche und koche es nach.', time: '1-2 Stunden', tools: 'Zutaten, Rezept' }
+          ],
+          'lang': [
+            { title: '3-Gänge-Menü kochen', desc: 'Plan und koche ein vollständiges Menü für 2-4 Personen.', time: '2-3 Stunden', tools: 'Vollständige Küche' }
+          ]
+        },
+        'ordnen': {
+          'kurz': [
+            { title: 'Platz-für-jedes-Ding-Reset', desc: '15 Min, nur mit dem was schon da ist. Jedes Ding bekommt einen festen Namen und Ort.', time: '15 Minuten', tools: 'Kartons, Etiketten, Gute Laune' },
+            { title: 'Eine Schublade komplett ordnen', desc: 'Nimm eine Schublade und bring sie in System.', time: '20 Minuten', tools: 'Teiler, Kartons' }
+          ],
+          'mittel': [
+            { title: 'Platz-für-jedes-Ding-Reset', desc: '15 Min, nur mit dem was schon da ist. Jedes Ding bekommt einen festen Namen und Ort.', time: '15 Minuten', tools: 'Kartons, Etiketten, Gute Laune' },
+            { title: 'Ein ganzes Zimmer durchgehen', desc: 'Kategorisiere alles: behalten, weggeben, verkaufen.', time: '1-2 Stunden', tools: 'Kartons, Marker' }
+          ],
+          'lang': [
+            { title: 'Komplette Haushalts-Reset', desc: 'Durchgehende Ordnung in mehreren Räumen. Spende, verkaufe, organisiert.', time: '3-5 Stunden', tools: 'Kartons, Reinigungsmittel' }
+          ]
+        },
+        'bewegen': {
+          'kurz': [
+            { title: '7-Tage-Plank-Challenge', desc: 'Täglich so lange halten wie dein Lieblingssong. Tag 7 notierst du deine Steigerung.', time: '5 Min/Tag, 7 Tage', tools: 'Yogamatte oder Teppich' },
+            { title: '100 Kniebeugen Challenge', desc: 'Verteile 100 Kniebeugen über den Tag. Zähle jeden Satz.', time: '10 Min/Tag', tools: 'Nichts' }
+          ],
+          'mittel': [
+            { title: '7-Tage-Plank-Challenge', desc: 'Täglich so lange halten wie dein Lieblingssong. Tag 7 notierst du deine Steigerung.', time: '5 Min/Tag, 7 Tage', tools: 'Yogamatte oder Teppich' },
+            { title: 'Wander-Challenge', desc: 'Gehe heute 1 Stunde wandern oder spazieren in der Natur.', time: '1 Stunde', tools: 'Bequeme Schuhe' }
+          ],
+          'lang': [
+            { title: '4-Wochen-Fitness-Programm', desc: 'Erstelle einen Plan und führe ihn 4 Wochen durch.', time: '30 Min/Tag, 4 Wochen', tools: 'Fitness-Plan' }
+          ]
+        },
+        'basteln': {
+          'kurz': [
+            { title: 'Upcycling-Projekt', desc: 'Nimm etwas Altes (Glas, Kiste, Stoff) und verwandle es in etwas Nützliches.', time: '1-2 Stunden', tools: 'Altes Material, Kleber, Schere' },
+            { title: 'Bemalte Pflanzentöpfe', desc: 'Nimm alte Töpfe und bemale sie nach deinem Geschmack.', time: '45 Minuten', tools: 'Töpfe, Farbe, Pinsel' }
+          ],
+          'mittel': [
+            { title: 'Upcycling-Projekt', desc: 'Nimm etwas Altes (Glas, Kiste, Stoff) und verwandle es in etwas Nützliches.', time: '1-2 Stunden', tools: 'Altes Material, Kleber, Schere' },
+            { title: 'Macrame Pflanzehänger', desc: 'Knote einen Pflanzehänger aus alter Kleidung oder Schnur.', time: '2 Stunden', tools: 'Schnur, Schere' }
+          ],
+          'lang': [
+            { title: 'Großes Upcycling-Projekt', desc: 'Verwandle ein altes Möbelstück in etwas Neues.', time: '3-5 Stunden', tools: 'Möbel, Werkzeuge, Farbe' }
+          ]
+        },
+        'pflegen': {
+          'kurz': [
+            { title: 'Kräuter-Anzucht', desc: 'Setze Basilikum oder Minze aus Samen oder Stecklingen. Pflege sie 2 Wochen.', time: '10 Min/Tag', tools: 'Töpfe, Erde, Samen' },
+            { title: 'Zimmerpflanzen-Check', desc: 'Überprüfe alle deine Pflanzen: gießen, schneiden, drehen.', time: '30 Minuten', tools: 'Gießkanne, Schere' }
+          ],
+          'mittel': [
+            { title: 'Kräuter-Anzucht', desc: 'Setze Basilikum oder Minze aus Samen oder Stecklingen. Pflege sie 2 Wochen.', time: '10 Min/Tag', tools: 'Töpfe, Erde, Samen' },
+            { title: 'Balkon-Garten starten', desc: 'Pflanze Kräuter oder Blumen in Töpfen.', time: '1-2 Stunden', tools: 'Töpfe, Erde, Pflanzen' }
+          ],
+          'lang': [
+            { title: 'Gemüsegarten planen', desc: 'Plan und pflanze einen kleinen Gemüsegarten.', time: '3-5 Stunden', tools: 'Beete, Erde, Setzlinge' }
+          ]
+        },
+        'reparieren': {
+          'kurz': [
+            { title: 'Repariere statt ersetzen', desc: 'Suche etwas Kaputtes (Handy-Display, Toaster, Lampe) und versuch es zu reparieren.', time: '30-60 Minuten', tools: 'Schraubendreher, Lötkolben (optional)' },
+            { title: 'Kleines Flick-Experiment', desc: 'Flicke ein Loch in Kleidung oder repariere ein Spielzeug.', time: '30 Minuten', tools: 'Nadel, Faden, Kleber' }
+          ],
+          'mittel': [
+            { title: 'Repariere statt ersetzen', desc: 'Suche etwas Kaputtes (Handy-Display, Toaster, Lampe) und versuch es zu reparieren.', time: '30-60 Minuten', tools: 'Schraubendreher, Lötkolben (optional)' },
+            { title: 'Möbel-Reparatur', desc: 'Repariere einen Wackelstuhl oder einen Kratzer im Möbel.', time: '1-2 Stunden', tools: 'Werkzeug, Holzleim' }
+          ],
+          'lang': [
+            { title: 'Großes Reparatur-Projekt', desc: 'Repariere ein größeres Gerät oder Möbelstück komplett.', time: '3-5 Stunden', tools: 'Vollständige Werkzeugausstattung' }
+          ]
+        },
+        'gestalten': {
+          'kurz': [
+            { title: 'Kreatives Experiment', desc: 'Male, zeichne oder gestalte etwas ohne Plan. Nur für den Prozess, nicht fürs Ergebnis.', time: '45 Minuten', tools: 'Papier, Stifte, Farbe' },
+            { title: 'Collage erstellen', desc: 'Schneide Bilder aus alten Zeitschriften und erstelle eine Collage.', time: '30 Minuten', tools: 'Zeitschriften, Schere, Kleber' }
+          ],
+          'mittel': [
+            { title: 'Kreatives Experiment', desc: 'Male, zeichne oder gestalte etwas ohne Plan. Nur für den Prozess, nicht fürs Ergebnis.', time: '45 Minuten', tools: 'Papier, Stifte, Farbe' },
+            { title: 'Fotografie-Challenge', desc: 'Fotografiere heute 10 Dinge, die du sonst nie beachten würdest.', time: '1 Stunde', tools: 'Kamera oder Handy' }
+          ],
+          'lang': [
+            { title: 'Kunstwerk schaffen', desc: 'Male oder gestalte ein größeres Werk über mehrere Stunden.', time: '3-5 Stunden', tools: 'Leinwand, Farbe, Pinsel' }
+          ]
+        }
+      };
+      
+      // Wähle Challenge basierend auf Archetyp + Zeit-Scope
+      const challenge_pool = challenges[archetyp]?.[zeit_scope] || challenges[archetyp]?.['mittel'] || challenges[archetyp]?.['kurz'];
+      // Zufällige Auswahl aus dem Pool
+      const challenge = challenge_pool[Math.floor(Math.random() * challenge_pool.length)];
+      
+      // Reflexions-Frage
+      const reflexionsfragen = {
+        'bauen': 'Was ist dir beim Bauen aufgefallen? Was würdest du beim nächsten Mal anders machen?',
+        'kochen': 'Wie hat das Gericht geschmeckt? Was würdest du beim nächsten Mal ändern?',
+        'ordnen': 'Wie fühlt sich der aufgeräumte Bereich an? Welche Gewohnheit hilft dir, es zu behalten?',
+        'bewegen': 'Wie war deine Energie heute? Wie hast du dich nach dem Training gefühlt?',
+        'basteln': 'Was hast du gelernt? Würdest du das Projekt weiterführen?',
+        'pflegen': 'Wie entwickeln sich deine Pflanzen? Was braucht sie mehr/weniger?',
+        'reparieren': 'Ist es gelungen? Was war die größte Herausforderung?',
+        'gestalten': 'Wie hat sich der Prozess angefühlt? Was hast du entdeckt?'
+      };
+      const reflexionsfrage = reflexionsfragen[archetyp];
+      
+      const resultContent = document.getElementById('resultContent');
+      resultContent.innerHTML = `
+        <h3>📊 Deine Situation</h3>
+        <div class="meta-info">
+          <span class="meta-tag"><span class="badge badge-age">Kategorie:</span> ${category}</span>
+          <span class="meta-tag"><span class="badge badge-age">Alter:</span> ${alter || 'Nicht angegeben'}</span>
+          <span class="meta-tag"><span class="badge badge-time">Zeit:</span> ${timeBudget}</span>
+          <span class="meta-tag"><span class="badge badge-budget">Budget:</span> ${moneyBudget}</span>
+        </div>
+        
+        <div class="note">
+          <strong>🎯 Dein Zustand:</strong> ${zustand || 'Unbekannt'}
+        </div>
+        
+        <h3 style="margin-top: 1.5rem;">🚀 Deine Challenge für diese Woche</h3>
+        <div style="background: var(--bg); border: 2px solid var(--accent); border-radius: 12px; padding: 1.25rem; margin: 1rem 0;">
+          <h4 style="color: var(--accent); margin-bottom: 0.5rem;">${challenge.title}</h4>
+          <p style="margin-bottom: 0.75rem;">${challenge.desc}</p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-muted);">
+            <span>⏱️ <strong>Zeit:</strong> ${challenge.time}</span>
+            <span>🔧 <strong>Werkzeuge:</strong> ${challenge.tools}</span>
+          </div>
+        </div>
+        
+        <div class="note" style="margin-top: 1rem;">
+          <strong>💡 Warum diese Challenge?</strong><br>
+          Kein Buch über ${archetyp_name.toLowerCase()} — du machst es. In ${challenge.time} hast du nicht nur Wissen, sondern ein greifbares Ergebnis.
+        </div>
+        
+        <h3 style="margin-top: 1.5rem;">📸 Danach: Reflexion</h3>
+        <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin: 0.5rem 0;">
+          <p style="font-style: italic;">${reflexionsfrage}</p>
+          <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">
+            Nimm dir 2 Minuten, beantworte diese Frage in Gedanken oder schreib sie auf.
+          </p>
+        </div>
+        
+        <h3 style="margin-top: 1.5rem;">📈 Steigerungs-Pfad</h3>
+        <p style="color: var(--text-muted); margin-top: 0.5rem;">
+          <strong>Level 1:</strong> Diese Challenge abschließen<br>
+          <strong>Level 2:</strong> Gleiche Challenge 3× wiederholen<br>
+          <strong>Level 3:</strong> Nächste Stufe versuchen (z.B. komplexeres Projekt)
+        </p>
+        
+        <div class="note" style="margin-top: 1rem;">
+          <strong>🛒 Werkzeug (optional):</strong><br>
+          Wenn du echte Werkzeuge brauchst, schau in den passenden Alters-Kategorien auf 2do.shop. 
+          Ziehe Produkte in die "Meine Auswahl"-Sidebar oder klicke auf eine Karte für Details.
+        </div>
+      `;
+      
+      const skillTreeContent = document.getElementById('skillTreeContent');
+      skillTreeContent.innerHTML = `
+        <div class="skill-branch">
+          <div class="skill-branch-title">🌱 Selbstfürsorge & Körpergesundheit</div>
+          <div class="skill-item unlocked">✓ Körperpflege</div>
+          <div class="skill-item in-progress">◐ ${skills.find(s => s.branch === 'Selbstfürsorge & Körpergesundheit')?.skill || 'Gesunde Ernährung'} (in Arbeit)</div>
+          <div class="skill-item locked">✗ Schlaf & Rhythmus</div>
+        </div>
+        
+        <div class="skill-branch">
+          <div class="skill-branch-title">💰 Finanzen & Wirtschaft</div>
+          <div class="skill-item unlocked">✓ Geld kennen & wechseln</div>
+          <div class="skill-item locked">✗ Taschengeld budgetieren</div>
+          <div class="skill-item locked">✗ Sparen & Ziel setzen</div>
+        </div>
+        
+        <div class="skill-branch">
+          <div class="skill-branch-title">🏠 Haushalt & Selbstversorgung</div>
+          <div class="skill-item unlocked">✓ Aufräumen & Ordnung</div>
+          <div class="skill-item in-progress">◐ ${skills.find(s => s.branch === 'Haushalt & Selbstversorgung')?.skill || 'Wäsche & Reinigung'} (in Arbeit)</div>
+          <div class="skill-item locked">✗ Kochen & Zubereiten</div>
+        </div>
+        
+        <div class="skill-branch">
+          <div class="skill-branch-title">🤝 Soziale Kompetenz & Beziehungen</div>
+          <div class="skill-item unlocked">✓ Zuhören & Sprechen</div>
+          <div class="skill-item locked">✗ Empathie & Perspektive</div>
+          <div class="skill-item locked">✗ Beziehungen pflegen</div>
+        </div>
+        
+        <div class="skill-branch">
+          <div class="skill-branch-title">⏰ Organisation & Produktivität</div>
+          <div class="skill-item unlocked">✓ Routinen & Pünktlichkeit</div>
+          <div class="skill-item in-progress">◐ ${skills.find(s => s.branch === 'Organisation & Produktivität')?.skill || 'Zeitmanagement & Planung'} (in Arbeit)</div>
+          <div class="skill-item locked">✗ Ziele setzen & erreichen</div>
+        </div>
+        
+        <div class="skill-branch">
+          <div class="skill-branch-title">🎨 Kreative Lebenskompetenzen</div>
+          <div class="skill-item unlocked">✓ Kreativ sein</div>
+          <div class="skill-item locked">✗ Instrument lernen</div>
+          <div class="skill-item locked">✗ Fotografie</div>
+        </div>
+      `;
+      
+      document.getElementById('quizSection').classList.add('hidden');
+      document.getElementById('resultSection').classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    renderQuestion();
+  </script>
+</body>
+</html>
